@@ -1,0 +1,461 @@
+<title>플레이 라이브러리</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<style>
+/* Layout: 상단 내비게이션 + 두 화면(타임라인 지도 / 플레이 라이브러리 그리드) */
+:root {
+  --bg: #eef0f4;
+  --surface: #ffffff;
+  --ink: #14161c;
+  --muted: #5d6372;
+  --line: #d7dbe3;
+  --accent: #2b45d4;
+  --accent-soft: #dfe4fb;
+  --done: #3f9b5a;
+  --done-soft: #dcefe1;
+  --path: #b9bfcc;
+  --body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101218; --surface: #191c24; --ink: #eceef3; --muted: #9aa1b2; --line: #2a2f3b;
+    --accent: #7d92ff; --accent-soft: #232b4d; --done: #66c283; --done-soft: #1d3326; --path: #3a404e; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #101218; --surface: #191c24; --ink: #eceef3; --muted: #9aa1b2; --line: #2a2f3b;
+  --accent: #7d92ff; --accent-soft: #232b4d; --done: #66c283; --done-soft: #1d3326; --path: #3a404e; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); }
+/* 페이지 폭: 최대 1440px, 좌우 여백은 화면 폭의 8% (34~144px) */
+.wrap {
+  max-width: 1440px; margin: 0 auto;
+  padding-left: max(clamp(34px, 8vw, 144px), env(safe-area-inset-left, 0px));
+  padding-right: max(clamp(34px, 8vw, 144px), env(safe-area-inset-right, 0px));
+}
+
+/* ---------- 상단 내비게이션 ---------- */
+.topbar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 12px; }
+.brand { font-weight: 600; font-size: 15px; letter-spacing: -.01em; }
+.nav { display: flex; gap: 4px; }
+.nav a {
+  text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 500;
+  padding: 7px 14px; border-radius: 8px;
+}
+.nav a:hover { color: var(--ink); background: var(--accent-soft); }
+.nav a[aria-current="page"] { color: var(--ink); background: var(--surface); box-shadow: 0 0 0 1px var(--line); }
+.nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+main.wrap { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 8vw, 106px); }
+
+/* ---------- 플레이 라이브러리 ---------- */
+/* 필터는 항상 한 줄: 넘치면 줄바꿈 대신 가로 스크롤 */
+.filters {
+  display: flex; flex-wrap: nowrap; gap: 6px; margin: 0 0 28px;
+  overflow-x: auto; scrollbar-width: thin; padding-bottom: 4px;
+}
+.filter {
+  flex: 0 0 auto; white-space: nowrap;
+  font: inherit; font-size: 13px; cursor: pointer;
+  border: 1px solid var(--line); background: transparent; color: var(--ink);
+  padding: 6px 11px; border-radius: 999px;
+}
+.filter:hover { background: var(--accent-soft); }
+.filter[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.filter:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.filter .n { font-size: 11px; opacity: .7; margin-left: 4px; font-variant-numeric: tabular-nums; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); gap: 22px 16px; list-style: none; margin: 0; padding: 0; }
+@media (max-width: 460px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 12px; } }
+.game { display: grid; gap: 8px; align-content: start; min-width: 0; }
+.icon {
+  aspect-ratio: 1; width: 100%; max-width: 100%; border-radius: 22%;
+  overflow: hidden; background: var(--accent-soft);
+  box-shadow: 0 0 0 1px var(--line), 0 6px 14px -8px rgba(20, 22, 28, .35);
+  display: grid; place-items: center;
+}
+.icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.icon .initial { font-size: 32px; font-weight: 500; color: var(--accent); }
+.name {
+  font-size: 13px; font-weight: 500; line-height: 1.35; text-align: center;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  word-break: keep-all; overflow-wrap: anywhere;
+}
+
+/* ---------- 타임라인 (스테이지 지도) ---------- */
+.map {
+  position: relative; border-radius: 18px; padding: 36px 20px;
+  background:
+    radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 1.5px) 0 0 / 22px 22px,
+    var(--surface);
+  box-shadow: 0 0 0 1px var(--line);
+}
+.map svg.trail { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.trail .done { fill: none; stroke: var(--path); stroke-width: 6; stroke-linecap: round; }
+.trail .todo { fill: none; stroke: var(--path); stroke-width: 3; stroke-dasharray: 2 9; stroke-linecap: round; }
+/* 왼쪽에 세로 직선 하나, 오른쪽에 넓은 설명 영역 */
+.stages { list-style: none; margin: 0; padding: 0; display: grid; gap: 44px; position: relative; }
+.stage { display: grid; grid-template-columns: 96px minmax(0, 1fr); align-items: start; gap: 28px; }
+.stage .spot { display: grid; justify-items: center; gap: 6px; }
+.stage .card { min-width: 0; padding-top: 6px; }
+
+.node {
+  width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--surface); border: 3px solid var(--path); position: relative; z-index: 1;
+}
+.node svg { width: 20px; height: 20px; }
+.stage[data-state="done"] .node { border-color: var(--done); background: var(--done-soft); color: var(--done); }
+.stage[data-state="current"] .node { border-color: var(--accent); background: var(--accent); color: var(--surface); box-shadow: 0 0 0 6px var(--accent-soft); }
+.stage[data-state="goal"] .node { border-style: dashed; color: var(--muted); }
+.stage[data-highlight] .node { width: 56px; height: 56px; }
+.lv { font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: .02em; color: var(--muted); background: var(--surface); padding: 1px 9px; border-radius: 999px; box-shadow: 0 0 0 1px var(--line); position: relative; z-index: 1; white-space: nowrap; }
+.stage[data-state="done"] .lv { color: var(--done); }
+.stage[data-state="current"] .lv { color: var(--accent); }
+
+.card { max-width: 860px; display: grid; gap: 10px; }
+.card .head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
+.card h3 { margin: 0; font-size: 19px; font-weight: 600; line-height: 1.35; text-wrap: balance; }
+.card p { margin: 0; font-size: 15px; line-height: 1.75; color: var(--muted); word-break: keep-all; max-width: 68ch; }
+.badge { font-size: 11px; font-weight: 600; letter-spacing: .04em; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 999px; }
+.media { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 4px; }
+.ph {
+  aspect-ratio: 16 / 10; max-width: 100%; border: 2px dashed var(--line); border-radius: 10px;
+  display: grid; place-items: center; text-align: center; padding: 8px;
+  font-size: 12px; color: var(--muted); background: var(--bg);
+}
+.ph::before { content: "이미지"; display: block; font-size: 10px; letter-spacing: .08em; opacity: .7; }
+.ph span { display: block; }
+.shot { margin: 0; display: grid; gap: 6px; min-width: 0; }
+.shot-btn {
+  padding: 0; border: 0; cursor: zoom-in; display: block; width: 100%;
+  aspect-ratio: 16 / 10; border-radius: 10px; overflow: hidden;
+  background: var(--bg); box-shadow: 0 0 0 1px var(--line);
+}
+.shot-btn img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.shot-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.shot figcaption { font-size: 12px; color: var(--muted); line-height: 1.45; }
+.links { display: flex; flex-wrap: wrap; gap: 8px; }
+.links a {
+  font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none;
+  padding: 6px 12px; border-radius: 8px; background: var(--accent-soft);
+}
+.links a:hover { text-decoration: underline; }
+.links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* 이미지 크게 보기 */
+.viewer {
+  position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; gap: 10px;
+  padding: max(24px, env(safe-area-inset-top, 0px)) max(24px, env(safe-area-inset-right, 0px)) max(24px, env(safe-area-inset-bottom, 0px)) max(24px, env(safe-area-inset-left, 0px));
+  background: rgba(10, 12, 16, .82); cursor: zoom-out;
+}
+.viewer img { max-width: 100%; max-height: calc(100vh - 120px); border-radius: 8px; background: #fff; }
+.viewer p { margin: 0; color: #e8eaef; font-size: 14px; text-align: center; }
+
+@media (max-width: 720px) {
+  .map { padding: 24px 14px; }
+  .stage { grid-template-columns: 60px minmax(0, 1fr); gap: 14px; }
+  .media { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+}
+</style>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">게임기획 포트폴리오</div>
+    <nav class="nav" aria-label="페이지">
+      <a href="#timeline" id="nav-timeline">타임라인</a>
+      <a href="#library" id="nav-library">플레이 라이브러리</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="view-timeline" aria-labelledby="nav-timeline">
+    <div class="map" id="map">
+      <svg class="trail" id="trail" aria-hidden="true"><path class="todo" id="trail-todo" d=""/><path class="done" id="trail-done" d=""/></svg>
+      <ol class="stages" id="stages"></ol>
+    </div>
+  </section>
+
+  <section id="view-library" aria-labelledby="nav-library" hidden>
+    <div class="filters" id="filters" role="group" aria-label="장르 필터"></div>
+    <ul class="grid" id="grid"></ul>
+  </section>
+</main>
+
+<div class="viewer" id="viewer" hidden><img src="" alt=""><p></p></div>
+
+<script id="games-data" type="application/json">[
+{"id":"pubg","name":"PUBG: 배틀그라운드","platform":"steam","genre":"shooter","src":"steam","q":"PUBG: BATTLEGROUNDS","appid":578080,"tags":["생존","슈팅","배틀 로얄"],"tab":"shooter","year":2017},
+{"id":"cyberpunk","name":"사이버펑크 2077","platform":"steam","genre":"openworld","src":"steam","q":"Cyberpunk 2077","appid":1091500,"tags":["오픈 월드","RPG","1인칭 슈팅"],"tab":"openworld","year":2020},
+{"id":"rdr2","name":"레드 데드 리뎀션 2","platform":"steam","genre":"openworld","src":"steam","q":"Red Dead Redemption 2","appid":1174180,"tags":["오픈 월드","어드벤처","액션"],"tab":"openworld","year":2018},
+{"id":"arcraiders","name":"아크 레이더스","platform":"steam","genre":"shooter","src":"steam","q":"ARC Raiders","tags":["익스트랙션 슈터","3인칭 슈팅","생존"],"tab":"shooter","year":2025},
+{"id":"eldenring","name":"엘든 링","platform":"steam","genre":"action","src":"steam","q":"ELDEN RING","appid":1245620,"tags":["소울라이크","오픈 월드","액션 RPG"],"tab":"openworld","year":2022},
+{"id":"palworld","name":"팰월드","platform":"steam","genre":"survival","src":"steam","q":"Palworld","appid":1623730,"tags":["오픈 월드","생존","생명체 수집"],"tab":"sandbox","year":2024},
+{"id":"sts","name":"슬레이 더 스파이어","platform":"steam","genre":"card","src":"steam","q":"Slay the Spire","appid":646570,"tags":["로그라이크 덱빌딩","카드 게임","턴제"],"tab":"card","year":2017},
+{"id":"bg3","name":"발더스 게이트 3","platform":"steam","genre":"rpg","src":"steam","q":"Baldur's Gate 3","appid":1086940,"tags":["RPG","CRPG","턴제 전투"],"tab":"rpg","year":2020},
+{"id":"division2","name":"톰 클랜시의 더 디비전 2","platform":"steam","genre":"shooter","src":"steam","q":"Tom Clancy's The Division 2","tags":["약탈 슈팅","오픈 월드","3인칭 슈팅"],"tab":"shooter","year":2019},
+{"id":"clairobscur","name":"클레르 옵스퀴르: 33 원정대","platform":"steam","genre":"rpg","src":"steam","q":"Clair Obscur: Expedition 33","tags":["턴제 전투","RPG","JRPG"],"tab":"rpg","year":2025},
+{"id":"mordor","name":"미들 어스: 섀도우 오브 모르도르","platform":"steam","genre":"openworld","src":"steam","q":"Middle-earth: Shadow of Mordor","appid":241930,"tags":["오픈 월드","액션","어드벤처"],"tab":"openworld","year":2014},
+{"id":"cotl","name":"컬트 오브 더 램","platform":"steam","genre":"rogue","src":"steam","q":"Cult of the Lamb","appid":1313140,"tags":["기지 건설","액션 로그라이크","던전 크롤러"],"tab":"rogue","year":2022},
+{"id":"darkestdungeon","name":"다키스트 던전","platform":"steam","genre":"rogue","src":"steam","q":"Darkest Dungeon","appid":262060,"tags":["턴제 전투","던전 크롤러","로그라이크"],"tab":"rogue","year":2015},
+{"id":"l4d2","name":"레프트 4 데드 2","platform":"steam","genre":"shooter","src":"steam","q":"Left 4 Dead 2","appid":550,"tags":["1인칭 슈팅","협동","생존"],"tab":"shooter","year":2009},
+{"id":"acbf","name":"어쌔신 크리드 IV 블랙 플래그","platform":"steam","genre":"openworld","src":"steam","q":"Assassin's Creed IV Black Flag","appid":242050,"tags":["오픈 월드","액션 어드벤처","잠입"],"tab":"openworld","year":2013},
+{"id":"acod","name":"어쌔신 크리드 오디세이","platform":"steam","genre":"openworld","src":"steam","q":"Assassin's Creed Odyssey","appid":812140,"tags":["오픈 월드","액션 어드벤처","RPG"],"tab":"openworld","year":2018},
+{"id":"dmc","name":"DmC: 데빌 메이 크라이","platform":"steam","genre":"action","src":"steam","q":"DmC: Devil May Cry","appid":220440,"tags":["액션","핵 앤 슬래시","캐릭터 액션 게임"],"tab":"action","year":2013},
+{"id":"witcher3","name":"위쳐 3: 와일드 헌트","platform":"steam","genre":"openworld","src":"steam","q":"The Witcher 3: Wild Hunt","appid":292030,"tags":["오픈 월드","RPG","액션 RPG"],"tab":"openworld","year":2015},
+{"id":"kcd1","name":"킹덤 컴: 딜리버런스","platform":"steam","genre":"openworld","src":"steam","q":"Kingdom Come: Deliverance","appid":379430,"tags":["RPG","오픈 월드","어드벤처"],"tab":"openworld","year":2018},
+{"id":"kcd","name":"킹덤 컴: 딜리버런스 II","platform":"steam","genre":"openworld","src":"steam","q":"Kingdom Come: Deliverance II","appid":1771300,"tags":["RPG","오픈 월드","어드벤처"],"tab":"openworld","year":2025},
+{"id":"sekiro","name":"SEKIRO: SHADOWS DIE TWICE","platform":"steam","genre":"action","src":"steam","q":"Sekiro: Shadows Die Twice","appid":814380,"tags":["소울라이크","액션","잠입"],"tab":"action","year":2019},
+{"id":"dredge","name":"드레지","platform":"steam","genre":"narrative","src":"steam","q":"DREDGE","appid":1562430,"tags":["어드벤처","탐험","낚시"],"tab":"story","year":2023},
+{"id":"hollowknight","name":"할로우 나이트","platform":"steam","genre":"action","src":"steam","q":"Hollow Knight","appid":367520,"tags":["메트로배니아","플랫폼","소울라이크"],"tab":"action","year":2017},
+{"id":"silksong","name":"할로우 나이트: 실크송","platform":"steam","genre":"action","src":"steam","q":"Hollow Knight: Silksong","appid":1030300,"tags":["메트로배니아","소울라이크","플랫폼"],"tab":"action","year":2025},
+{"id":"xcom2","name":"엑스컴 2","platform":"steam","genre":"tactics","src":"steam","q":"XCOM 2","appid":268500,"tags":["턴제 전술","전략","RPG"],"tab":"strategy","year":2016},
+{"id":"chainedechoes","name":"체인드 에코즈","platform":"steam","genre":"rpg","src":"steam","q":"Chained Echoes","appid":1229240,"tags":["JRPG","턴제 전투","RPG"],"tab":"rpg","year":2022},
+{"id":"hades","name":"하데스","platform":"steam","genre":"rogue","src":"steam","q":"Hades","appid":1145360,"tags":["액션 로그라이크","로그라이트","핵 앤 슬래시"],"tab":"rogue","year":2018},
+{"id":"theforest","name":"더 포레스트","platform":"steam","genre":"survival","src":"steam","q":"The Forest","appid":242760,"tags":["오픈 월드 생존 제작","생존","생존 공포"],"tab":"sandbox","year":2014},
+{"id":"davethediver","name":"데이브 더 다이버","platform":"steam","genre":"narrative","src":"steam","q":"DAVE THE DIVER","appid":1868140,"tags":["경영","어드벤처","캐주얼"],"tab":"strategy","year":2022},
+{"id":"skul","name":"스컬: 더 히어로 슬레이어","platform":"steam","genre":"rogue","src":"steam","q":"Skul: The Hero Slayer","appid":1147560,"tags":["액션 로그라이크","로그라이트","플랫폼"],"tab":"rogue","year":2020},
+{"id":"dungeonborne","name":"던전본","platform":"steam","genre":"shooter","src":"steam","q":"Dungeonborne","appid":2448970,"tags":["익스트랙션 슈터","던전 크롤러","액션 RPG"],"tab":"shooter","year":2024},
+{"id":"duckov","name":"Escape from Duckov","platform":"steam","genre":"shooter","src":"steam","q":"Escape from Duckov","tags":["익스트랙션 슈터","약탈 슈팅","탑다운 슈팅"],"tab":"shooter","year":2025},
+{"id":"gungeon","name":"엔터 더 건전","platform":"steam","genre":"rogue","src":"steam","q":"Enter the Gungeon","appid":311690,"tags":["탄막 지옥","액션 로그라이크","던전 크롤러"],"tab":"rogue","year":2016},
+{"id":"spelunky","name":"스펠렁키","platform":"steam","genre":"rogue","src":"steam","q":"Spelunky","appid":239350,"tags":["로그라이크","플랫폼","액션"],"tab":"rogue","year":2012},
+{"id":"tlou","name":"The Last of Us Part I","platform":"steam","genre":"narrative","src":"steam","q":"The Last of Us Part I","appid":1888930,"tags":["액션 어드벤처","생존 공포","3인칭 슈팅"],"tab":"action","year":2022},
+{"id":"aceattorney","name":"역전재판 123 나루호도 셀렉션","platform":"steam","genre":"narrative","src":"steam","q":"Phoenix Wright: Ace Attorney Trilogy","appid":787480,"tags":["추리","비주얼 노벨","어드벤처"],"tab":"story","year":2019},
+{"id":"chronotrigger","name":"크로노 트리거","platform":"steam","genre":"rpg","src":"steam","q":"CHRONO TRIGGER","appid":613830,"tags":["JRPG","턴제","RPG"],"tab":"rpg","year":1995},
+{"id":"hff","name":"휴먼 폴 플랫","platform":"steam","genre":"versus","src":"steam","q":"Human Fall Flat","appid":477160,"tags":["퍼즐","협동","물리"],"tab":"story","year":2016},
+{"id":"sniperelite5","name":"스나이퍼 엘리트 5","platform":"steam","genre":"shooter","src":"steam","q":"Sniper Elite 5","appid":1029690,"tags":["3인칭 슈팅","잠입","액션 어드벤처"],"tab":"shooter","year":2022},
+{"id":"farcry6","name":"파 크라이 6","platform":"steam","genre":"openworld","src":"steam","q":"Far Cry 6","tags":["오픈 월드","1인칭 슈팅","액션 어드벤처"],"tab":"shooter","year":2021},
+{"id":"dqb2","name":"드래곤 퀘스트 빌더즈 2 파괴신 시도와 텅 빈 섬","platform":"steam","genre":"survival","src":"steam","q":"DRAGON QUEST BUILDERS 2","appid":1072420,"tags":["RPG","샌드박스","건설"],"tab":"sandbox","year":2018},
+{"id":"kingdom2c","name":"킹덤 투 크라운","platform":"steam","genre":"defense","src":"steam","q":"Kingdom Two Crowns","appid":701160,"tags":["타워 디펜스","도시 건설","전략"],"tab":"strategy","year":2018},
+{"id":"civ5","name":"시드 마이어의 문명 V","platform":"steam","genre":"tactics","src":"steam","q":"Sid Meier's Civilization V","appid":8930,"tags":["턴제 전략","4X","대전략"],"tab":"strategy","year":2010},
+{"id":"crysis3","name":"크라이시스 3","platform":"steam","genre":"shooter","src":"steam","q":"Crysis 3 Remastered","appid":2096610,"tags":["1인칭 슈팅","액션","샌드박스"],"tab":"shooter","year":2013},
+{"id":"dungreed","name":"던그리드","platform":"steam","genre":"rogue","src":"steam","q":"Dungreed","appid":753420,"tags":["액션 로그라이크","로그라이트","던전 크롤러"],"tab":"rogue","year":2018},
+{"id":"gta5","name":"Grand Theft Auto V","platform":"steam","genre":"openworld","src":"steam","q":"Grand Theft Auto V","appid":271590,"tags":["오픈 월드","액션","3인칭 슈팅"],"tab":"openworld","year":2013},
+{"id":"legendofmortal","name":"활협전","platform":"steam","genre":"rpg","src":"steam","q":"Legend of Mortal","tags":["RPG","무협","내러티브"],"tab":"story","year":2024},
+{"id":"chainedtogether","name":"체인드 투게더","platform":"steam","genre":"versus","src":"steam","q":"Chained Together","tags":["협동","3D 플랫폼","퍼즐 플랫폼"],"tab":"action","year":2024},
+{"id":"ror2","name":"리스크 오브 레인 2","platform":"steam","genre":"rogue","src":"steam","q":"Risk of Rain 2","appid":632360,"tags":["액션 로그라이크","3인칭 슈팅","협동"],"tab":"rogue","year":2019},
+{"id":"terraria","name":"테라리아","platform":"steam","genre":"survival","src":"steam","q":"Terraria","appid":105600,"tags":["오픈 월드 생존 제작","샌드박스","크래프팅"],"tab":"sandbox","year":2011},
+{"id":"deadcells","name":"데드 셀","platform":"steam","genre":"rogue","src":"steam","q":"Dead Cells","appid":588650,"tags":["액션 로그라이크","메트로배니아","로그라이트"],"tab":"rogue","year":2017},
+{"id":"forager","name":"포리저","platform":"steam","genre":"survival","src":"steam","q":"Forager","appid":751780,"tags":["오픈 월드 생존 제작","크래프팅","농장 시뮬레이션"],"tab":"sandbox","year":2019},
+{"id":"twom","name":"디스 워 오브 마인","platform":"steam","genre":"tactics","src":"steam","q":"This War of Mine","appid":282070,"tags":["생존","전략","시뮬레이션"],"tab":"strategy","year":2014},
+{"id":"pvz","name":"Plants vs. Zombies","platform":"steam","genre":"defense","src":"steam","q":"Plants vs. Zombies GOTY Edition","appid":3590,"tags":["타워 디펜스","전략","캐주얼"],"tab":"strategy","year":2009},
+{"id":"stacklands","name":"Stacklands","platform":"steam","genre":"card","src":"steam","q":"Stacklands","appid":1948280,"tags":["카드 게임","경영","도시 건설"],"tab":"card","year":2022},
+{"id":"btd6","name":"Bloons TD 6","platform":"steam","genre":"defense","src":"steam","q":"Bloons TD 6","appid":960090,"tags":["타워 디펜스","전략","협동"],"tab":"strategy","year":2018},
+
+{"id":"lol","name":"리그 오브 레전드","platform":"pc","genre":"versus","src":"wiki","q":"League of Legends","tags":["MOBA","전략","PvP"],"tab":"strategy","year":2009},
+{"id":"getamped","name":"겟앰프드","platform":"pc","genre":"versus","src":"wiki","q":"겟앰프드","lang":"ko","tags":["대전 격투","액션","PvP"],"tab":"action","year":2002},
+{"id":"minecraft","name":"마인크래프트","platform":"pc","genre":"survival","src":"itunes","q":"Minecraft","tags":["샌드박스","생존","크래프팅"],"tab":"sandbox","year":2009},
+{"id":"aion2","name":"아이온2","platform":"pc","genre":"mmo","src":"itunes","q":"아이온2","tags":["MMORPG","액션 RPG","PvP"],"tab":"rpg","year":2025},
+{"id":"overwatch","name":"오버워치","platform":"pc","genre":"shooter","src":"steam","q":"Overwatch 2","appid":2357570,"tags":["1인칭 슈팅","히어로 슈터","PvP"],"tab":"shooter","year":2016},
+{"id":"sc2randy","name":"스타크래프트 II 유즈맵 : 스2랜디","platform":"pc","genre":"defense","src":"wiki","q":"StarCraft II: Wings of Liberty","tags":["타워 디펜스","실시간 전략","협동"],"tab":"strategy","year":2010},
+{"id":"autochess","name":"도타2 유즈맵 : 오토체스","platform":"pc","genre":"defense","src":"steam","q":"Dota 2","appid":570,"tags":["오토 배틀러","전략","PvP"],"tab":"strategy","year":2019},
+
+{"id":"pokemondp","name":"포켓몬스터 시리즈 (DP~XY)","platform":"nintendo","genre":"rpg","src":"wiki","q":"Pokémon Diamond and Pearl","tags":["RPG","턴제","생명체 수집"],"tab":"rpg","year":2013},
+{"id":"arceus","name":"Pokémon LEGENDS 아르세우스","platform":"nintendo","genre":"rpg","src":"wiki","q":"Pokémon Legends: Arceus","tags":["액션 RPG","생명체 수집","오픈 월드"],"tab":"rpg","year":2022},
+{"id":"threehouses","name":"파이어 엠블렘 풍화설월","platform":"nintendo","genre":"tactics","src":"wiki","q":"Fire Emblem: Three Houses","tags":["전술 RPG","턴제 전술","시뮬레이션"],"tab":"strategy","year":2019},
+{"id":"totk","name":"젤다의 전설 티어스 오브 더 킹덤","platform":"nintendo","genre":"openworld","src":"wiki","q":"The Legend of Zelda: Tears of the Kingdom","tags":["오픈 월드","액션 어드벤처","샌드박스"],"tab":"openworld","year":2023},
+{"id":"botw","name":"젤다의 전설 브레스 오브 더 와일드","platform":"nintendo","genre":"openworld","src":"wiki","q":"The Legend of Zelda: Breath of the Wild","tags":["오픈 월드","액션 어드벤처","탐험"],"tab":"openworld","year":2017},
+{"id":"albw","name":"젤다의 전설 신들의 트라이포스 2","platform":"nintendo","genre":"narrative","src":"wiki","q":"The Legend of Zelda: A Link Between Worlds","tags":["액션 어드벤처","퍼즐","탑다운"],"tab":"action","year":2013},
+{"id":"spirittracks","name":"젤다의 전설 대지의 기적","platform":"nintendo","genre":"narrative","src":"wiki","q":"The Legend of Zelda: Spirit Tracks","tags":["액션 어드벤처","퍼즐","탐험"],"tab":"action","year":2009},
+{"id":"layton1","name":"레이튼 교수와 이상한 마을","platform":"nintendo","genre":"narrative","src":"wiki","q":"Professor Layton and the Curious Village","tags":["퍼즐","어드벤처","추리"],"tab":"story","year":2007},
+{"id":"layton2","name":"레이튼 교수와 악마의 상자","platform":"nintendo","genre":"narrative","src":"wiki","q":"Professor Layton and the Diabolical Box","tags":["퍼즐","어드벤처","추리"],"tab":"story","year":2007},
+{"id":"odyssey","name":"슈퍼 마리오 오디세이","platform":"nintendo","genre":"action","src":"wiki","q":"Super Mario Odyssey","tags":["3D 플랫폼","액션 어드벤처","탐험"],"tab":"action","year":2017},
+{"id":"galaxy2","name":"슈퍼 마리오 갤럭시 2","platform":"nintendo","genre":"action","src":"wiki","q":"Super Mario Galaxy 2","tags":["3D 플랫폼","액션","어드벤처"],"tab":"action","year":2010},
+{"id":"rabbids","name":"마리오 + 래비드 킹덤 배틀","platform":"nintendo","genre":"tactics","src":"wiki","q":"Mario + Rabbids Kingdom Battle","tags":["턴제 전술","전술 RPG","어드벤처"],"tab":"strategy","year":2017},
+{"id":"kirby","name":"별의 커비 디스커버리","platform":"nintendo","genre":"action","src":"wiki","q":"Kirby and the Forgotten Land","tags":["3D 플랫폼","액션","어드벤처"],"tab":"action","year":2022},
+
+{"id":"tcgpocket","name":"포켓몬 카드 게임 Pocket","platform":"mobile","genre":"card","src":"itunes","q":"Pokémon TCG Pocket","tags":["트레이딩 카드 게임","카드 배틀","캐주얼"],"tab":"card","year":2024},
+{"id":"randomdice","name":"랜덤 다이스: 디펜스","platform":"mobile","genre":"defense","src":"itunes","q":"랜덤다이스","itunesId":1462877149,"tags":["타워 디펜스","전략","PvP"],"tab":"strategy","year":2019},
+{"id":"luckydefense","name":"운빨존많겜","platform":"mobile","genre":"defense","src":"itunes","q":"운빨존많겜","tags":["타워 디펜스","전략","협동"],"tab":"strategy","year":2024},
+{"id":"marvelsnap","name":"마블 스냅","platform":"mobile","genre":"card","src":"itunes","q":"MARVEL SNAP","tags":["덱빌딩","카드 배틀","트레이딩 카드 게임"],"tab":"card","year":2022},
+{"id":"kingdomrush","name":"킹덤 러쉬","platform":"mobile","genre":"defense","src":"itunes","q":"Kingdom Rush Tower Defense TD","tags":["타워 디펜스","전략","액션"],"tab":"strategy","year":2011},
+{"id":"nightoffullmoon","name":"나이트 오브 풀문","platform":"mobile","genre":"card","src":"itunes","q":"Night of the Full Moon","tags":["카드 게임","덱빌딩","로그라이트"],"tab":"card","year":2017},
+{"id":"dungeonmaker","name":"던전메이커","platform":"mobile","genre":"rogue","src":"itunes","q":"던전메이커","tags":["로그라이크","디펜스","전략"],"tab":"rogue","year":2018},
+{"id":"dq1","name":"드래곤 퀘스트","platform":"mobile","genre":"rpg","src":"itunes","q":"DRAGON QUEST","itunesId":911201894,"tags":["JRPG","턴제","RPG"],"tab":"rpg","year":1986},
+{"id":"mermaid","name":"방구석에 인어아가씨","platform":"mobile","genre":"narrative","src":"itunes","q":"방구석에 인어아가씨","itunesId":904882274,"tags":["비주얼 노벨","연애 시뮬레이션","어드벤처"],"tab":"story","year":2014},
+{"id":"seoul2033","name":"서울 2033","platform":"mobile","genre":"survival","src":"itunes","q":"서울2033","tags":["텍스트 어드벤처","생존","포스트아포칼립스"],"tab":"story","year":2018},
+{"id":"balatro","name":"발라트로","platform":"mobile","genre":"card","src":"itunes","q":"Balatro+","tags":["로그라이크 덱빌딩","카드 게임","전략"],"tab":"card","year":2024},
+{"id":"brotato","name":"Brotato","platform":"mobile","genre":"rogue","src":"itunes","q":"Brotato","tags":["액션 로그라이크","탄막 지옥","아레나 슈팅"],"tab":"rogue","year":2022},
+{"id":"thronefall","name":"Thronefall","platform":"mobile","genre":"defense","src":"itunes","q":"Thronefall","tags":["타워 디펜스","도시 건설","액션 RTS"],"tab":"strategy","year":2023},
+{"id":"taleofimmortal","name":"귀곡팔황","platform":"mobile","genre":"rpg","src":"steam","q":"Tale of Immortal","appid":1468810,"tags":["샌드박스","RPG","시뮬레이션"],"tab":"rpg","year":2021},
+{"id":"rummikub","name":"루미큐브","platform":"mobile","genre":"card","src":"itunes","q":"Rummikub","tags":["보드게임","퍼즐","전략"],"tab":"story","year":1977},
+{"id":"kairosoft","name":"카이로소프트 시리즈","platform":"mobile","genre":"tactics","src":"itunes","q":"게임개발 스토리","itunesId":396085661,"tags":["경영","시뮬레이션","캐주얼"],"tab":"strategy","year":2010},
+{"id":"20mtd","name":"20 Minutes Till Dawn","platform":"mobile","genre":"rogue","src":"itunes","q":"20 Minutes Till Dawn","tags":["액션 로그라이크","탄막 지옥","생존"],"tab":"rogue","year":2022},
+{"id":"dokkaebi","name":"도깨비의세계","platform":"mobile","genre":"mmo","src":"itunes","q":"도깨비의세계","tags":["MMORPG","2.5D","판타지"],"tab":"rpg","year":2026},
+{"id":"eclipse","name":"이클립스: 더 어웨이크닝","platform":"mobile","genre":"mmo","src":"itunes","q":"이클립스 더 어웨이크닝","tags":["MMORPG","액션 RPG","판타지"],"tab":"rpg","year":2026},
+{"id":"zeus","name":"제우스: 오만의 신","platform":"mobile","genre":"mmo","src":"itunes","q":"제우스 오만의 신","tags":["MMORPG","액션 RPG","신화"],"tab":"rpg","year":2026},
+{"id":"battlecats","name":"냥코 대전쟁","platform":"mobile","genre":"defense","src":"itunes","q":"냥코 대전쟁","tags":["타워 디펜스","전략","캐주얼"],"tab":"strategy","year":2012},
+{"id":"soulknight","name":"소울 나이트","platform":"mobile","genre":"rogue","src":"itunes","q":"Soul Knight","tags":["액션 로그라이크","탑다운 슈팅","던전 크롤러"],"tab":"rogue","year":2017},
+{"id":"toweroftwinter","name":"겨울의 탑","platform":"mobile","genre":"rogue","src":"itunes","q":"겨울의 탑","tags":["로그라이크","턴제 전투","텍스트 어드벤처"],"tab":"rogue","year":2022},
+{"id":"brawlstars","name":"브롤스타즈","platform":"mobile","genre":"versus","src":"itunes","q":"Brawl Stars","tags":["탑다운 슈팅","PvP","배틀 로얄"],"tab":"shooter","year":2018},
+{"id":"unknownknights","name":"언노운 나이츠","platform":"mobile","genre":"rogue","src":"itunes","q":"언노운 나이츠","tags":["액션 로그라이크","실시간 전술","전략"],"tab":"rogue","year":2019},
+{"id":"hearthstone","name":"하스스톤","platform":"mobile","genre":"card","src":"itunes","q":"Hearthstone","tags":["트레이딩 카드 게임","카드 게임","전략"],"tab":"card","year":2014},
+{"id":"clashroyale","name":"클래시 로얄","platform":"mobile","genre":"defense","src":"itunes","q":"Clash Royale","tags":["실시간 전략","카드 배틀","PvP"],"tab":"strategy","year":2016},
+{"id":"lostpage","name":"로스트페이지","platform":"mobile","genre":"card","src":"itunes","q":"로스트페이지","tags":["로그라이크 덱빌딩","카드 게임","전략"],"tab":"card","year":2021}
+]
+</script>
+<script id="timeline-data" type="application/json">[
+{"title":"게임기획자로 입사","state":"goal","desc":"다음 스테이지.","media":[]},
+{"title":"졸업 · 취업 준비","state":"current","desc":"졸업 후 라이브 서비스 중인 MMORPG를 대상으로 시스템 기획서 3편을 작성했다. 「아이온2」의 반복되는 PVE 동선을 개선하는 연전 던전 시스템, 「제우스: 오만의 신」의 서버 간 쟁 격차를 줄이는 보정 시스템 '적응인자'를 창작했고, 「제우스」의 미다스의 금고가 다이아 발행·사냥터 분산·장비 소각으로 경제에 개입하는 구조를 분석해 개선안을 제안했다.","media":[{"src":"media/lv9-aion-cover.jpg","caption":"아이온2 · 연전 던전 시스템 기획서"},{"src":"media/lv9-zeus-cover.jpg","caption":"제우스 · 쟁 보정 시스템 '적응인자' 기획서"},{"src":"media/lv9-midas-cover.jpg","caption":"제우스 · 미다스의 금고 시스템 분석서"}],"links":[{"label":"연전 던전 시스템 기획서 (PDF, 17쪽)","href":"media/doc-aion2-dungeon.pdf"},{"label":"적응인자 쟁 보정 시스템 기획서 (PDF, 18쪽)","href":"media/doc-zeus-adapt.pdf"},{"label":"미다스의 금고 시스템 분석서 (PDF, 16쪽)","href":"media/doc-zeus-midas.pdf"}]},
+{"title":"산학협력 캡스톤 · Tokyo Desire : Deck Builders","state":"done","highlight":true,"desc":"산학협력 캡스톤에서 게임 개발 과제를 맡아 기획을 자원했다. 협력사가 개발하다 중단한 게임의 에셋으로 로그라이크 카드게임을 기획했고, 회사 이름으로 스팀 페스티벌에 데모를 출시했다. 기획서와 테이블 작성부터 스팀 페이지 구성, 홍보 페이지까지 개발 외 업무를 모두 맡았다.","media":[{"src":"media/lv10-steam.jpg","caption":"스팀 라이브러리 페이지 (체험판)"},{"src":"media/lv10-system.jpg","caption":"시스템 기획서 (Act 1 MVP 기준 · 유물·계약·카드·이벤트·보상)"},{"src":"media/lv10-meeting.jpg","caption":"팀 회의"},"밸런스 테이블"],"links":[{"label":"스팀 페이지 · 트레일러 보기","href":"https://store.steampowered.com/app/2865450/"}]},
+{"title":"게임개발동아리 creator · 기획 스터디","state":"done","desc":"게임개발동아리 creator에서 한 학기 동안 기획 스터디에 참여해 처음으로 기획서를 쓰고, 동아리원들과 서로의 문서에 피드백을 주고받았다. 오리지널 기획 2편(무협 경영 시뮬레이션 아이디어 제안서, 탑뷰 배틀로얄 「해머로얄」 시스템 기획서)과 기존 게임의 시스템을 분석한 역기획서 4편(루미큐브, Brotato 강화 시스템, Dead Cells 성장 시스템, 몬스터 AI)을 작성했다.","media":[{"src":"media/lv7-hammer.jpg","caption":"해머로얄 시스템 기획서 · 게임 규칙"},{"src":"media/lv7-brotato.jpg","caption":"Brotato 강화 시스템 역기획서 · 업그레이드 확률표"},{"src":"media/lv7-deadcells.jpg","caption":"Dead Cells 시스템 역기획서 · 진행 방식"},{"src":"media/lv9-botw-fsm.jpg","caption":"몬스터 AI 역기획서 · FSM"}]},
+{"title":"캡스톤디자인 · BapTalkSu 총괄 기획","state":"done","desc":"교내에서 함께 밥 먹을 사람을 모으는 앱 BapTalkSu의 총괄 기획을 맡았다. 요구사항을 정리해 기능 명세서를 작성했고, WBS와 간트 차트로 마일스톤을 관리하며 피그마로 와이어프레임을 그렸다.","media":[{"src":"media/lv8-figma.png","caption":"피그마 와이어프레임 (로딩·로그인·회원가입·메인·지도·채팅·프로필)"},{"src":"media/lv8-gantt.png","caption":"WBS · 간트 차트 (2024.04 ~ 06)"}]},
+{"title":"키오스크 프로그램 개발","state":"done","desc":"전공 수업에서 C# WinForm으로 키오스크 기능을 구현하는 팀 프로젝트를 진행했다. 구현 대부분을 맡아 프로그램을 완성했다.","media":[{"src":"media/lv7-kiosk.png","caption":"키오스크 메뉴 선택 · 주문 화면"}]},
+{"title":"컴퓨터공학 전공 시작","state":"done","desc":"게임기획자를 목표로 컴퓨터공학을 전공하기 시작했다.","media":[]},
+{"title":"교내 TED 대회 도전","state":"done","desc":"게임기획을 주제로 자료를 준비해 교내 TED 대회에 도전했다.","media":["발표 자료"]},
+{"title":"나의 꿈 발표대회 은상","state":"done","desc":"교내 '나의 꿈 발표대회'에서 게임기획자를 주제로 발표해 은상을 받았다. 발표를 준비하며 직무를 조사하면서 꿈이 구체화됐다.","media":["상장 · 발표 사진"]},
+{"title":"첫 게임을 만들다","state":"done","desc":"동생과 보드게임을 하다 게임 제작에 관심이 생겨, 네이버 카페 CrazyGM에서 GameMaker로 게임을 만들었다. 카페에 올린 게임에 달린 반응과 의견을 보며 게임 제작의 매력을 알게 됐고, 플랫포머 게임까지 구현했다. 이때부터 게임기획자를 꿈꿨다.","media":[{"src":"media/lv1-game.png","caption":"GameMaker로 만든 「경찰과 도둑」 플레이 화면"},{"src":"media/lv1-cafe.png","caption":"CrazyGM 카페에 올린 「경찰과 도둑 0.5」 (2011)"}]}
+]
+</script>
+<script>
+(function () {
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  /* ================= 플레이 라이브러리 ================= */
+  const games = JSON.parse(document.getElementById('games-data').textContent);
+
+  // 장르 탭: 게임마다 games.json의 "tab" 값 하나에만 속함
+  const FILTERS = [
+    { key: 'card', label: '카드 & 덱빌딩' },
+    { key: 'rogue', label: '로그라이크' },
+    { key: 'rpg', label: 'RPG' },
+    { key: 'openworld', label: '오픈월드' },
+    { key: 'strategy', label: '전략 & 디펜스' },
+    { key: 'action', label: '액션 & 플랫포머' },
+    { key: 'shooter', label: '슈터' },
+    { key: 'sandbox', label: '샌드박스 & 생존' },
+    { key: 'story', label: '퍼즐 & 스토리' }
+  ];
+  const groupOf = g => FILTERS.some(f => f.key === g.tab) ? g.tab : 'story';
+
+  // 출시 연도 최신순 (같은 해는 목록 순서 유지)
+  const sorted = games.map((g, i) => ({ g, i })).sort((a, b) => (b.g.year || 0) - (a.g.year || 0) || a.i - b.i).map(x => x.g);
+
+  const grid = document.getElementById('grid');
+  grid.innerHTML = sorted.map(g => `
+    <li class="game" title="${esc(g.name)}" data-group="${groupOf(g)}">
+      <div class="icon" data-initial="${esc(g.name.charAt(0))}"><img src="icons/${g.id}.jpg" alt="" loading="lazy"></div>
+      <div class="name">${esc(g.name)}</div>
+    </li>`).join('');
+
+  // 아이콘 이미지가 없으면 첫 글자로 대체
+  const toInitial = img => {
+    const span = document.createElement('span');
+    span.className = 'initial';
+    span.textContent = img.parentElement.dataset.initial;
+    img.replaceWith(span);
+  };
+  grid.querySelectorAll('.icon img').forEach(img => {
+    if (img.complete && img.naturalWidth === 0) toInitial(img);
+    else img.addEventListener('error', () => toInitial(img), { once: true });
+  });
+
+  // 장르 탭: '전체'가 기본, 장르를 누르면 해당 장르만, 같은 장르를 다시 누르면 전체로
+  const filtersEl = document.getElementById('filters');
+  const items = [...grid.querySelectorAll('.game')];
+  let active = 'all';
+  const inGroup = (li, key) => key === 'all' || li.dataset.group === key;
+  [{ key: 'all', label: '전체' }, ...FILTERS].forEach(f => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'filter'; b.id = 'filter-' + f.key; b.dataset.key = f.key;
+    b.innerHTML = `${esc(f.label)}<span class="n">${items.filter(li => inGroup(li, f.key)).length}</span>`;
+    b.addEventListener('click', () => { active = (active === f.key && f.key !== 'all') ? 'all' : f.key; applyFilter(); });
+    filtersEl.appendChild(b);
+  });
+  function applyFilter() {
+    filtersEl.querySelectorAll('.filter').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.key === active)));
+    items.forEach(li => { li.hidden = !inGroup(li, active); });
+  }
+  applyFilter();
+
+  /* ================= 타임라인 ================= */
+  // 위가 최신(다음 목표), 아래가 시작점. 노드 사이를 구불구불한 길로 잇는다.
+  const stagesData = JSON.parse(document.getElementById('timeline-data').textContent);
+  const ICON = {
+    done: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+    current: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6-4.5-4.2 6.1-.7z"/></svg>',
+    goal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>'
+  };
+  // 레벨: 맨 아래(시작점)가 Lv.1, 목표는 NEXT
+  const reached = stagesData.filter(s => s.state !== 'goal').length;
+  let lvCount = reached;
+  const levelOf = s => s.state === 'goal' ? 'NEXT' : 'Lv.' + (lvCount--);
+  const stagesEl = document.getElementById('stages');
+  stagesEl.innerHTML = stagesData.map(s => `
+    <li class="stage" data-state="${s.state || 'done'}"${s.highlight ? ' data-highlight' : ''}>
+      <div class="spot"><div class="node">${ICON[s.state] || ICON.done}</div><span class="lv">${levelOf(s)}</span></div>
+      <div class="card">
+        <div class="head">
+          <h3>${esc(s.title)}</h3>
+          ${s.state === 'current' ? '<span class="badge">지금 여기</span>' : ''}
+          ${s.highlight ? '<span class="badge">대표 프로젝트</span>' : ''}
+        </div>
+        <p>${esc(s.desc)}</p>
+        ${s.media && s.media.length ? `<div class="media">${s.media.map(m => typeof m === 'string'
+          ? `<div class="ph"><span>${esc(m)}</span></div>`
+          : `<figure class="shot"><button type="button" class="shot-btn" data-src="${esc(m.src)}" data-caption="${esc(m.caption || '')}" aria-label="${esc(m.caption || '이미지')} 크게 보기"><img src="${esc(m.src)}" alt="${esc(m.caption || '')}" loading="lazy"></button>${m.caption ? `<figcaption>${esc(m.caption)}</figcaption>` : ''}</figure>`
+        ).join('')}</div>` : ''}
+        ${s.links && s.links.length ? `<div class="links">${s.links.map(l => `<a href="${esc(l.href)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`).join('')}</div>` : ''}
+      </div>
+    </li>`).join('');
+
+  // 이미지 클릭 → 크게 보기, 아무 데나 누르거나 Esc로 닫기
+  const viewer = document.getElementById('viewer');
+  const closeViewer = () => { viewer.hidden = true; };
+  stagesEl.addEventListener('click', e => {
+    const b = e.target.closest('.shot-btn'); if (!b) return;
+    viewer.querySelector('img').src = b.dataset.src;
+    viewer.querySelector('img').alt = b.dataset.caption;
+    viewer.querySelector('p').textContent = b.dataset.caption;
+    viewer.hidden = false;
+  });
+  viewer.addEventListener('click', closeViewer);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeViewer(); });
+  stagesEl.querySelectorAll('img').forEach(img => img.addEventListener('load', () => drawTrail()));
+
+  const map = document.getElementById('map');
+  function drawTrail() {
+    if (!map.offsetParent) return;
+    const box = map.getBoundingClientRect();
+    const pts = [...stagesEl.querySelectorAll('.node')].map(n => {
+      const r = n.getBoundingClientRect();
+      return { x: r.left - box.left + r.width / 2, y: r.top - box.top + r.height / 2 };
+    });
+    const states = stagesData.map(s => s.state || 'done');
+    const seg = (a, b) => ` L ${b.x} ${b.y}`;
+    // 아래(시작점)에서 위로 그린다. 목표(goal)로 가는 구간만 점선
+    let done = '', todo = '';
+    for (let i = pts.length - 1; i > 0; i--) {
+      const a = pts[i], b = pts[i - 1];
+      if (states[i - 1] === 'goal') todo += (todo ? '' : `M ${a.x} ${a.y}`) + seg(a, b);
+      else done += (done ? '' : `M ${a.x} ${a.y}`) + seg(a, b);
+    }
+    document.getElementById('trail-done').setAttribute('d', done);
+    document.getElementById('trail-todo').setAttribute('d', todo);
+  }
+  window.addEventListener('resize', drawTrail);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawTrail);
+
+  /* ================= 화면 전환 ================= */
+  const views = { timeline: document.getElementById('view-timeline'), library: document.getElementById('view-library') };
+  function route() {
+    const key = location.hash === '#library' ? 'library' : 'timeline';
+    Object.entries(views).forEach(([k, el]) => { el.hidden = k !== key; });
+    document.querySelectorAll('.nav a').forEach(a => {
+      if (a.id === 'nav-' + key) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    if (key === 'timeline') requestAnimationFrame(drawTrail);
+  }
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script>
