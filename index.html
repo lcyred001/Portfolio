@@ -1,3 +1,9 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}</style>
 <title>플레이 라이브러리</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,6 +36,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 body { background: var(--bg); color: var(--ink); font-family: var(--body); }
 /* 페이지 폭: 최대 1440px, 좌우 여백은 화면 폭의 8% (34~144px) */
 .wrap {
@@ -166,6 +173,9 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 8vw, 106px); }
   .media { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
 }
 </style>
+</head>
+<body>
+
 
 <header class="topbar">
   <div class="wrap">
@@ -459,3 +469,6 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 8vw, 106px); }
   route();
 })();
 </script>
+
+</body>
+</html>
