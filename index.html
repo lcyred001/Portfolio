@@ -129,6 +129,8 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 8vw, 106px); }
 .stage[data-state="current"] .lv { color: var(--accent); }
 
 .card { max-width: 860px; display: grid; gap: 10px; }
+.card .year { font-size: 13px; font-weight: 600; letter-spacing: .06em; color: var(--muted); font-variant-numeric: tabular-nums; margin-bottom: -6px; }
+.stage[data-state="current"] .card .year { color: var(--accent); }
 .card .head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
 .card h3 { margin: 0; font-size: 19px; font-weight: 600; line-height: 1.35; text-wrap: balance; }
 .card p { margin: 0; font-size: 15px; line-height: 1.75; color: var(--muted); word-break: keep-all; max-width: 68ch; }
@@ -315,15 +317,15 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 8vw, 106px); }
 </script>
 <script id="timeline-data" type="application/json">[
 {"title":"게임기획자로 입사","state":"goal","desc":"다음 스테이지.","media":[]},
-{"title":"졸업 · 취업 준비","state":"current","desc":"졸업 후 라이브 서비스 중인 MMORPG를 대상으로 시스템 기획서 3편을 작성했다. 「아이온2」의 반복되는 PVE 동선을 개선하는 연전 던전 시스템, 「제우스: 오만의 신」의 서버 간 쟁 격차를 줄이는 보정 시스템 '적응인자'를 창작했고, 「제우스」의 미다스의 금고가 다이아 발행·사냥터 분산·장비 소각으로 경제에 개입하는 구조를 분석해 개선안을 제안했다.","media":[{"src":"media/lv9-aion-cover.jpg","caption":"아이온2 · 연전 던전 시스템 기획서"},{"src":"media/lv9-zeus-cover.jpg","caption":"제우스 · 쟁 보정 시스템 '적응인자' 기획서"},{"src":"media/lv9-midas-cover.jpg","caption":"제우스 · 미다스의 금고 시스템 분석서"}],"links":[{"label":"연전 던전 시스템 기획서 (PDF, 17쪽)","href":"media/doc-aion2-dungeon.pdf"},{"label":"적응인자 쟁 보정 시스템 기획서 (PDF, 18쪽)","href":"media/doc-zeus-adapt.pdf"},{"label":"미다스의 금고 시스템 분석서 (PDF, 16쪽)","href":"media/doc-zeus-midas.pdf"}]},
-{"title":"산학협력 캡스톤 · Tokyo Desire : Deck Builders","state":"done","highlight":true,"desc":"산학협력 캡스톤에서 게임 개발 과제를 맡아 기획을 자원했다. 협력사가 개발하다 중단한 게임의 에셋으로 로그라이크 카드게임을 기획했고, 회사 이름으로 스팀 페스티벌에 데모를 출시했다. 기획서와 테이블 작성부터 스팀 페이지 구성, 홍보 페이지까지 개발 외 업무를 모두 맡았다.","media":[{"src":"media/lv10-steam.jpg","caption":"스팀 라이브러리 페이지 (체험판)"},{"src":"media/lv10-system.jpg","caption":"시스템 기획서 (Act 1 MVP 기준 · 유물·계약·카드·이벤트·보상)"},{"src":"media/lv10-meeting.jpg","caption":"팀 회의"},"밸런스 테이블"],"links":[{"label":"스팀 페이지 · 트레일러 보기","href":"https://store.steampowered.com/app/2865450/"}]},
-{"title":"게임개발동아리 creator · 기획 스터디","state":"done","desc":"게임개발동아리 creator에서 한 학기 동안 기획 스터디에 참여해 처음으로 기획서를 쓰고, 동아리원들과 서로의 문서에 피드백을 주고받았다. 오리지널 기획 2편(무협 경영 시뮬레이션 아이디어 제안서, 탑뷰 배틀로얄 「해머로얄」 시스템 기획서)과 기존 게임의 시스템을 분석한 역기획서 4편(루미큐브, Brotato 강화 시스템, Dead Cells 성장 시스템, 몬스터 AI)을 작성했다.","media":[{"src":"media/lv7-hammer.jpg","caption":"해머로얄 시스템 기획서 · 게임 규칙"},{"src":"media/lv7-brotato.jpg","caption":"Brotato 강화 시스템 역기획서 · 업그레이드 확률표"},{"src":"media/lv7-deadcells.jpg","caption":"Dead Cells 시스템 역기획서 · 진행 방식"},{"src":"media/lv9-botw-fsm.jpg","caption":"몬스터 AI 역기획서 · FSM"}]},
-{"title":"캡스톤디자인 · BapTalkSu 총괄 기획","state":"done","desc":"교내에서 함께 밥 먹을 사람을 모으는 앱 BapTalkSu의 총괄 기획을 맡았다. 요구사항을 정리해 기능 명세서를 작성했고, WBS와 간트 차트로 마일스톤을 관리하며 피그마로 와이어프레임을 그렸다.","media":[{"src":"media/lv8-figma.png","caption":"피그마 와이어프레임 (로딩·로그인·회원가입·메인·지도·채팅·프로필)"},{"src":"media/lv8-gantt.png","caption":"WBS · 간트 차트 (2024.04 ~ 06)"}]},
-{"title":"키오스크 프로그램 개발","state":"done","desc":"전공 수업에서 C# WinForm으로 키오스크 기능을 구현하는 팀 프로젝트를 진행했다. 구현 대부분을 맡아 프로그램을 완성했다.","media":[{"src":"media/lv7-kiosk.png","caption":"키오스크 메뉴 선택 · 주문 화면"}]},
-{"title":"컴퓨터공학 전공 시작","state":"done","desc":"게임기획자를 목표로 컴퓨터공학을 전공하기 시작했다.","media":[]},
-{"title":"교내 TED 대회 도전","state":"done","desc":"게임기획을 주제로 자료를 준비해 교내 TED 대회에 도전했다.","media":["발표 자료"]},
-{"title":"나의 꿈 발표대회 은상","state":"done","desc":"교내 '나의 꿈 발표대회'에서 게임기획자를 주제로 발표해 은상을 받았다. 발표를 준비하며 직무를 조사하면서 꿈이 구체화됐다.","media":["상장 · 발표 사진"]},
-{"title":"첫 게임을 만들다","state":"done","desc":"동생과 보드게임을 하다 게임 제작에 관심이 생겨, 네이버 카페 CrazyGM에서 GameMaker로 게임을 만들었다. 카페에 올린 게임에 달린 반응과 의견을 보며 게임 제작의 매력을 알게 됐고, 플랫포머 게임까지 구현했다. 이때부터 게임기획자를 꿈꿨다.","media":[{"src":"media/lv1-game.png","caption":"GameMaker로 만든 「경찰과 도둑」 플레이 화면"},{"src":"media/lv1-cafe.png","caption":"CrazyGM 카페에 올린 「경찰과 도둑 0.5」 (2011)"}]}
+{"year":"2026","title":"졸업 · 취업 준비","state":"current","desc":"졸업 후 라이브 서비스 중인 MMORPG를 대상으로 시스템 기획서 3편을 작성했다. 「아이온2」의 반복되는 PVE 동선을 개선하는 연전 던전 시스템, 「제우스: 오만의 신」의 서버 간 쟁 격차를 줄이는 보정 시스템 '적응인자'를 창작했고, 「제우스」의 미다스의 금고가 다이아 발행·사냥터 분산·장비 소각으로 경제에 개입하는 구조를 분석해 개선안을 제안했다.","media":[{"src":"media/lv9-aion-cover.jpg","caption":"아이온2 · 연전 던전 시스템 기획서"},{"src":"media/lv9-zeus-cover.jpg","caption":"제우스 · 쟁 보정 시스템 '적응인자' 기획서"},{"src":"media/lv9-midas-cover.jpg","caption":"제우스 · 미다스의 금고 시스템 분석서"}],"links":[{"label":"연전 던전 시스템 기획서 (PDF, 17쪽)","href":"media/doc-aion2-dungeon.pdf"},{"label":"적응인자 쟁 보정 시스템 기획서 (PDF, 18쪽)","href":"media/doc-zeus-adapt.pdf"},{"label":"미다스의 금고 시스템 분석서 (PDF, 16쪽)","href":"media/doc-zeus-midas.pdf"}]},
+{"year":"2026","title":"산학협력 캡스톤 · Tokyo Desire : Deck Builders","state":"done","highlight":true,"desc":"산학협력 캡스톤에서 게임 개발 과제를 맡아 기획을 자원했다. 협력사가 개발하다 중단한 게임의 에셋으로 로그라이크 카드게임을 기획했고, 회사 이름으로 스팀 페스티벌에 데모를 출시했다. 기획서와 테이블 작성부터 스팀 페이지 구성, 홍보 페이지까지 개발 외 업무를 모두 맡았다.","media":[{"src":"media/lv10-steam.jpg","caption":"스팀 라이브러리 페이지 (체험판)"},{"src":"media/lv10-system.jpg","caption":"시스템 기획서 (Act 1 MVP 기준 · 유물·계약·카드·이벤트·보상)"},{"src":"media/lv10-meeting.jpg","caption":"팀 회의"},"밸런스 테이블"],"links":[{"label":"스팀 페이지 · 트레일러 보기","href":"https://store.steampowered.com/app/2865450/"}]},
+{"year":"2024","title":"캡스톤디자인 · BapTalkSu 총괄 기획","state":"done","desc":"교내에서 함께 밥 먹을 사람을 모으는 앱 BapTalkSu의 총괄 기획을 맡았다. 요구사항을 정리해 기능 명세서를 작성했고, WBS와 간트 차트로 마일스톤을 관리하며 피그마로 와이어프레임을 그렸다.","media":[{"src":"media/lv8-figma.png","caption":"피그마 와이어프레임 (로딩·로그인·회원가입·메인·지도·채팅·프로필)"},{"src":"media/lv8-gantt.png","caption":"WBS · 간트 차트 (2024.04 ~ 06)"}]},
+{"year":"2023","title":"게임개발동아리 creator · 기획 스터디","state":"done","desc":"게임개발동아리 creator에서 한 학기 동안 기획 스터디에 참여해 처음으로 기획서를 쓰고, 동아리원들과 서로의 문서에 피드백을 주고받았다. 오리지널 기획 2편(무협 경영 시뮬레이션 아이디어 제안서, 탑뷰 배틀로얄 「해머로얄」 시스템 기획서)과 기존 게임의 시스템을 분석한 역기획서 4편(루미큐브, Brotato 강화 시스템, Dead Cells 성장 시스템, 몬스터 AI)을 작성했다.","media":[{"src":"media/lv7-hammer.jpg","caption":"해머로얄 시스템 기획서 · 게임 규칙"},{"src":"media/lv7-brotato.jpg","caption":"Brotato 강화 시스템 역기획서 · 업그레이드 확률표"},{"src":"media/lv7-deadcells.jpg","caption":"Dead Cells 시스템 역기획서 · 진행 방식"},{"src":"media/lv9-botw-fsm.jpg","caption":"몬스터 AI 역기획서 · FSM"}]},
+{"year":"2023","title":"키오스크 프로그램 개발","state":"done","desc":"전공 수업에서 C# WinForm으로 키오스크 기능을 구현하는 팀 프로젝트를 진행했다. 구현 대부분을 맡아 프로그램을 완성했다.","media":[{"src":"media/lv7-kiosk.png","caption":"키오스크 메뉴 선택 · 주문 화면"}]},
+{"year":"2022","title":"컴퓨터공학 전공 시작","state":"done","desc":"게임기획자를 목표로 컴퓨터공학을 전공하기 시작했다.","media":[]},
+{"year":"2016","title":"교내 TED 대회 도전","state":"done","desc":"게임기획을 주제로 자료를 준비해 교내 TED 대회에 도전했다.","media":["발표 자료"]},
+{"year":"2015","title":"나의 꿈 발표대회 은상","state":"done","desc":"교내 '나의 꿈 발표대회'에서 게임기획자를 주제로 발표해 은상을 받았다. 발표를 준비하며 직무를 조사하면서 꿈이 구체화됐다.","media":["상장 · 발표 사진"]},
+{"year":"2010","title":"첫 게임을 만들다","state":"done","desc":"동생과 보드게임을 하다 게임 제작에 관심이 생겨, 네이버 카페 CrazyGM에서 GameMaker로 게임을 만들었다. 카페에 올린 게임에 달린 반응과 의견을 보며 게임 제작의 매력을 알게 됐고, 플랫포머 게임까지 구현했다. 이때부터 게임기획자를 꿈꿨다.","media":[{"src":"media/lv1-game.png","caption":"GameMaker로 만든 「경찰과 도둑」 플레이 화면"},{"src":"media/lv1-cafe.png","caption":"CrazyGM 카페에 올린 「경찰과 도둑 0.5」 (2011)"}]}
 ]
 </script>
 <script>
@@ -404,6 +406,7 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 8vw, 106px); }
     <li class="stage" data-state="${s.state || 'done'}"${s.highlight ? ' data-highlight' : ''}>
       <div class="spot"><div class="node">${ICON[s.state] || ICON.done}</div><span class="lv">${levelOf(s)}</span></div>
       <div class="card">
+        ${s.year ? `<span class="year">${esc(s.year)}</span>` : ''}
         <div class="head">
           <h3>${esc(s.title)}</h3>
           ${s.state === 'current' ? '<span class="badge">지금 여기</span>' : ''}
