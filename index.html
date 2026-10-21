@@ -135,6 +135,11 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) calc(clamp(56px, 8vw, 106px) +
 .card h3 { margin: 0; font-size: 19px; font-weight: 600; line-height: 1.35; text-wrap: balance; }
 .card p { margin: 0; font-size: 15px; line-height: 1.75; color: var(--muted); word-break: keep-all; max-width: 68ch; }
 .badge { font-size: 11px; font-weight: 600; letter-spacing: .04em; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 999px; }
+.outputs { display: flex; align-items: baseline; gap: 12px; }
+.outputs > span { flex: none; font-size: 12px; font-weight: 700; color: var(--ink); padding: 1px 8px; border-radius: 999px; background: var(--accent-soft); }
+.outputs ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 2px 0; }
+.outputs li { font-size: 15px; font-weight: 700; color: var(--accent); word-break: keep-all; }
+.outputs li + li::before { content: "·"; margin: 0 8px; color: var(--path); font-weight: 400; }
 .media { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 4px; }
 .ph {
   aspect-ratio: 16 / 10; max-width: 100%; border: 2px dashed var(--line); border-radius: 10px;
@@ -257,11 +262,24 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) calc(clamp(56px, 8vw, 106px) +
 .lead h2 { margin: 0; font-size: clamp(24px, 3.4vw, 34px); font-weight: 600; letter-spacing: -.02em; line-height: 1.3; text-wrap: balance; word-break: keep-all; }
 .lead h2 em { font-style: normal; color: var(--accent); }
 .lead p { margin: 0; color: var(--muted); font-size: 15px; }
-
+.philo { margin: -8px 0 28px; display: grid; gap: 18px; }
+.philo-lead { margin: 0; font-size: 16px; line-height: 1.8; color: var(--muted); word-break: keep-all; }
+.philo-end { margin: 14px 0 0; padding-left: 14px; border-left: 3px solid var(--accent); font-size: 19px; line-height: 1.5; font-weight: 700; color: var(--ink); word-break: keep-all; }
+.philo-cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 720px) { .philo-cases { grid-template-columns: minmax(0, 1fr); } }
+.philo-cases .case { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px; align-items: start; padding: 16px 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+.philo-cases img { width: 52px; height: 52px; border-radius: 12px; object-fit: cover; }
+.philo-cases .case > div { display: grid; gap: 4px; }
+.philo-cases b { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+.philo-cases p { margin: 0; display: grid; grid-template-columns: 44px minmax(0, 1fr); font-size: 14px; line-height: 1.6; color: var(--ink); word-break: keep-all; }
+.philo-cases p span { font-size: 12px; font-weight: 700; color: var(--muted); padding-top: 1px; }
+.philo-cases p + p span { color: var(--accent); }
 /* ---------- 장르 간 시스템 이식 ---------- */
-.transfer { margin: 0 0 32px; padding: 20px 24px; width: fit-content; max-width: 100%; box-sizing: border-box; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; display: grid; grid-template-columns: minmax(0, 220px) 76px minmax(0, 220px); align-items: start; row-gap: 12px; }
+.transfer { --tw: 170px; margin: 0 0 32px; padding: 20px 24px; box-sizing: border-box; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; display: grid; grid-template-columns: auto 76px minmax(0, var(--tw)) minmax(0, 1fr); align-items: start; row-gap: 12px; }
 .transfer-tag { grid-column: 1 / -1; margin: 0; justify-self: start; padding: 3px 10px; border-radius: 999px; background: var(--accent-soft); font-size: 12px; font-weight: 700; color: var(--ink); }
-.transfer-link { display: grid; justify-items: center; gap: 2px; margin-top: calc(220px * 9 / 32 - 26px); color: var(--accent); }
+.transfer-srcs { display: grid; grid-template-columns: minmax(0, var(--tw)) 24px minmax(0, var(--tw)); align-items: start; }
+.transfer-srcs .plus { margin-top: calc(var(--tw) * 9 / 32 - 11px); text-align: center; font-size: 18px; font-weight: 700; color: var(--muted); }
+.transfer-link { display: grid; justify-items: center; gap: 2px; margin-top: calc(var(--tw) * 9 / 32 - 26px); color: var(--accent); }
 .transfer-link .bulb { width: 20px; height: 20px; }
 .transfer-link span { font-size: 12px; font-weight: 700; }
 .transfer-link .line { width: 56px; height: 10px; }
@@ -269,14 +287,24 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) calc(clamp(56px, 8vw, 106px) +
 .transfer-end .shot-btn { aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: var(--ink); box-shadow: 0 1px 3px rgba(43, 45, 51, .12), 0 12px 24px -10px rgba(43, 45, 51, .4); }
 .transfer-end .shot-btn img { object-fit: cover; }
 .transfer-end figcaption { display: grid; gap: 1px; }
-.transfer-end span { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: .02em; }
+.transfer-end span { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: .02em; word-break: keep-all; }
 .transfer-end b { font-size: 14px; font-weight: 700; word-break: keep-all; }
-@media (max-width: 720px) {
-  .transfer { padding: 16px; grid-template-columns: minmax(0, 1fr) 44px minmax(0, 1fr); width: 100%; }
-  .transfer-link { margin-top: calc((100vw - 32px - 32px - 44px) / 2 * 9 / 32 - 24px); }
-  .transfer-link .line { width: 34px; }
+.transfer-why { margin-left: 28px; padding-left: 28px; border-left: 1px solid var(--line); align-self: stretch; display: grid; align-content: center; gap: 8px; }
+.transfer-why b { font-size: 18px; font-weight: 700; line-height: 1.4; word-break: keep-all; }
+.transfer-why p { margin: 0; font-size: 14px; line-height: 1.7; color: var(--muted); word-break: keep-all; }
+@media (max-width: 1080px) {
+  .transfer { grid-template-columns: auto 76px minmax(0, var(--tw)); }
+  .transfer-why { grid-column: 1 / -1; margin: 4px 0 0; padding: 14px 0 0; border-left: 0; border-top: 1px solid var(--line); }
 }
-
+@media (max-width: 720px) {
+  .transfer { padding: 16px; grid-template-columns: minmax(0, 1fr); }
+  .transfer-srcs { grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr); }
+  .transfer-srcs .plus { margin-top: calc((100vw - 32px - 32px - 20px) / 2 * 9 / 32 - 11px); }
+  .transfer-link { grid-template-columns: auto auto auto; align-items: center; justify-content: center; gap: 6px; margin: 0; }
+  .transfer-link .line { width: 28px; transform: rotate(90deg); }
+  .transfer-end.dst { justify-self: center; width: calc((100% - 20px) / 2); }
+  .transfer-why b { font-size: 16px; }
+}
 /* ---------- 포트폴리오 ---------- */
 .section-title { margin: 0 0 18px; font-size: 13px; font-weight: 600; letter-spacing: .08em; color: var(--muted); }
 .featured { display: grid; gap: 28px; margin-bottom: 56px; }
@@ -308,7 +336,7 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) calc(clamp(56px, 8vw, 106px) +
 .work .game { font-size: 13px; color: var(--muted); margin-top: -6px; }
 .work p { margin: 0; font-size: 14px; line-height: 1.7; color: var(--muted); word-break: keep-all; }
 .work .tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.work .tags span { font-size: 12px; padding: 2px 8px; border-radius: 6px; box-shadow: 0 0 0 1px var(--line); color: var(--ink); }
+.work .tags span { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--accent); color: #fff; }
 .work .thumbs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
 .work .thumbs .shot-btn { aspect-ratio: 16 / 9; border-radius: 6px; }
 .others .work h3 { font-size: 16px; }
@@ -394,7 +422,29 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) calc(clamp(56px, 8vw, 106px) +
   </section>
 
   <section id="view-portfolio" aria-labelledby="nav-portfolio" hidden>
-    <h2 class="section-title">포트폴리오</h2>
+    <div class="lead"><h2>모든 기획서는 시스템과 그 구조에 <em>의문</em>을 품음으로써 시작합니다.</h2></div>
+    <div class="philo">
+      <p class="philo-lead">시스템은 개발사가 정한 방향 아래에서 설계됩니다. 그래서 시스템의 구조를 이해하려면, 먼저 개발사의 의도를 읽어야 합니다.</p>
+      <div class="philo-cases">
+        <div class="case">
+          <img src="icons/zeus.jpg" alt="">
+          <div>
+            <b>제우스: 오만의 신</b>
+            <p><span>방향</span>모두가 즐기는 경쟁과 편의성</p>
+            <p><span>시스템</span>바쁜 현대인을 위한 AI 모드, 모두를 위한 오디세이아 콘텐츠</p>
+          </div>
+        </div>
+        <div class="case">
+          <img src="icons/duckov.jpg" alt="">
+          <div>
+            <b>Escape from Duckov</b>
+            <p><span>방향</span>캐주얼 익스트랙션 슈터</p>
+            <p><span>시스템</span>복잡성은 줄이되, 사망 시 아이템을 잃는 하드코어 요소는 유지</p>
+          </div>
+        </div>
+      </div>
+      <p class="philo-end">제 기획서는 게임이 추구하는 재미와 시스템 사이의 유기적인 연결을 포착합니다.</p>
+    </div>
     <div class="featured" id="featured"></div>
   </section>
 
@@ -413,19 +463,30 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) calc(clamp(56px, 8vw, 106px) +
     <div class="lead"><h2 id="library-title"></h2></div>
     <div class="transfer">
       <p class="transfer-tag">예시</p>
-      <figure class="transfer-end">
-        <button type="button" class="shot-btn" data-src="media/ref-sekiro.jpg" data-caption="SEKIRO: SHADOWS DIE TWICE" aria-label="세키로 크게 보기"><img src="media/ref-sekiro.jpg" alt=""></button>
-        <figcaption><span>SEKIRO · 액션</span><b>보스 연전 「사투답파」</b></figcaption>
-      </figure>
+      <div class="transfer-srcs">
+        <figure class="transfer-end">
+          <button type="button" class="shot-btn" data-src="media/ref-sekiro.jpg" data-caption="SEKIRO: SHADOWS DIE TWICE" aria-label="세키로 크게 보기"><img src="media/ref-sekiro.jpg" alt=""></button>
+          <figcaption><span>SEKIRO · 액션</span><b>보스 연전 「사투답파」</b></figcaption>
+        </figure>
+        <span class="plus" aria-hidden="true">+</span>
+        <figure class="transfer-end">
+          <button type="button" class="shot-btn" data-src="media/ref-deadcells.jpg" data-caption="Dead Cells" aria-label="데드 셀 크게 보기"><img src="media/ref-deadcells.jpg" alt=""></button>
+          <figcaption><span>DEAD CELLS · 로그라이트</span><b>보스 러시 모드</b></figcaption>
+        </figure>
+      </div>
       <div class="transfer-link">
         <svg class="bulb" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span>영감</span>
         <svg class="line" viewBox="0 0 64 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 6h54" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 4" stroke-linecap="round"/><path d="M54 1.5l6 4.5-6 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-      <figure class="transfer-end">
+      <figure class="transfer-end dst">
         <button type="button" class="shot-btn" data-src="media/lv9-aion-cover.jpg" data-caption="연전 시스템 창작 기획서" aria-label="연전 시스템 창작 기획서 크게 보기"><img src="media/lv9-aion-cover.jpg" alt=""></button>
         <figcaption><span>AION2 · MMORPG</span><b>연전 시스템 창작 기획서</b></figcaption>
       </figure>
+      <div class="transfer-why">
+        <b>싱글 액션의 보스 연전을, MMO 협동 PVE로</b>
+        <p>성장 정체 구간의 유저에게, 기존 던전 보스들을 연속으로 격파하는 협동 PVE로 새로운 플레이 동기를 부여합니다.</p>
+      </div>
     </div>
     <div class="filters" id="filters" role="group" aria-label="장르 필터"></div>
     <ul class="grid" id="grid"></ul>
@@ -547,20 +608,20 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) calc(clamp(56px, 8vw, 106px) +
 </script>
 <script id="timeline-data" type="application/json">[
 {"title":"게임기획자로 입사","state":"goal","desc":"다음 스테이지.","media":[]},
-{"year":"2026","title":"졸업 · 취업 준비","state":"current","desc":"기획서 작성을 본격적으로 시작하여 MMORPG를 깊게 플레이하고 분석하며 시스템 기획서 3편을 작성했다.","media":[{"src":"media/lv9-midas-cover.jpg","caption":"미다스의 금고 시스템 분석서"},{"src":"media/lv9-zeus-cover.jpg","caption":"쟁 보정 시스템 창작 기획서"},{"src":"media/lv9-aion-cover.jpg","caption":"연전 시스템 창작 기획서"}]},
-{"year":"2026.03 – 06","title":"산학협력 캡스톤 · Tokyo Desire : Deck Builders","state":"done","highlight":true,"desc":"협력하는 회사가 개발 중지한 에셋을 받아 로그라이크 덱빌딩 게임을 제작하여 스팀 덱빌딩 페스티벌에 데모를 등록했다. 이 데모를 바탕으로 협력사가 이어서 개발 중이며, 현재 버전은 데모와 다르다.","media":[{"src":"media/lv10-steam.jpg","caption":"스팀 라이브러리 페이지 (체험판)"},{"src":"media/lv10-system.jpg","caption":"시스템 기획서 (Act 1 MVP)"},{"src":"media/lv10-meeting.jpg","caption":"팀 회의"}]},
-{"year":"2024.03 – 06","title":"캡스톤디자인 · BapTalkSu 총괄 기획","state":"done","desc":"교내 사람들과 밥 약속을 잡는 미팅 앱을 개발하고자 총괄 기획을 맡아 기능 명세, 일정 관리, 와이어프레임 제작을 주로 담당했다.","media":[{"src":"media/lv8-figma.png","caption":"피그마 와이어프레임"},{"src":"media/lv8-gantt.png","caption":"WBS · 간트 차트"}]},
-{"year":"2023","title":"게임개발동아리 creator · 기획 스터디","state":"done","desc":"게임기획 스터디에 참여해 동아리 선배들과 주제를 잡고 토론하거나 주제에 맞게 써온 기획서들을 공유하며 피드백하는 시간을 가지면서 본격적인 게임 기획을 시작했다.","media":[{"src":"media/lv7-hammer.jpg","caption":"해머로얄 게임 창작 기획서"},{"src":"media/lv7-brotato.jpg","caption":"Brotato 강화 시스템 역기획서"},{"src":"media/lv7-deadcells.jpg","caption":"Dead Cells 시스템 역기획서"},{"src":"media/lv9-botw-fsm.jpg","caption":"젤다의 전설 야생의 숨결 몬스터 AI 역기획서"}]},
+{"year":"2026","title":"졸업 · 취업 준비","state":"current","outputs":["시스템 분석서 1편","창작 기획서 2편"],"desc":"기획서 작성을 본격적으로 시작하여 MMORPG를 깊게 플레이하고 분석하며 시스템 기획서 3편을 작성했다.","media":[{"src":"media/lv9-midas-cover.jpg","caption":"미다스의 금고 시스템 분석서"},{"src":"media/lv9-zeus-cover.jpg","caption":"쟁 보정 시스템 창작 기획서"},{"src":"media/lv9-aion-cover.jpg","caption":"연전 시스템 창작 기획서"}]},
+{"year":"2026.03 – 06","title":"산학협력 캡스톤 · Tokyo Desire : Deck Builders","state":"done","highlight":true,"outputs":["기획 문서 13편","UI 명세서","데이터 테이블 6종","에셋 요청 리스트","스팀 데모 등록"],"desc":"협력하는 회사가 개발 중지한 에셋을 받아 로그라이크 덱빌딩 게임을 제작하여 스팀 덱빌딩 페스티벌에 데모를 등록했다. 이 데모를 바탕으로 협력사가 이어서 개발 중이며, 현재 버전은 데모와 다르다.","media":[{"src":"media/lv10-steam.jpg","caption":"스팀 라이브러리 페이지 (체험판)"},{"src":"media/lv10-system.jpg","caption":"시스템 기획서 (Act 1 MVP)"},{"src":"media/lv10-meeting.jpg","caption":"팀 회의"}]},
+{"year":"2024.03 – 06","title":"캡스톤디자인 · BapTalkSu 총괄 기획","state":"done","outputs":["요구사항 명세서","WBS · 간트 차트","와이어프레임","개략설계","사용자 매뉴얼","시험 절차서 · 결과서"],"desc":"교내 사람들과 밥 약속을 잡는 미팅 앱을 개발하고자 총괄 기획을 맡아 기능 명세, 일정 관리, 와이어프레임 제작을 주로 담당했다.","media":[{"src":"media/lv8-figma.png","caption":"피그마 와이어프레임"},{"src":"media/lv8-gantt.png","caption":"WBS · 간트 차트"}]},
+{"year":"2023","title":"게임개발동아리 creator · 기획 스터디","state":"done","outputs":["역기획서 4편","창작 기획서 2편"],"desc":"게임기획 스터디에 참여해 동아리 선배들과 주제를 잡고 토론하거나 주제에 맞게 써온 기획서들을 공유하며 피드백하는 시간을 가지면서 본격적인 게임 기획을 시작했다.","media":[{"src":"media/lv7-hammer.jpg","caption":"해머로얄 게임 창작 기획서"},{"src":"media/lv7-brotato.jpg","caption":"Brotato 강화 시스템 역기획서"},{"src":"media/lv7-deadcells.jpg","caption":"Dead Cells 시스템 역기획서"},{"src":"media/lv9-botw-fsm.jpg","caption":"젤다의 전설 야생의 숨결 몬스터 AI 역기획서"}]},
 {"year":"2022–2023","title":"컴퓨터공학 전공","state":"done","desc":"개발 역량을 키워 기획에 도움이 되고자 인공지능융합학부로 입학한 후 컴퓨터공학부로 전과했다.","media":[]},
-{"year":"2015–2016","title":"학창 시절 게임 기획 · 개발","state":"done","desc":"게임기획을 주제로 교내 발표 또는 경진 대회에 꾸준히 참가했다.","media":[{"src":"media/lv2-dream.jpg","caption":"'나의 꿈 발표대회' 발표 자료 표지 (2015)"},{"src":"media/lv2-edu-game.png","caption":"지구과학 교육 게임 (2016)"}]},
-{"year":"2011","title":"첫 게임을 만들다","state":"done","desc":"GameMaker로 게임을 만들어 카페에 올리고, 사람들의 반응을 보며 흥미를 느끼고 게임기획자를 꿈꾸기 시작했다.","media":[{"src":"media/lv1-game.png","caption":"GameMaker로 만든 「경찰과 도둑」"},{"src":"media/lv1-cafe.png","caption":"CrazyGM 카페에 올린 「경찰과 도둑 0.5」 (2011)"}]}
+{"year":"2015–2016","title":"학창 시절 게임 기획 · 개발","state":"done","outputs":["발표 자료 2편","교육용 게임"],"desc":"게임기획을 주제로 교내 발표 또는 경진 대회에 꾸준히 참가했다.","media":[{"src":"media/lv2-dream.jpg","caption":"'나의 꿈 발표대회' 발표 자료 표지 (2015)"},{"src":"media/lv2-edu-game.png","caption":"지구과학 교육 게임 (2016)"}]},
+{"year":"2011","title":"첫 게임을 만들다","state":"done","outputs":["GameMaker 게임 2편"],"desc":"GameMaker로 게임을 만들어 카페에 올리고, 사람들의 반응을 보며 흥미를 느끼고 게임기획자를 꿈꾸기 시작했다.","media":[{"src":"media/lv1-game.png","caption":"GameMaker로 만든 「경찰과 도둑」"},{"src":"media/lv1-space.png","caption":"GameMaker로 만든 space game"},{"src":"media/lv1-cafe.png","caption":"CrazyGM 카페에 올린 「경찰과 도둑 0.5」 (2011)"}]}
 ]
 </script>
 <script id="portfolio-data" type="application/json">[
 {"featured":true,"year":"2026","type":"분석","title":"미다스의 금고 시스템 분석서","question":"금고는 재화 및 장비의 소각을 충분한 범위까지 잘 일으키는가?","game":"제우스: 오만의 신","tags":["라이브 경제","직접 수집 데이터"],
  "hook":"거래소의 유동성 공급과 재화 및 장비 소각을 중심으로 분석",
- "summary":"6주 동안 금고 매입 목록을 직접 기록해, 금고가 경제에 개입하는 구조를 수치로 분석하고 개선안을 냈다.",
- "points":["발행 · 분산 · 소각: 한 주 455개 매입으로 0강 장비 약 17,600개 소각","문제: 순환 밖에 쌓이는 하위 희귀 매물","개선안: 서버마다 쌓인 매물을 사들이는 '서버 전용 슬롯'"],
+ "summary":"아이템을 매입하는 금고는 개발사가 다이아 발행량, 사냥터 분포 그리고 장비 소각량에 직접적으로 개입하게 한다. 하지만 이 순환에 닿지 않는 거래소 매물이 있다.",
+ "points":["분석 : 미다스의 금고는 거래소에 유동성을 공급하고, 그 과정에서 강화와 거래 수수료로 재화를 소각한다.","문제 : 금고는 거래소에 쌓인 잉여 희귀 장비들을 해결하지 못한다.","개선안 : 6번째 '서버 전용 슬롯'이 사들여 반응형 소각과 순환을 일으킨다."],
  "cover":"media/lv9-midas-cover.jpg","pdf":"media/doc-zeus-midas.pdf","pages":16},
 {"featured":true,"year":"2026","type":"창작","title":"쟁 보정 시스템 창작 기획서","question":"통합서버의 보스는 서버 간 쟁을 일으키기에 충분했나?","game":"제우스: 오만의 신","tags":["서버 간 PvP","밸런스"],
  "hook":"보스는 자신을 독점한 서버에게 적응하여 서버간의 구도를 조정",
@@ -698,6 +759,7 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) calc(clamp(56px, 8vw, 106px) +
           <h3>${esc(s.title)}</h3>
         </div>
         <p>${esc(s.desc)}</p>
+        ${s.outputs && s.outputs.length ? `<div class="outputs"><span>산출물</span><ul>${s.outputs.map(o => `<li>${esc(o)}</li>`).join('')}</ul></div>` : ''}
         ${s.media && s.media.length ? `<div class="media">${s.media.map(m => typeof m === 'string'
           ? `<div class="ph"><span>${esc(m)}</span></div>`
           : `<figure class="shot"><button type="button" class="shot-btn" data-src="${esc(m.src)}" data-caption="${esc(m.caption || '')}" aria-label="${esc(m.caption || '이미지')} 크게 보기"><img src="${esc(m.src)}" alt="${esc(m.caption || '')}" loading="lazy"></button>${m.caption ? `<figcaption>${esc(m.caption)}</figcaption>` : ''}</figure>`
