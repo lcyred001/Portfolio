@@ -254,9 +254,28 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) calc(clamp(56px, 8vw, 106px) +
 .about .note { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.6; word-break: keep-all; }
 /* ---------- 타임라인 요약 ---------- */
 .lead { margin: 0 0 28px; display: grid; gap: 6px; }
-.lead h2 { margin: 0; font-size: clamp(24px, 3.4vw, 34px); font-weight: 600; letter-spacing: -.02em; line-height: 1.3; text-wrap: balance; }
+.lead h2 { margin: 0; font-size: clamp(24px, 3.4vw, 34px); font-weight: 600; letter-spacing: -.02em; line-height: 1.3; text-wrap: balance; word-break: keep-all; }
 .lead h2 em { font-style: normal; color: var(--accent); }
 .lead p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* ---------- 장르 간 시스템 이식 ---------- */
+.transfer { margin: 0 0 32px; padding: 20px 24px; width: fit-content; max-width: 100%; box-sizing: border-box; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; display: grid; grid-template-columns: minmax(0, 220px) 76px minmax(0, 220px); align-items: start; row-gap: 12px; }
+.transfer-tag { grid-column: 1 / -1; margin: 0; justify-self: start; padding: 3px 10px; border-radius: 999px; background: var(--accent-soft); font-size: 12px; font-weight: 700; color: var(--ink); }
+.transfer-link { display: grid; justify-items: center; gap: 2px; margin-top: calc(220px * 9 / 32 - 26px); color: var(--accent); }
+.transfer-link .bulb { width: 20px; height: 20px; }
+.transfer-link span { font-size: 12px; font-weight: 700; }
+.transfer-link .line { width: 56px; height: 10px; }
+.transfer-end { margin: 0; display: grid; gap: 10px; min-width: 0; }
+.transfer-end .shot-btn { aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: var(--ink); box-shadow: 0 1px 3px rgba(43, 45, 51, .12), 0 12px 24px -10px rgba(43, 45, 51, .4); }
+.transfer-end .shot-btn img { object-fit: cover; }
+.transfer-end figcaption { display: grid; gap: 1px; }
+.transfer-end span { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: .02em; }
+.transfer-end b { font-size: 14px; font-weight: 700; word-break: keep-all; }
+@media (max-width: 720px) {
+  .transfer { padding: 16px; grid-template-columns: minmax(0, 1fr) 44px minmax(0, 1fr); width: 100%; }
+  .transfer-link { margin-top: calc((100vw - 32px - 32px - 44px) / 2 * 9 / 32 - 24px); }
+  .transfer-link .line { width: 34px; }
+}
 
 /* ---------- 포트폴리오 ---------- */
 .section-title { margin: 0 0 18px; font-size: 13px; font-weight: 600; letter-spacing: .08em; color: var(--muted); }
@@ -392,6 +411,22 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) calc(clamp(56px, 8vw, 106px) +
 
   <section id="view-library" aria-labelledby="nav-library" hidden>
     <div class="lead"><h2 id="library-title"></h2></div>
+    <div class="transfer">
+      <p class="transfer-tag">예시</p>
+      <figure class="transfer-end">
+        <button type="button" class="shot-btn" data-src="media/ref-sekiro.jpg" data-caption="SEKIRO: SHADOWS DIE TWICE" aria-label="세키로 크게 보기"><img src="media/ref-sekiro.jpg" alt=""></button>
+        <figcaption><span>SEKIRO · 액션</span><b>보스 연전 「사투답파」</b></figcaption>
+      </figure>
+      <div class="transfer-link">
+        <svg class="bulb" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>영감</span>
+        <svg class="line" viewBox="0 0 64 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 6h54" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 4" stroke-linecap="round"/><path d="M54 1.5l6 4.5-6 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <figure class="transfer-end">
+        <button type="button" class="shot-btn" data-src="media/lv9-aion-cover.jpg" data-caption="연전 시스템 창작 기획서" aria-label="연전 시스템 창작 기획서 크게 보기"><img src="media/lv9-aion-cover.jpg" alt=""></button>
+        <figcaption><span>AION2 · MMORPG</span><b>연전 시스템 창작 기획서</b></figcaption>
+      </figure>
+    </div>
     <div class="filters" id="filters" role="group" aria-label="장르 필터"></div>
     <ul class="grid" id="grid"></ul>
   </section>
@@ -727,7 +762,7 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) calc(clamp(56px, 8vw, 106px) +
   document.getElementById('picks').innerHTML = featured.map(pickHtml).join('');
   document.getElementById('projects').innerHTML = works.filter(w => !w.featured).map(pickHtml).join('');
   document.getElementById('shelf').innerHTML = sorted.slice(0, 12).map(g => `<img src="icons/${g.id}.jpg" alt="${esc(g.name)}" title="${esc(g.name)}" loading="lazy">`).join('');
-  document.getElementById('library-title').innerHTML = `플레이한 다양한 장르의 게임들 <em>${games.length}개</em>`;
+  document.getElementById('library-title').innerHTML = `플레이한 다양한 장르의 게임들 <em>${games.length}개</em>를 기반으로,<br>장르의 경계를 넘어 의도에 맞는 시스템을 찾아옵니다.`;
 
   const views = { home: document.getElementById('view-home'), portfolio: document.getElementById('view-portfolio'), timeline: document.getElementById('view-timeline'), library: document.getElementById('view-library') };
   function route() {
