@@ -8,33 +8,26 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
 <style>
-/* Layout: 상단 내비게이션 + 두 화면(타임라인 지도 / 플레이 라이브러리 그리드) */
+/* Color: 포트폴리오 추천 팔레트 'Studio Concrete'
+   Charcoal #2B2D33 · Mid-gray #6E7278 · Off-white #F4F1ED · Orange-red #FF5C39 (포인트는 5% 이하로만)
+   Type: Noto Sans KR (가독성 우선) */
 :root {
-  --bg: #eef0f4;
-  --surface: #ffffff;
-  --ink: #14161c;
-  --muted: #5d6372;
-  --line: #d7dbe3;
-  --accent: #2b45d4;
-  --accent-soft: #dfe4fb;
-  --done: #3f9b5a;
-  --done-soft: #dcefe1;
-  --path: #b9bfcc;
-  --body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #101218; --surface: #191c24; --ink: #eceef3; --muted: #9aa1b2; --line: #2a2f3b;
-    --accent: #7d92ff; --accent-soft: #232b4d; --done: #66c283; --done-soft: #1d3326; --path: #3a404e; color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #101218; --surface: #191c24; --ink: #eceef3; --muted: #9aa1b2; --line: #2a2f3b;
-  --accent: #7d92ff; --accent-soft: #232b4d; --done: #66c283; --done-soft: #1d3326; --path: #3a404e; color-scheme: dark;
-}
-
+  --bg: #f4f1ed;
+  --surface: #fbfaf8;
+  --ink: #2b2d33;
+  --muted: #6e7278;
+  --line: #e2ddd6;
+  --accent: #ff5c39;
+  --accent-soft: #ece7e0;
+  --done: #2b2d33;
+  --done-soft: #ece7e0;
+  --path: #c9c4bd;
+  --body: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --display: var(--body);
+  color-scheme: light;
+}h1, h2, h3, .brand { font-family: var(--display); }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 body { background: var(--bg); color: var(--ink); font-family: var(--body); }
@@ -78,7 +71,7 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 8vw, 106px); }
   padding: 6px 11px; border-radius: 999px;
 }
 .filter:hover { background: var(--accent-soft); }
-.filter[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.filter[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
 .filter:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .filter .n { font-size: 11px; opacity: .7; margin-left: 4px; font-variant-numeric: tabular-nums; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); gap: 22px 16px; list-style: none; margin: 0; padding: 0; }
@@ -121,16 +114,16 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 8vw, 106px); }
 }
 .node svg { width: 20px; height: 20px; }
 .stage[data-state="done"] .node { border-color: var(--done); background: var(--done-soft); color: var(--done); }
-.stage[data-state="current"] .node { border-color: var(--accent); background: var(--accent); color: var(--surface); box-shadow: 0 0 0 6px var(--accent-soft); }
+.stage[data-state="current"] .node { border-color: var(--accent); background: var(--accent); color: #fff; box-shadow: 0 0 0 6px var(--accent-soft); }
 .stage[data-state="goal"] .node { border-style: dashed; color: var(--muted); }
 .stage[data-highlight] .node { width: 56px; height: 56px; }
 .lv { font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: .02em; color: var(--muted); background: var(--surface); padding: 1px 9px; border-radius: 999px; box-shadow: 0 0 0 1px var(--line); position: relative; z-index: 1; white-space: nowrap; }
 .stage[data-state="done"] .lv { color: var(--done); }
-.stage[data-state="current"] .lv { color: var(--accent); }
+.stage[data-state="current"] .lv { color: var(--ink); }
 
 .card { max-width: 860px; display: grid; gap: 10px; }
 .card .year { font-size: 13px; font-weight: 600; letter-spacing: .06em; color: var(--muted); font-variant-numeric: tabular-nums; margin-bottom: -6px; }
-.stage[data-state="current"] .card .year { color: var(--accent); }
+
 .card .head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
 .card h3 { margin: 0; font-size: 19px; font-weight: 600; line-height: 1.35; text-wrap: balance; }
 .card p { margin: 0; font-size: 15px; line-height: 1.75; color: var(--muted); word-break: keep-all; max-width: 68ch; }
@@ -155,7 +148,7 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 8vw, 106px); }
 .links { display: flex; flex-wrap: wrap; gap: 8px; }
 .links a {
   font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none;
-  padding: 6px 12px; border-radius: 8px; background: var(--accent-soft);
+  padding: 6px 12px; border-radius: 8px; background: var(--ink); color: #fff;
 }
 .links a:hover { text-decoration: underline; }
 .links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -173,7 +166,7 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 8vw, 106px); }
 .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); align-items: center; gap: 40px; padding-block: 12px 56px; }
 .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .14em; color: var(--accent); display: flex; align-items: center; gap: 8px; }
 .eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--accent); }
-.hero h1 { margin: 18px 0 0; font-size: clamp(36px, 5.4vw, 72px); line-height: 1.12; letter-spacing: -.035em; font-weight: 600; text-wrap: balance; word-break: keep-all; }
+.hero h1 { margin: 0; font-size: clamp(36px, 5.4vw, 72px); line-height: 1.12; letter-spacing: -.035em; font-weight: 600; text-wrap: balance; word-break: keep-all; }
 .hero h1 em { font-style: normal; color: var(--accent); }
 .hero .sub { margin: 22px 0 0; font-size: 17px; line-height: 1.7; color: var(--muted); max-width: 34em; word-break: keep-all; }
 .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
@@ -182,13 +175,13 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 8vw, 106px); }
 .btn:hover { box-shadow: 0 0 0 1px var(--ink); }
 .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .photo { position: relative; justify-self: end; width: min(100%, 460px); }
-.photo { isolation: isolate; padding: 24px 0 8px; }
-.photo::before { content: ""; position: absolute; inset: 14% 4% 0 6%; z-index: -1; background: var(--accent-soft); border-radius: 46% 54% 44% 56% / 52% 46% 54% 48%; }
-.photo::after { content: ""; position: absolute; z-index: -1; right: 2%; top: 6%; width: 74px; height: 74px; border-radius: 50%; border: 2px dashed var(--accent); opacity: .5; }
-.photo img { width: 100%; height: auto; display: block; position: relative; }
-.photo .spark { position: absolute; z-index: 1; color: var(--accent); font-size: 22px; line-height: 1; }
+.photo { isolation: isolate; padding: 0; }
+
+
+.photo img { width: 100%; height: auto; display: block; position: relative; margin-bottom: 0; }
+.photo .spark { position: absolute; z-index: 1; color: var(--ink); font-size: 22px; line-height: 1; }
 .photo .tag { position: absolute; z-index: 2; left: -4px; bottom: 18%; background: var(--surface); box-shadow: 0 0 0 1px var(--line), 0 10px 24px -14px rgba(20, 22, 28, .45); border-radius: 12px; padding: 10px 14px; font-size: 13px; display: grid; gap: 2px; }
-.photo .tag b { font-size: 12px; color: var(--accent); letter-spacing: .06em; }
+.photo .tag b { font-size: 12px; color: var(--ink); letter-spacing: .06em; }
 @media (max-width: 860px) {
   .hero { grid-template-columns: minmax(0, 1fr); gap: 28px; }
   .photo { justify-self: center; width: min(100%, 360px); order: -1; }
@@ -212,7 +205,7 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 8vw, 106px); }
 .pick img { width: 100%; height: 100%; object-fit: contain; display: block; transition: transform .25s ease; }
 .pick:hover img { transform: scale(1.03); }
 .pick .k { font-size: 12px; font-weight: 600; color: var(--accent); }
-.pick h3 { margin: -6px 0 0; font-size: 18px; font-weight: 600; }
+.pick h3 { margin: 0; font-size: 18px; font-weight: 600; }
 .pick p { margin: -4px 0 0; font-size: 14px; color: var(--muted); line-height: 1.6; }
 .pick:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 12px; }
 .method { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; list-style: none; margin: 0; padding: 0; counter-reset: step; }
@@ -224,9 +217,34 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 8vw, 106px); }
 .shelf { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 12px; }
 @media (max-width: 860px) { .shelf { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
 .shelf img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 22%; box-shadow: 0 0 0 1px var(--line); display: block; }
+.shelf .spot { grid-column: span 2; margin: 0; display: grid; gap: 8px; align-content: start; justify-items: center; }
+.shelf .spot img { width: 66%; box-shadow: 0 0 0 5px var(--accent); }
+.shelf .spot figcaption { font-size: 14px; font-weight: 600; text-align: center; word-break: keep-all; }
 .site-foot { border-top: 1px solid var(--line); padding-block: 28px 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--muted); }
 .site-foot b { color: var(--ink); }
 
+/* ---------- About ---------- */
+.about { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-block: 1px solid var(--line); margin-bottom: 80px; }
+.about > div { padding: 26px 28px 28px 0; display: grid; gap: 14px; align-content: start; min-width: 0; }
+.about > div + div { padding-left: 28px; border-left: 1px solid var(--line); }
+@media (max-width: 860px) { .about { grid-template-columns: minmax(0, 1fr); } .about > div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); } .about > div { padding-right: 0; } }
+.about h3 { margin: 0; font-size: 13px; font-weight: 600; color: var(--muted); letter-spacing: .04em; }
+.about dl { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 16px; font-size: 14px; }
+.about dt { color: var(--muted); white-space: nowrap; }
+.about dd { margin: 0; word-break: keep-all; }
+.about ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.about li { font-size: 14px; line-height: 1.55; display: grid; gap: 2px; word-break: keep-all; }
+.about li b { font-weight: 600; }
+.about li span { color: var(--muted); font-size: 13px; }
+.about .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.about .chips span { font-size: 13px; padding: 4px 10px; border-radius: 999px; background: var(--surface); box-shadow: 0 0 0 1px var(--line); }
+.about dd .sub { color: var(--muted); font-size: 13px; }
+.about .tools { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+.about .tools dt { font-size: 12px; margin-top: 8px; }
+.about .tools dt:first-child { margin-top: 0; }
+.about .timeline-mini li { grid-template-columns: 44px minmax(0, 1fr); column-gap: 10px; }
+.about .timeline-mini time { grid-row: span 2; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 1px; }
+.about .note { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.6; word-break: keep-all; }
 /* ---------- 타임라인 요약 ---------- */
 .lead { margin: 0 0 28px; display: grid; gap: 6px; }
 .lead h2 { margin: 0; font-size: clamp(24px, 3.4vw, 34px); font-weight: 600; letter-spacing: -.02em; line-height: 1.3; text-wrap: balance; }
@@ -281,7 +299,7 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 8vw, 106px); }
 
 <header class="topbar">
   <div class="wrap">
-    <a class="brand" href="#home" style="text-decoration:none;color:inherit">LEE CHANGYEON <span style="font-weight:500;color:var(--muted);font-size:12px;letter-spacing:.08em">· GAME DESIGNER</span></a>
+    <a class="brand" href="#home" style="text-decoration:none;color:inherit">LEE CHANGYEON</a>
     <nav class="nav" aria-label="페이지">
       <a href="#home" id="nav-home">홈</a>
       <a href="#portfolio" id="nav-portfolio">포트폴리오</a>
@@ -295,53 +313,62 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 8vw, 106px); }
   <section id="view-home" aria-labelledby="nav-home">
     <div class="hero">
       <div>
-        <div class="eyebrow">GAME DESIGNER · 이창연</div>
-        <h1>플레이어가 떠나는 순간을 <em>기록하는</em> 기획자</h1>
-        <p class="sub">라이브 게임을 직접 관찰해 데이터로 문제를 증명하고, 플레이어를 다시 붙잡는 시스템을 설계합니다.</p>
-        <div class="cta">
-          <a class="btn primary" href="#portfolio">포트폴리오 보기</a>
-          <a class="btn" href="#timeline">지나온 길</a>
-        </div>
+        
+        <h1>'<em>왜?</em>'를 쫓아 의도를 읽는 기획자</h1>
+        <p class="sub">장르를 막론하고, 게임이 추구하는 가치와 방향을 먼저 찾습니다. 그리고 시스템이 그 방향에 맞게 설계되었는지, 의도대로 작동하는지를 탐구합니다.</p>
+        
       </div>
       <div class="photo">
-        <span class="spark" style="left:4%;top:18%" aria-hidden="true">✦</span><span class="spark" style="right:10%;top:42%;font-size:15px" aria-hidden="true">✦</span><img src="media/profile-sticker.png" alt="이창연 프로필 사진">
-        <div class="tag"><b id="photo-lv">Lv.7</b><span>졸업 · 취업 준비 중</span></div>
+        <img src="media/profile-sticker.png" alt="이창연 프로필 사진">
       </div>
     </div>
 
-    <div class="stats" id="stats"></div>
-
+    <section class="about" aria-label="소개">
+      <div>
+        <h3>PROFILE</h3>
+        <dl>
+          <dt>이름</dt><dd>이창연</dd>
+          <dt>지원 직무</dt><dd>게임 시스템 기획</dd>
+          <dt>학력</dt><dd>삼육대학교 컴퓨터공학부<br><span class="sub">2022.03 – 2026.08 졸업</span></dd>
+          <dt>이메일</dt><dd>lcyred001@naver.com</dd>
+        </dl>
+      </div>
+      <div>
+        <h3>EXPERIENCE</h3>
+        <ul class="timeline-mini">
+          <li><time>2026</time><b>라이브 MMORPG 시스템 기획서 3편</b><span>아이온2 · 제우스: 오만의 신 분석 · 창작</span></li>
+          <li><time>2026</time><b>산학협력 캡스톤 · Tokyo Desire</b><span>기획 담당, 스팀 체험판 출시</span></li>
+          <li><time>2024</time><b>캡스톤디자인 · BapTalkSu</b><span>총괄 기획, 기능 명세 · 일정 관리</span></li>
+          <li><time>2023</time><b>게임개발동아리 creator</b><span>기획 스터디, 역기획서 4편 · 창작 2편</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>INTERESTS</h3>
+        <div class="chips"><span>시스템 기획</span><span>라이브 서비스 운영</span><span>게임 경제</span><span>서버 간 PvP</span><span>MMORPG</span><span>로그라이크 덱빌딩</span></div>
+        <p class="note">2025–2026 국내 MMORPG 4종을 포함해 104개 게임을 플레이했습니다.</p>
+      </div>
+    </section>
     <div class="home-sec">
-      <div class="sec-head"><div><div class="num">01 · PORTFOLIO</div><h2>대표 작업</h2></div><a href="#portfolio">전체 보기 →</a></div>
+      <div class="sec-head"><div><h2>포트폴리오</h2></div><a href="#portfolio">전체 보기 →</a></div>
       <div class="picks" id="picks"></div>
     </div>
 
     <div class="home-sec">
-      <div class="sec-head"><div><div class="num">02 · HOW I WORK</div><h2>일하는 방식</h2></div></div>
-      <ol class="method">
-        <li><b>관찰</b><span>라이브 게임을 직접 플레이하며 플레이어가 멈추거나 떠나는 지점을 찾는다.</span></li>
-        <li><b>기록</b><span>감이 아니라 숫자로 남긴다. 몇 주씩 같은 지표를 직접 모은다.</span></li>
-        <li><b>진단</b><span>기록으로 문제의 원인을 증명하고, 비슷한 사례가 왜 실패했는지 살핀다.</span></li>
-        <li><b>설계</b><span>기존 리소스를 살려 만들 수 있는 규칙과 테이블로 해결책을 그린다.</span></li>
-        <li><b>검증</b><span>예상되는 부작용을 규칙으로 막고, 효과를 확인할 지표를 정해 둔다.</span></li>
-      </ol>
+      <div class="sec-head"><div><h2>프로젝트</h2></div><a href="#portfolio">전체 보기 →</a></div>
+      <div class="picks" id="projects"></div>
     </div>
 
     <div class="home-sec">
-      <div class="sec-head"><div><div class="num">03 · PLAY LIBRARY</div><h2>최근 플레이한 게임</h2></div><a href="#library" id="shelf-more">전체 보기 →</a></div>
+      <div class="sec-head"><div><h2>최근 플레이한 게임</h2></div><a href="#library" id="shelf-more">전체 보기 →</a></div>
       <div class="shelf" id="shelf"></div>
     </div>
 
-    <footer class="site-foot">
-      <span><b>이창연</b> · 게임기획자 · 플레이어가 떠나는 순간을 기록합니다.</span>
-      <span>lcyred001@naver.com</span>
-    </footer>
   </section>
 
   <section id="view-portfolio" aria-labelledby="nav-portfolio" hidden>
-    <h2 class="section-title">대표 작업</h2>
+    <h2 class="section-title">포트폴리오</h2>
     <div class="featured" id="featured"></div>
-    <h2 class="section-title">그 외 작업</h2>
+    <h2 class="section-title">프로젝트</h2>
     <div class="others" id="others"></div>
   </section>
 
@@ -587,7 +614,7 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 8vw, 106px); }
     <article class="work">
       <button type="button" class="cover shot-btn" data-src="${esc(w.cover)}" data-caption="${esc(w.title)}" aria-label="${esc(w.title)} 표지 크게 보기"><img src="${esc(w.cover)}" alt="" loading="lazy"></button>
       <div class="body">
-        <div class="meta"><span class="kind">${esc(w.type)}</span><span>${esc(w.year)}</span></div>
+        
         <h3>${esc(w.title)}</h3>
         <div class="game">${esc(w.game)}</div>
         ${w.tags ? `<div class="tags">${w.tags.map(t => `<span>${esc(t)}</span>`).join('')}</div>` : ''}
@@ -625,8 +652,6 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 8vw, 106px); }
         ${s.year ? `<span class="year">${esc(s.year)}</span>` : ''}
         <div class="head">
           <h3>${esc(s.title)}</h3>
-          ${s.state === 'current' ? '<span class="badge">지금 여기</span>' : ''}
-          ${s.highlight ? '<span class="badge">대표 프로젝트</span>' : ''}
         </div>
         <p>${esc(s.desc)}</p>
         ${s.media && s.media.length ? `<div class="media">${s.media.map(m => typeof m === 'string'
@@ -683,22 +708,21 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 8vw, 106px); }
   /* ================= 화면 전환 ================= */
   /* ================= 홈 ================= */
   const featured = works.filter(w => w.featured);
-  document.getElementById('picks').innerHTML = featured.map(w => `
+  const pickHtml = w => `
     <a class="pick" href="#portfolio">
       <div class="img"><img src="${esc(w.cover)}" alt="" loading="lazy"></div>
-      <div class="k">${esc(w.type)} · ${esc(w.game)}</div>
       <h3>${esc(w.title)}</h3>
-      <p>${esc(w.hook)}</p>
-    </a>`).join('');
-  document.getElementById('shelf').innerHTML = sorted.slice(0, 12).map(g => `<img src="icons/${g.id}.jpg" alt="${esc(g.name)}" title="${esc(g.name)}" loading="lazy">`).join('');
+      <p>${esc(w.hook || w.summary)}</p>
+    </a>`;
+  document.getElementById('picks').innerHTML = featured.map(pickHtml).join('');
+  document.getElementById('projects').innerHTML = works.filter(w => !w.featured).map(pickHtml).join('');
+  // 기획서를 쓰며 분석한 2026 신작 MMORPG(도깨비의세계 · 이클립스 · 제우스)는 강조
+  const SPOTLIGHT = ['dokkaebi', 'eclipse', 'zeus'];
+  const shelfGames = [...sorted.filter(g => SPOTLIGHT.includes(g.id)), ...sorted.filter(g => !SPOTLIGHT.includes(g.id))].slice(0, SPOTLIGHT.length + 18);
+  document.getElementById('shelf').innerHTML = shelfGames.map(g => SPOTLIGHT.includes(g.id)
+    ? `<figure class="spot"><img src="icons/${g.id}.jpg" alt="${esc(g.name)}" loading="lazy"><figcaption>${esc(g.name)}</figcaption></figure>`
+    : `<img src="icons/${g.id}.jpg" alt="${esc(g.name)}" title="${esc(g.name)}" loading="lazy">`).join('');
   document.getElementById('shelf-more').textContent = `${games.length}개 전체 보기 →`;
-  document.getElementById('photo-lv').textContent = 'Lv.' + reached;
-  document.getElementById('stats').innerHTML = [
-    [`${span}년`, `게임을 만들어 온 시간 (${Math.min(...years)}~)`],
-    [`${games.length}개`, '플레이한 게임'],
-    [`${featured.length}편`, '라이브 MMORPG 시스템 기획서'],
-    ['6주', '직접 기록한 라이브 데이터']
-  ].map(([n, t]) => `<div><strong>${n}</strong><span>${t}</span></div>`).join('');
 
   const views = { home: document.getElementById('view-home'), portfolio: document.getElementById('view-portfolio'), timeline: document.getElementById('view-timeline'), library: document.getElementById('view-library') };
   function route() {
