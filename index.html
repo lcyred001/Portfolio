@@ -213,8 +213,13 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) calc(clamp(56px, 8vw, 106px) +
 .picks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
 @media (max-width: 860px) { .picks { grid-template-columns: minmax(0, 1fr); } }
 .pick { text-decoration: none; color: inherit; display: grid; gap: 12px; align-content: start; }
-.pick .img { aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; box-shadow: 0 0 0 1px var(--line); background: var(--surface); padding: 0; border: 0; width: 100%; cursor: zoom-in; display: block; }
+.pick .img { aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; box-shadow: 0 0 0 1px var(--line); background: var(--surface); padding: 0; border: 0; width: 100%; cursor: pointer; display: block; }
 .pick img { width: 100%; height: 100%; object-fit: contain; display: block; transition: transform .25s ease; }
+.pick .img:hover img { transform: scale(1.03); }
+.pick .img:focus-visible, .shelf a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.shelf a { display: block; border-radius: 22%; }
+.shelf a img { transition: transform .2s ease; }
+.shelf a:hover img { transform: translateY(-3px); }
 .pick .k { font-size: 12px; font-weight: 600; color: var(--accent); }
 .pick h3 { margin: 0; font-size: 18px; font-weight: 600; }
 .pick p { margin: -4px 0 0; font-size: 14px; color: var(--muted); line-height: 1.6; }
@@ -258,11 +263,11 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) calc(clamp(56px, 8vw, 106px) +
 .about .timeline-mini time { grid-row: span 2; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 1px; }
 .about .note { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.6; word-break: keep-all; }
 /* ---------- 타임라인 요약 ---------- */
-.lead { margin: 0 0 28px; display: grid; gap: 6px; }
+.lead { margin: 0 0 28px; display: grid; gap: 14px; }
 .lead h2 { margin: 0; font-size: clamp(24px, 3.4vw, 34px); font-weight: 600; letter-spacing: -.02em; line-height: 1.3; text-wrap: balance; word-break: keep-all; }
 .lead h2 em { font-style: normal; color: var(--accent); }
-.lead p { margin: 0; color: var(--muted); font-size: 15px; }
-.philo { margin: -8px 0 28px; display: grid; gap: 18px; }
+.lead p { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.8; word-break: keep-all; }
+.philo { margin: -14px 0 28px; display: grid; gap: 18px; }
 .philo-lead { margin: 0; font-size: 16px; line-height: 1.8; color: var(--muted); word-break: keep-all; }
 .philo-end { margin: 14px 0 0; padding-left: 14px; border-left: 3px solid var(--accent); font-size: 19px; line-height: 1.5; font-weight: 700; color: var(--ink); word-break: keep-all; }
 .philo-cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
@@ -814,16 +819,17 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) calc(clamp(56px, 8vw, 106px) +
   /* ================= 화면 전환 ================= */
   /* ================= 홈 ================= */
   const featured = works.filter(w => w.featured);
-  const pickHtml = w => `
+  // 홈의 이미지·아이콘을 누르면 해당 탭으로 이동
+  const pickHtml = (w, tab, tabName) => `
     <div class="pick">
-      <button type="button" class="img shot-btn" data-src="${esc(w.cover)}" data-caption="${esc(w.title)}" aria-label="${esc(w.title)} 크게 보기"><img src="${esc(w.cover)}" alt="" loading="lazy"></button>
+      <a class="img" href="#${tab}" aria-label="${esc(w.title)} · ${tabName} 탭으로 이동"><img src="${esc(w.cover)}" alt="" loading="lazy"></a>
       <h3>${esc(w.title)}</h3>
       <p>${esc(w.hook || w.summary)}</p>
       ${w.question ? `<p class="q">${esc(w.question)}</p>` : ''}
     </div>`;
-  document.getElementById('picks').innerHTML = featured.map(pickHtml).join('');
-  document.getElementById('projects').innerHTML = works.filter(w => !w.featured).map(pickHtml).join('');
-  document.getElementById('shelf').innerHTML = sorted.slice(0, 12).map(g => `<img src="icons/${g.id}.jpg" alt="${esc(g.name)}" title="${esc(g.name)}" loading="lazy">`).join('');
+  document.getElementById('picks').innerHTML = featured.map(w => pickHtml(w, 'portfolio', '포트폴리오')).join('');
+  document.getElementById('projects').innerHTML = works.filter(w => !w.featured).map(w => pickHtml(w, 'timeline', '활동')).join('');
+  document.getElementById('shelf').innerHTML = sorted.slice(0, 12).map(g => `<a href="#library" aria-label="${esc(g.name)} · 게임 탭으로 이동"><img src="icons/${g.id}.jpg" alt="${esc(g.name)}" title="${esc(g.name)}" loading="lazy"></a>`).join('');
   document.getElementById('library-title').innerHTML = `플레이한 다양한 장르의 게임들 <em>${games.length}개</em>를 기반으로,<br>장르의 경계를 넘어 의도에 맞는 시스템을 찾아옵니다.`;
 
   const views = { home: document.getElementById('view-home'), portfolio: document.getElementById('view-portfolio'), timeline: document.getElementById('view-timeline'), library: document.getElementById('view-library') };
