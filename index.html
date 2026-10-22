@@ -269,7 +269,7 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) calc(clamp(56px, 8vw, 106px) +
 .about .chips span { font-size: 13px; padding: 4px 10px; border-radius: 999px; background: var(--surface); box-shadow: 0 0 0 1px var(--line); }
 .about dd .sub { color: var(--muted); font-size: 13px; }
 .about .tools { grid-template-columns: 52px minmax(0, 1fr); gap: 10px 12px; align-items: center; }
-.about .timeline-mini li { grid-template-columns: 44px minmax(0, 1fr); column-gap: 10px; }
+.about .timeline-mini li { grid-template-columns: 44px minmax(0, 1fr); column-gap: 10px; word-break: keep-all; }
 .about .timeline-mini time { grid-row: span 2; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 1px; }
 .about .note { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.6; word-break: keep-all; }
 /* ---------- 타임라인 요약 ---------- */
@@ -402,10 +402,10 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) calc(clamp(56px, 8vw, 106px) +
       <div>
         <h3>EXPERIENCE</h3>
         <ul class="timeline-mini">
-          <li><time>2026</time><b>라이브 MMORPG 시스템 기획서 3편</b><span>아이온2 · 제우스: 오만의 신 분석 · 창작</span></li>
-          <li><time>2026</time><b>산학협력 캡스톤 · Tokyo Desire</b><span>기획 담당, 스팀 체험판 출시</span></li>
-          <li><time>2024</time><b>캡스톤디자인 · BapTalkSu</b><span>총괄 기획, 기능 명세 · 일정 관리</span></li>
-          <li><time>2023</time><b>게임개발동아리 creator</b><span>기획 스터디, 역기획서 4편 · 창작 2편</span></li>
+          <li><time>2026</time><b>라이브 MMORPG 시스템 기획서 3편</b><span>아이온2, 제우스: 오만의 신 분석 및 창작</span></li>
+          <li><time>2026</time><b>산학협력 캡스톤 디자인 · Tokyo Desire</b><span>총괄 기획, 스팀 데모 등록</span></li>
+          <li><time>2024</time><b>캡스톤 디자인 · BapTalkSU</b><span>총괄 기획, 기능 명세 및 일정 관리</span></li>
+          <li><time>2023</time><b>게임 개발 동아리 creator</b><span>기획 스터디, 역기획서 4편 및 창작 기획서 2편</span></li>
         </ul>
       </div>
       <div>
@@ -625,8 +625,8 @@ main.wrap { padding-block: clamp(40px, 6vw, 80px) calc(clamp(56px, 8vw, 106px) +
 {"title":"게임기획자로 입사","state":"goal","desc":"다음 스테이지.","media":[]},
 {"year":"2026","title":"졸업 · 취업 준비","state":"current","outputs":["시스템 분석서 1편","창작 기획서 2편"],"desc":"기획서 작성을 본격적으로 시작하여 MMORPG를 깊게 플레이하고 분석하며 시스템 기획서 3편을 작성했다.","media":[{"src":"media/lv9-midas-cover.jpg","caption":"미다스의 금고 시스템 분석서"},{"src":"media/lv9-zeus-cover.jpg","caption":"쟁 보정 시스템 창작 기획서"},{"src":"media/lv9-aion-cover.jpg","caption":"연전 시스템 창작 기획서"}]},
 {"year":"2026.03 – 06","title":"산학협력 캡스톤 · Tokyo Desire : Deck Builders","state":"done","highlight":true,"outputs":["기획 문서 13편","UI 명세서","데이터 테이블 6종","에셋 요청 리스트","스팀 데모 등록"],"desc":"협력하는 회사가 개발 중지한 에셋을 받아 로그라이크 덱빌딩 게임을 제작하여 스팀 덱빌딩 페스티벌에 데모를 등록했다. 이 데모를 바탕으로 협력사가 이어서 개발 중이며, 현재 버전은 데모와 다르다.","media":[{"src":"media/lv10-steam.jpg","caption":"스팀 라이브러리 페이지 (체험판)"},{"src":"media/lv10-system.jpg","caption":"시스템 기획서 (Act 1 MVP)"},{"src":"media/lv10-meeting.jpg","caption":"팀 회의"}]},
-{"year":"2024.03 – 06","title":"캡스톤디자인 · BapTalkSu 총괄 기획","state":"done","outputs":["요구사항 명세서","WBS","와이어프레임","개략설계","사용자 매뉴얼","시험 절차서 · 결과서"],"desc":"교내 사람들과 밥 약속을 잡는 미팅 앱을 개발하고자 총괄 기획을 맡아 기능 명세, 일정 관리, 와이어프레임 제작을 주로 담당했다.","media":[{"src":"media/lv8-figma.png","caption":"피그마 와이어프레임"},{"src":"media/lv8-gantt.png","caption":"간트 차트"}]},
-{"year":"2023","title":"게임개발동아리 creator · 기획 스터디","state":"done","outputs":["역기획서 4편","창작 기획서 2편"],"desc":"게임기획 스터디에 참여해 동아리 선배들과 주제를 잡고 토론하거나 주제에 맞게 써온 기획서들을 공유하며 피드백하는 시간을 가지면서 본격적인 게임 기획을 시작했다.","media":[{"src":"media/lv7-hammer.jpg","caption":"해머로얄 게임 창작 기획서"},{"src":"media/lv7-sect.jpg","caption":"약소문파 키우기 게임 아이디어 제안서"},{"src":"media/lv7-rummikub.jpg","caption":"루미큐브 역기획서"},{"src":"media/lv7-brotato.jpg","caption":"Brotato 강화 시스템 역기획서"},{"src":"media/lv7-deadcells.jpg","caption":"Dead Cells 시스템 역기획서"},{"src":"media/lv9-botw-fsm.jpg","caption":"젤다의 전설 야생의 숨결 몬스터 AI 역기획서"}]},
+{"year":"2024.03 – 06","title":"캡스톤디자인 · BapTalkSu 총괄 기획","state":"done","outputs":["요구사항 명세서","WBS · 간트 차트","와이어프레임","개략설계","사용자 매뉴얼","시험 절차서 · 결과서"],"desc":"교내 사람들과 밥 약속을 잡는 미팅 앱을 개발하고자 총괄 기획을 맡아 기능 명세, 일정 관리, 와이어프레임 제작을 주로 담당했다.","media":[{"src":"media/lv8-figma.png","caption":"피그마 와이어프레임"},{"src":"media/lv8-gantt.png","caption":"WBS · 간트 차트"}]},
+{"year":"2023","title":"게임개발동아리 creator · 기획 스터디","state":"done","outputs":["역기획서 4편","창작 기획서 2편"],"desc":"게임기획 스터디에 참여해 동아리 선배들과 주제를 잡고 토론하거나 주제에 맞게 써온 기획서들을 공유하며 피드백하는 시간을 가지면서 본격적인 게임 기획을 시작했다.","media":[{"src":"media/lv7-hammer.jpg","caption":"해머 로얄 게임 창작 기획서"},{"src":"media/lv7-sect.jpg","caption":"약소문파 키우기 게임 아이디어 제안서"},{"src":"media/lv7-rummikub.jpg","caption":"루미큐브 역기획서"},{"src":"media/lv7-brotato.jpg","caption":"Brotato 강화 시스템 역기획서"},{"src":"media/lv7-deadcells.jpg","caption":"Dead Cells 시스템 역기획서"},{"src":"media/lv9-botw-fsm.jpg","caption":"젤다의 전설 야생의 숨결 몬스터 AI 역기획서"}]},
 {"year":"2022–2023","title":"컴퓨터공학 전공","state":"done","desc":"개발 역량을 키워 기획에 도움이 되고자 인공지능융합학부로 입학한 후 컴퓨터공학부로 전과했다.","media":[]},
 {"year":"2015–2016","title":"학창 시절 게임 기획 · 개발","state":"done","outputs":["발표 자료 2편","교육용 게임"],"desc":"게임기획을 주제로 교내 발표 또는 경진 대회에 꾸준히 참가했다.","media":[{"src":"media/lv2-dream.jpg","caption":"'나의 꿈 발표대회' 발표 자료 표지 (2015)"},{"src":"media/lv2-edu-game.png","caption":"지구과학 교육 게임 (2016)"}]},
 {"year":"2011","title":"첫 게임을 만들다","state":"done","outputs":["GameMaker 게임 2편"],"desc":"GameMaker로 게임을 만들어 카페에 올리고, 사람들의 반응을 보며 흥미를 느끼고 게임기획자를 꿈꾸기 시작했다.","media":[{"src":"media/lv1-game.png","caption":"GameMaker로 만든 「경찰과 도둑」"},{"src":"media/lv1-space.png","caption":"GameMaker로 만든 space game"},{"src":"media/lv1-cafe.png","caption":"CrazyGM 카페에 올린 「경찰과 도둑 0.5」 (2011)"}]}
