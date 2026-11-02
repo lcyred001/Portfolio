@@ -733,7 +733,7 @@ em { font-style: normal; color: var(--sr-accent); }
           const k = p.indexOf(' : ');
           return `<li>${k > 0 ? `<b>${esc(p.slice(0, k))}</b>  ${esc(p.slice(k + 3))}` : esc(p)}</li>`;
         }).join('')}</ul>` : ''}
-        ${w.pdf ? `<div class="links"><a class="cta" href="${esc(w.pdf)}" target="_blank" rel="noopener">문서 보기 · PDF ${esc(w.pages)}쪽 ${arrow}</a></div>` : ''}
+        ${w.pdf ? `<div class="links"><a class="cta" href="${esc(w.pdf)}" target="_blank" rel="noopener" data-goatcounter-click="pdf/${esc(w.pdf.split('/').pop())}" data-goatcounter-title="PDF 열람 · ${esc(w.title)}">문서 보기 · PDF ${esc(w.pages)}쪽 ${arrow}</a></div>` : ''}
       </div>
     </article>`).join('');
 
@@ -865,6 +865,8 @@ em { font-style: normal; color: var(--sr-accent); }
   frame();
 })();
 </script>
+<!-- 방문 통계 (GoatCounter, https://lcyred001.goatcounter.com) : 쿠키 없음, localhost·file 열람은 세지 않음 -->
+<script data-goatcounter="https://lcyred001.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
 </body>
 </html>
