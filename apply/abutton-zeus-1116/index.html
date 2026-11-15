@@ -288,6 +288,11 @@ html.motion .cover .scribble { animation: scribble 3.2s ease-in-out infinite; }
 @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
 html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
 
+.contactbtn { align-self: flex-start; margin-top: 36px; display: inline-flex; align-items: center; gap: 12px; padding: 16px 28px 16px 30px; border-radius: 999px; border: 1px solid var(--sr-ink); color: var(--sr-ink); text-decoration: none; font-family: var(--sr-display); font-size: 26px; letter-spacing: .06em; text-transform: uppercase; transition: background-color .35s var(--ease-out), color .35s var(--ease-out), transform .35s var(--ease-out); }
+.contactbtn svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: transform .35s var(--ease-out); }
+.contactbtn:hover { background: var(--sr-accent); border-color: var(--sr-accent); color: var(--sr-on-accent); transform: translateY(-3px); }
+.contactbtn:hover svg { transform: translateX(5px); }
+
 .pdfbtn { margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 9px; padding: 11px 18px 11px 16px; border-radius: 999px; background: var(--sr-accent); color: var(--sr-on-accent); text-decoration: none; font-size: 14px; font-weight: 800; box-shadow: 0 10px 24px -12px rgba(255,50,29,.8); transition: transform .2s, box-shadow .2s; }
 .pdfbtn:hover { transform: translateY(-2px); box-shadow: 0 14px 28px -12px rgba(255,50,29,.9); }
 .pdfbtn svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
@@ -610,9 +615,8 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
 
 
 <section id="end" class="page end">
-  <span class="label">Thank you</span>
-  <h2 class="d1" style="margin-top:12px">Ready for<br><em>Next Season.</em></h2>
-  <p class="muted" style="margin-top:28px">이창연 · lcyred001@naver.com</p>
+  <h2 class="d1">Let's build<br><em>the next season.</em></h2>
+  <a class="contactbtn" href="mailto:lcyred001@naver.com" aria-label="이메일 보내기">Contact<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   <span class="page-no">13</span>
 </section>
 
@@ -691,7 +695,7 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
     });
   }
   mark('.head .d1, .cover .big, .doc h2', 'rv-mask', .08);
-  mark('.cover .one, .cover .who, .doc .big-no, .doc .chips, .concl li, .pdfbtn, .doc-side > img, .tcap, .zcol, .pside > *, .play .shot, .spec > div, .st, .grows li', 'rv', .07, .1);
+  mark('.cover .one, .cover .who, .contactbtn, .doc .big-no, .doc .chips, .concl li, .pdfbtn, .doc-side > img, .tcap, .zcol, .pside > *, .play .shot, .spec > div, .st, .grows li', 'rv', .07, .1);
   mark('.quad img, .st .gal figure, .grows img', 'rv-pop', .05, .3);
   mark('.tk', 'rv', .05, .35);
   var io = new IntersectionObserver(function (es) {
