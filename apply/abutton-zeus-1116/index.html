@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이창연 게임 시스템 기획 포트폴리오</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Black+Han+Sans&family=Manrope:wght@500;700;800&family=Noto+Sans+KR:wght@500;700;800&family=Permanent+Marker&display=swap">
+<style>
+:root {
+  --sr-bg: #17171a; --sr-surface: #101010; --sr-ink: #ece7dc; --sr-ink-2: #9a968f; --sr-ink-3: #6e6b66;
+  --sr-accent: #ff321d; --sr-ember: #7a352c; --sr-on-accent: #17171a;
+  --sr-line: rgba(236,231,220,.28); --sr-line-soft: rgba(236,231,220,.12); --sr-ghost: rgba(236,231,220,.04);
+  --sr-display: "Anton", "Black Han Sans", sans-serif; --sr-kr-display: "Black Han Sans", "Anton", sans-serif;
+  --sr-body: "Manrope", "Noto Sans KR", "Malgun Gothic", sans-serif; --sr-script: "Permanent Marker", cursive;
+  --pw: 1280px; --ph: 720px; --pad: 56px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #0b0b0c; }
+body { color: var(--sr-ink); font-family: var(--sr-body); font-weight: 500; font-size: 17px; line-height: 1.55; word-break: keep-all; }
+img { display: block; max-width: 100%; }
+em { font-style: normal; color: var(--sr-accent); }
+
+.deck { display: grid; justify-content: center; gap: 28px; padding: 28px 0 80px; }
+.page { position: relative; width: var(--pw); height: var(--ph); background: var(--sr-bg); overflow: hidden; padding: var(--pad); display: flex; flex-direction: column; }
+.page-no { position: absolute; right: var(--pad); bottom: 22px; font-family: var(--sr-display); font-size: 14px; letter-spacing: .08em; color: var(--sr-ink-3); }
+.page-tag { position: absolute; left: var(--pad); bottom: 22px; font-size: 12px; color: var(--sr-ink-3); }
+
+.label { font-family: var(--sr-body); font-weight: 700; font-size: 14px; letter-spacing: .02em; text-transform: uppercase; color: var(--sr-ink-2); }
+.num { font-family: var(--sr-display); font-size: 16px; letter-spacing: .08em; color: var(--sr-accent); }
+.d1 { font-family: var(--sr-display); font-weight: 400; text-transform: uppercase; line-height: .88; margin: 0; }
+.kr-h { font-family: var(--sr-kr-display); font-weight: 400; letter-spacing: -.01em; line-height: 1.12; margin: 0; }
+.muted { color: var(--sr-ink-2); }
+.head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding-bottom: 18px; border-bottom: 1px solid var(--sr-line); margin-bottom: 26px; }
+.head > div:first-child { flex: 1 1 auto; min-width: 0; }
+.head > p { flex: 0 0 380px; }
+.head .d1 { font-size: 72px; }
+.head .kr-h { font-size: 30px; margin-top: 8px; }
+.head > p { margin: 0; font-size: 15px; color: var(--sr-ink-2); text-align: right; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 9px; border: 1px solid var(--sr-line); border-radius: 1px; font-size: 13px; font-weight: 700; white-space: nowrap; }
+.chip.on { background: var(--sr-accent); border-color: var(--sr-accent); color: var(--sr-on-accent); }
+.chip.ink { background: var(--sr-ink); border-color: var(--sr-ink); color: var(--sr-bg); }
+.chip.dim { color: var(--sr-ink-3); border-style: dashed; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.slot { display: grid; place-items: center; text-align: center; border: 1px dashed var(--sr-line); background: var(--sr-ghost); color: var(--sr-ink-3); font-size: 14px; padding: 16px; }
+.slot b { display: block; color: var(--sr-ink-2); font-size: 15px; margin-bottom: 4px; }
+
+.cover { display: grid; grid-template-columns: minmax(0,1fr) 360px; gap: 40px; }
+.cover-main { display: flex; flex-direction: column; justify-content: flex-end; gap: 36px; }
+.cover .big { font-size: 212px; letter-spacing: -.01em; }
+.cover .big .q { color: var(--sr-accent); }
+.cover .one { font-size: 40px; margin-top: 22px; }
+.cover .proof { margin: 12px 0 0; font-size: 16px; font-weight: 700; color: var(--sr-ink-2); }
+.cover .proof span { color: var(--sr-accent); margin: 0 6px; }
+.cover .who { display: flex; gap: 28px; align-items: baseline; border-top: 1px solid var(--sr-line-soft); padding-top: 16px; }
+.cover .who b { font-family: var(--sr-kr-display); font-weight: 400; font-size: 26px; }
+.cover .portrait { position: relative; display: flex; align-items: flex-end; justify-content: center; }
+.cover .portrait::before { content: ""; position: absolute; left: 6%; right: 6%; bottom: 0; height: 72%; background: var(--sr-ember); }
+.cover .portrait img { position: relative; width: 100%; filter: grayscale(1) contrast(1.08); }
+.cover .scribble { position: absolute; z-index: 2; top: 4%; right: -6px; font-family: var(--sr-script); font-size: 30px; color: var(--sr-accent); transform: rotate(-8deg); white-space: nowrap; }
+
+.fit { width: 100%; border-collapse: collapse; font-size: 15px; }
+.fit th, .fit td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--sr-line-soft); }
+.fit th { font-family: var(--sr-display); font-weight: 400; letter-spacing: .06em; text-transform: uppercase; font-size: 14px; color: var(--sr-ink-2); border-bottom-color: var(--sr-line); }
+.fit td:first-child { width: 300px; font-weight: 800; }
+.fit td:first-child small { display: block; font-weight: 500; color: var(--sr-ink-2); font-size: 13px; margin-top: 2px; }
+.fit td:last-child { width: 90px; font-family: var(--sr-display); color: var(--sr-accent); letter-spacing: .04em; }
+.prefer { margin-top: auto; display: flex; gap: 16px; align-items: center; padding-top: 16px; }
+
+.map { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 0; flex: 1; }
+.lane { border-left: 1px solid var(--sr-line-soft); padding: 0 14px; display: flex; flex-direction: column; gap: 10px; position: relative; }
+.lane:first-child { border-left: 0; padding-left: 0; }
+.lane h4 { margin: 0 0 4px; font-family: var(--sr-display); font-weight: 400; font-size: 22px; letter-spacing: .04em; text-transform: uppercase; }
+.lane h4 small { display: block; font-family: var(--sr-body); font-size: 13px; font-weight: 700; color: var(--sr-ink-2); letter-spacing: 0; text-transform: none; }
+.lane:not(:last-child)::after { content: "→"; position: absolute; right: -9px; top: 4px; color: var(--sr-accent); font-weight: 800; }
+.node { padding: 8px 10px; border: 1px solid var(--sr-line-soft); background: var(--sr-surface); font-size: 14px; font-weight: 700; }
+.node small { display: block; font-weight: 500; font-size: 12px; color: var(--sr-ink-2); }
+.pin { padding: 8px 10px; background: var(--sr-accent); color: var(--sr-on-accent); font-size: 14px; font-weight: 800; }
+.pin small { display: block; font-weight: 700; font-size: 12px; }
+.season { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); border: 1px solid var(--sr-line); margin-top: 18px; }
+.season div { padding: 10px 14px; font-size: 14px; font-weight: 700; }
+.season div + div { border-left: 1px solid var(--sr-line-soft); }
+.season b { font-family: var(--sr-display); font-weight: 400; font-size: 26px; color: var(--sr-accent); margin-right: 6px; }
+
+.about { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); border-block: 1px solid var(--sr-line); flex: 1; }
+.about > div { padding: 24px 24px 24px 0; }
+.about > div + div { padding-left: 24px; border-left: 1px solid var(--sr-line-soft); }
+.about h3 { margin: 0 0 16px; }
+.about dl { margin: 0; display: grid; grid-template-columns: 72px minmax(0,1fr); gap: 10px 14px; font-size: 15px; }
+.about dt { color: var(--sr-ink-2); font-size: 13px; padding-top: 2px; }
+.about dd { margin: 0; font-weight: 700; }
+.xp { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.xp li { display: grid; grid-template-columns: 48px minmax(0,1fr); gap: 2px 12px; }
+.xp time { grid-row: span 2; font-family: var(--sr-display); font-size: 16px; color: var(--sr-accent); }
+.xp b { font-size: 15px; }
+.xp span { font-size: 13px; color: var(--sr-ink-2); }
+.xp li.key b { color: var(--sr-accent); }
+
+.doc { display: grid; grid-template-columns: minmax(0,1fr) 500px; gap: 40px; flex: 1; }
+.doc-main { display: flex; flex-direction: column; }
+.doc .big-no { font-family: var(--sr-display); font-size: 120px; line-height: .85; color: var(--sr-accent); }
+.doc h2 { font-size: 40px; margin: 14px 0 6px; }
+.doc .sub { font-size: 17px; color: var(--sr-ink-2); margin: 0 0 16px; }
+.concl { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 14px; }
+.concl li { font-size: 16px; }
+.concl li > div { display: grid; grid-template-columns: 44px minmax(0,1fr); }
+.concl li span.k { font-weight: 800; }
+.doc-side { display: grid; grid-template-rows: auto minmax(0,1fr); gap: 14px; align-content: start; }
+.doc-side > img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; background: var(--sr-surface); border: 1px solid var(--sr-line-soft); }
+.quad { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 8px; align-content: start; }
+.quad img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border: 1px solid var(--sr-line-soft); display: block; }
+.doc-foot { margin-top: auto; display: flex; gap: 18px; align-items: center; font-size: 13px; color: var(--sr-ink-2); padding-top: 14px; border-top: 1px solid var(--sr-line-soft); }
+
+.two { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 32px; flex: 1; }
+.kv { display: grid; grid-template-columns: 110px minmax(0,1fr); gap: 0; border-top: 1px solid var(--sr-line); }
+.kv dt, .kv dd { margin: 0; padding: 11px 0; border-bottom: 1px solid var(--sr-line-soft); font-size: 15px; }
+.kv dt { color: var(--sr-ink-2); font-size: 14px; }
+.kv dd { font-weight: 700; }
+.obs { width: 100%; border-collapse: collapse; font-size: 14px; }
+.obs th, .obs td { text-align: left; padding: 10px 10px; border-bottom: 1px solid var(--sr-line-soft); vertical-align: top; }
+.obs th { font-family: var(--sr-display); font-weight: 400; letter-spacing: .06em; font-size: 13px; color: var(--sr-ink-2); border-bottom-color: var(--sr-line); text-transform: uppercase; }
+.obs td:last-child { color: var(--sr-accent); font-weight: 800; white-space: nowrap; }
+.judge td:first-child, .judge th:first-child { white-space: nowrap; font-weight: 700; }
+.obs td.ex { color: var(--sr-ink); font-weight: 500; white-space: normal; }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); border-block: 1px solid var(--sr-line-soft); margin-bottom: 22px; }
+.stat { padding: 18px 18px 16px 0; display: grid; gap: 6px; }
+.stat + .stat { padding-left: 18px; border-left: 1px solid var(--sr-line-soft); }
+.stat b { font-family: var(--sr-display); font-weight: 400; font-size: 64px; line-height: .9; }
+.stat b sup { font-size: .35em; vertical-align: top; margin-left: 3px; color: var(--sr-accent); }
+.stat span { font-size: 13px; color: var(--sr-ink-2); }
+
+
+.core-grid { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,1fr); gap: 32px; flex: 1; min-height: 0; }
+.gim { display: grid; gap: 10px; }
+.gim .g { border: 1px solid var(--sr-line-soft); background: var(--sr-surface); padding: 12px 14px; }
+.gim .g b { display: block; font-size: 16px; margin-bottom: 4px; }
+.gim .g b i { font-style: normal; font-family: var(--sr-display); color: var(--sr-accent); margin-right: 8px; letter-spacing: .04em; }
+.gim .g span { display: block; font-size: 13px; color: var(--sr-ink-2); }
+.schema { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.schema .t { border: 1px solid var(--sr-line); background: var(--sr-surface); }
+.schema .t h5 { margin: 0; padding: 7px 10px; font-family: var(--sr-display); font-weight: 400; font-size: 15px; letter-spacing: .04em; background: var(--sr-ink); color: var(--sr-bg); }
+.schema .t ul { list-style: none; margin: 0; padding: 8px 10px; font-size: 12.5px; line-height: 1.6; }
+.schema .t li.k { color: var(--sr-accent); font-weight: 800; }
+.schema .t li.f { color: var(--sr-ink-2); }
+.badge-ex { display: inline-block; margin-left: 8px; padding: 2px 6px; font-size: 11px; font-weight: 800; border: 1px dashed var(--sr-accent); color: var(--sr-accent); vertical-align: middle; }
+
+
+.spec { display: grid; grid-template-columns: 300px minmax(0,1fr) 360px; gap: 0; flex: 1; border-top: 1px solid var(--sr-line); }
+.spec > div { padding: 18px 26px 0 0; }
+.spec > div + div { padding-left: 26px; border-left: 1px solid var(--sr-line-soft); }
+.spec h3 { margin: 0 0 14px; }
+.spec .photo { width: 150px; aspect-ratio: 3 / 4; object-fit: cover; border: 1px solid var(--sr-line-soft); margin-bottom: 18px; }
+.spec dl { margin: 0; display: grid; grid-template-columns: 64px minmax(0,1fr); gap: 9px 12px; font-size: 14.5px; }
+.spec dt { color: var(--sr-ink-2); font-size: 13px; padding-top: 2px; }
+.spec dd { margin: 0; font-weight: 700; }
+.spec dd span { display: block; font-weight: 500; font-size: 12.5px; color: var(--sr-ink-2); }
+.spec .xp { gap: 12px; }
+.spec .xp b { font-size: 14.5px; }
+.spec .xp span { font-size: 12.5px; }
+.mini { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--sr-line-soft); margin-bottom: 14px; }
+.mini div { padding: 8px 12px; display: grid; gap: 2px; }
+.mini div:nth-child(even) { border-left: 1px solid var(--sr-line-soft); }
+.mini div:nth-child(n+3) { border-top: 1px solid var(--sr-line-soft); }
+.mini b { font-family: var(--sr-display); font-weight: 400; font-size: 34px; line-height: .95; }
+.mini b sup { font-size: .4em; vertical-align: top; margin-left: 2px; color: var(--sr-accent); }
+.mini span { font-size: 12.5px; color: var(--sr-ink-2); }
+.docs { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--sr-line-soft); }
+.docs li { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--sr-line-soft); font-size: 14px; }
+.docs li b { font-weight: 800; }
+.docs li i { font-style: normal; font-size: 12.5px; color: var(--sr-ink-2); margin-left: 6px; }
+.docs li em { font-family: var(--sr-display); font-size: 15px; letter-spacing: .04em; }
+
+.tl { list-style: none; margin: 0; padding: 0; position: relative; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); flex: 1; min-height: 0; }
+.tl.b { grid-template-columns: repeat(3, minmax(0,1fr)); }
+.tl::before { content: ""; position: absolute; left: 0; right: 0; top: 33px; height: 2px; background: var(--sr-accent); }
+.st { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 0 20px 12px; min-width: 0; min-height: 0; }
+.st + .st { border-left: 1px solid var(--sr-line-soft); }
+.st:first-child { padding-left: 0; }
+.st:last-child { padding-right: 0; }
+.st time { font-family: var(--sr-display); font-size: 22px; letter-spacing: .04em; color: var(--sr-accent); line-height: 1; height: 24px; white-space: nowrap; }
+.st .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--sr-bg); border: 2px solid var(--sr-accent); margin: -2px 0 4px; position: relative; z-index: 1; }
+.st h4 { margin: 0; font-size: 16px; font-weight: 800; line-height: 1.35; }
+.st p { margin: 0; font-size: 13px; line-height: 1.55; color: var(--sr-ink-2); }
+.st .out { display: flex; flex-wrap: wrap; gap: 4px; }
+.st .out span { padding: 2px 7px; border: 1px solid var(--sr-line); font-size: 12px; font-weight: 700; white-space: nowrap; }
+.st .gal { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.st .gal figure { margin: 0; min-width: 0; }
+.st .gal img { width: 100%; height: var(--mh, 96px); object-fit: contain; background: var(--sr-surface); border: 1px solid var(--sr-line-soft); }
+.st .gal figcaption { margin-top: 3px; font-size: 11px; line-height: 1.35; color: var(--sr-ink-2); }
+.st .gal .wide { grid-column: span 2; }
+.st.hot { background: var(--sr-surface); padding: 0 18px 14px; }
+.st.hot .dot { background: var(--sr-accent); }
+.st.hot h4 { color: var(--sr-accent); font-size: 18px; }
+.st.hot p { color: var(--sr-ink); }
+.st.hot .out span { border-color: var(--sr-accent); }
+.st.hot .gal img { background: var(--sr-bg); }
+.st.now .dot { background: var(--sr-accent); box-shadow: 0 0 0 4px rgba(255,50,29,.25); }
+
+.play { display: grid; grid-template-columns: 660px minmax(0,1fr); gap: 32px; flex: 1; min-height: 0; align-items: start; }
+.play .shot { position: relative; }
+.play .shot img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border: 1px solid var(--sr-line-soft); }
+.pside { display: flex; flex-direction: column; gap: 18px; }
+.pstats { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); }
+.pstats div { display: grid; gap: 4px; padding-right: 12px; }
+.pstats div + div { padding-left: 14px; border-left: 1px solid var(--sr-line-soft); }
+.pstats b { font-family: var(--sr-display); font-weight: 400; font-size: 44px; line-height: .9; letter-spacing: .01em; }
+.pstats b sup { font-family: var(--sr-body); font-size: 15px; font-weight: 800; vertical-align: top; margin-left: 2px; color: var(--sr-accent); }
+.pstats span { font-size: 12.5px; color: var(--sr-ink-2); }
+.pside .kv { grid-template-columns: 96px minmax(0,1fr); }
+.pside .kv dt, .pside .kv dd { padding: 8px 0; }
+.pact { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.pact li { display: grid; gap: 4px; padding: 10px 14px; background: var(--sr-surface); font-size: 14.5px; font-weight: 700; line-height: 1.5; }
+.pact em { font-size: 12px; font-weight: 800; letter-spacing: .02em; }
+
+.glib { display: grid; grid-template-columns: 600px minmax(0,1fr); gap: 40px; flex: 1; min-height: 0; }
+.grows { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: minmax(0,1fr); column-gap: 24px; border-top: 1px solid var(--sr-line); }
+.grows li { display: flex; flex-direction: column; justify-content: center; gap: 7px; border-bottom: 1px solid var(--sr-line-soft); }
+.grows span { font-size: 14px; font-weight: 800; }
+.grows div { display: flex; gap: 8px; align-items: center; }
+.grows .more { font-style: normal; font-size: 22px; font-weight: 800; letter-spacing: 2px; color: var(--sr-ink-2); margin-left: 4px; line-height: 1; }
+.grows img { width: 52px; height: 52px; border-radius: 9px; border: 1px solid var(--sr-line-soft); }
+.gtext { padding-top: 14px; border-top: 1px solid var(--sr-line); font-size: 16px; line-height: 1.7; }
+
+.tlp { position: relative; }
+.tcap { margin: -6px 0 10px; font-size: 14px; font-weight: 800; }
+.tline { position: relative; height: 196px; }
+.tline::before { content: ""; position: absolute; left: 0; right: 4%; top: 98px; height: 2px; background: var(--sr-line); }
+.tline::after { content: ""; position: absolute; left: 0; right: 4%; top: 93px; height: 12px; background: repeating-linear-gradient(90deg, var(--sr-line-soft) 0 1px, transparent 1px 16px); }
+.tk { position: absolute; top: 98px; width: 0; }
+.tk::before { content: ""; position: absolute; left: 0; width: 1px; height: var(--h); background: var(--sr-ink-3); }
+.tk.up::before { bottom: 0; }
+.tk.dn::before { top: 2px; }
+.tk .lb { position: absolute; left: 0; transform: translateX(-50%); white-space: nowrap; padding: 4px 9px; border: 1px solid var(--sr-line); background: var(--sr-surface); border-radius: 6px; font-size: 12.5px; font-weight: 700; }
+.tk .lb i { font-style: normal; margin-right: 4px; color: var(--sr-ink-2); }
+.tk.up .lb { bottom: var(--h); }
+.tk.dn .lb { top: calc(var(--h) + 2px); }
+.tk.hot .lb { border-color: var(--sr-accent); color: var(--sr-accent); }
+.tk.hot .lb i { color: var(--sr-accent); }
+.tk.start .lb { background: var(--sr-accent); border-color: var(--sr-accent); color: var(--sr-on-accent); }
+.tk.start .lb i { color: var(--sr-on-accent); }
+.flag { position: absolute; right: 0; top: 80px; padding: 6px 10px; background: var(--sr-ink); color: var(--sr-bg); font-family: var(--sr-kr-display); font-size: 16px; }
+.zoom3 { margin-top: 22px; display: grid; grid-template-columns: 600px minmax(0,1fr); gap: 40px; }
+.zleft { display: grid; gap: 14px; }
+.zcol ul { margin: 0; padding-left: 16px; display: grid; gap: 3px; font-size: 12.5px; line-height: 1.5; }
+.zright { border-top: 1px solid var(--sr-line); padding-top: 12px; font-size: 15px; line-height: 1.7; }
+.zcol { border-top: 2px solid var(--sr-accent); padding-top: 10px; }
+.znote { margin: 10px 0 0; font-size: 12px; line-height: 1.6; color: var(--sr-ink-2); }
+.zcol h4 { margin: 0 0 12px; font-size: 18px; font-weight: 800; }
+.zcol h4 i { font-style: normal; color: var(--sr-accent); margin-right: 6px; }
+.zcol h4 small { font-size: 12.5px; font-weight: 600; color: var(--sr-ink-2); margin-left: 10px; }
+.loop { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; counter-reset: lp; }
+.loop li { position: relative; counter-increment: lp; padding: 10px 12px; background: var(--sr-surface); border: 1px solid var(--sr-line-soft); display: grid; gap: 4px; align-content: start; }
+.loop li b { font-size: 14px; }
+.loop li b::before { content: counter(lp) ". "; color: var(--sr-accent); }
+.loop li span { font-size: 11.5px; line-height: 1.5; color: var(--sr-ink-2); }
+.loop li + li::before { content: "→"; position: absolute; left: -8px; top: 50%; transform: translate(-50%,-50%); font-weight: 800; color: var(--sr-ink-2); }
+
+.end { justify-content: center; }
+.end .d1 { font-size: 150px; }
+
+@media print {
+  @page { size: 1280px 720px; margin: 0; }
+  html, body { background: var(--sr-bg); }
+  .deck { display: block; padding: 0; }
+  .page { break-after: page; page-break-after: always; zoom: 1 !important; }
+  }
+</style>
+</head>
+<body>
+<main class="deck" id="deck">
+
+<section class="page">
+  <div class="cover" style="flex:1">
+    <div class="cover-main">
+      <div>
+        <h1 class="d1 big">War &amp;<br>Economy<span class="q">.</span></h1>
+        <p class="kr-h one">MMORPG 쟁유발·경제 특화 시스템 기획자</p>
+      </div>
+      <div class="who">
+        <b>이창연</b>
+        <span class="muted">게임 시스템 기획</span>
+        <span class="muted">lcyred001@naver.com</span>
+      </div>
+    </div>
+    <div class="portrait">
+      <span class="scribble">read the season!</span>
+      <img src="media/profile-sticker.png" alt="이창연 프로필 사진">
+    </div>
+  </div>
+</section>
+
+<section id="spec" class="page">
+  <div class="head" style="margin-bottom:0">
+    <div><h2 class="d1">Profile</h2></div>
+  </div>
+  <div class="spec">
+    <div>
+      <h3 class="label">인적 사항</h3>
+      <img class="photo" src="media/photo-resume.jpg" alt="이창연 증명사진">
+      <dl>
+        <dt>이름</dt><dd>이창연</dd>
+        <dt>생년월일</dt><dd>1999.09.14</dd>
+        <dt>학력</dt><dd>삼육대학교 소프트웨어전공<span>공학사 · 2022.03 – 2026.08 졸업</span></dd>
+        <dt>이메일</dt><dd>lcyred001@naver.com</dd>
+      </dl>
+    </div>
+    <div>
+      <h3 class="label">활동</h3>
+      <ul class="xp">
+        <li><time>2026</time><b>모나크 · AI로 개발 중인 리니지라이크 카드 시뮬레이터</b></li>
+        <li><time>2026</time><b>Tokyo Desire 총괄 기획 · 스팀 데모 등록</b></li>
+        <li><time>2026</time><b>MMORPG 기획서 4편 (제우스 3편 포함)</b></li>
+        <li><time>2024</time><b>BapTalkSU 총괄 기획</b></li>
+        <li><time>2023</time><b>게임 개발 동아리 creator</b></li>
+        <li><time>2011</time><b>GameMaker로 첫 게임 제작</b></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="label">포트폴리오</h3>
+      <ul class="docs">
+        <li><div><b>적응인자</b></div><em data-ref="adapt"></em></li>
+        <li><div><b>필드보스</b></div><em data-ref="field"></em></li>
+        <li><div><b>미다스의 금고</b></div><em data-ref="midas"></em></li>
+        <li><div><b>연전 던전</b></div><em data-ref="dungeon"></em></li>
+      </ul>
+    </div>
+  </div>
+  <span class="page-no"></span>
+</section>
+
+<section id="adapt" class="page">
+  <div class="doc">
+    <div class="doc-main">
+      <div class="big-no">01</div>
+      <div class="chips" style="margin-top:14px"><span class="chip on">보스 전투</span><span class="chip on">서버 간 경쟁</span><span class="chip">규칙·테이블</span></div>
+      <h2 class="kr-h">보스 경쟁 콘텐츠의 보정 규칙 「적응인자」</h2>
+      <ol class="concl">
+        <li><div><span class="k">분석</span>제우스 인터 서버 쟁의 구도는 용캐의 수와 격차로 정해지고, 아이온2 점령전의 패배 진영 보정은 진영 고착을 풀지 못해 결국 삭제됐다.</div></li>
+        <li><div><span class="k">문제</span>우세 서버가 신화 보스를 매주 독점하면, 열세 서버는 "어차피 이길 수 없다"며 쟁 참여 자체를 포기한다.</div></li>
+        <li><div><span class="k">제안</span>한 서버가 3회 연속 독점하면 보스가 적응해, 스택 3~5단계마다 독점 서버에 전투 디버프를, 독점을 끊은 서버에 보상 가중치 ×1.5~2.5를 준다.</div></li>
+      </ol>
+    </div>
+    <div class="doc-side">
+      <img src="media/lv9-zeus-cover.jpg" alt="적응인자 기획서 표지">
+      <div class="quad"><img src="media/doc-adapt-p10.jpg" alt="적응인자 기획서 10쪽"><img src="media/doc-adapt-p11.jpg" alt="적응인자 기획서 11쪽"><img src="media/doc-adapt-p13.jpg" alt="적응인자 기획서 13쪽"><img src="media/doc-adapt-p17.jpg" alt="적응인자 기획서 17쪽"></div>
+    </div>
+  </div>
+  <span class="page-no">05</span>
+</section>
+
+<section id="field" class="page">
+  <div class="doc">
+    <div class="doc-main">
+      <div class="big-no">02</div>
+      <div class="chips" style="margin-top:14px"><span class="chip on">보스 콘텐츠</span><span class="chip on">성장 수치</span><span class="chip">길드 경쟁</span></div>
+      <h2 class="kr-h">보스 콘텐츠의 보상·성장 구조 「필드보스」</h2>
+      <ol class="concl">
+        <li><div><span class="k">분석</span>영혼 파편은 성장도 10당 다이아가 가장 적게 드는 운명의 실타래로 이어져, 보스 리스폰 운영이 곧 성장 속도를 정한다.</div></li>
+        <li><div><span class="k">문제</span>신규 맵으로 보스가 15마리로 늘면, 합성 가속권은 7.5배·운명의 흐름은 약 1.7배가 필요해져 무과금·소과금 유저는 새 보스 루틴을 유지하지 못한다.</div></li>
+        <li><div><span class="k">제안</span>신규 맵과 함께 2주 한정 실타래 테마 패스(2,000다이아, 흐름 3배·가속권 21개)를 내 소과금 유저의 유지 보스를 4.1→5.1마리로 늘리고, 2주 차 신규 보스 처치 수 80% 유지로 성패를 확인한다.</div></li>
+      </ol>
+    </div>
+    <div class="doc-side">
+      <img src="media/doc-field-cover.jpg" alt="필드보스 분석서 표지">
+      <div class="quad"><img src="media/doc-field-p05.jpg" alt="필드보스 분석서 5쪽"><img src="media/doc-field-p07.jpg" alt="필드보스 분석서 7쪽"><img src="media/doc-field-p12.jpg" alt="필드보스 분석서 12쪽"><img src="media/doc-field-p15.jpg" alt="필드보스 분석서 15쪽"></div>
+    </div>
+  </div>
+  <span class="page-no">06</span>
+</section>
+
+<section id="midas" class="page">
+  <div class="doc">
+    <div class="doc-main">
+      <div class="big-no">03</div>
+      <div class="chips" style="margin-top:14px"><span class="chip on">주간 시즌 콘텐츠</span><span class="chip on">데이터 6주 수집</span><span class="chip">보상 순환</span></div>
+      <h2 class="kr-h">주간 시즌 콘텐츠의 보상 순환 「미다스의 금고」</h2>
+      <ol class="concl">
+        <li><div><span class="k">분석</span>금고는 거래소에 유동성을 공급하고, 강화와 거래 수수료로 재화를 소각한다.</div></li>
+        <li><div><span class="k">문제</span>거래소에 쌓인 잉여 희귀 장비는 이 순환에 닿지 않는다.</div></li>
+        <li><div><span class="k">제안</span>6번째 '서버 전용 슬롯'이 사들여 반응형 소각과 순환을 만든다.</div></li>
+      </ol>
+    </div>
+    <div class="doc-side">
+      <img src="media/lv9-midas-cover.jpg" alt="미다스의 금고 분석서 표지">
+      <div class="quad"><img src="media/doc-midas-p06.jpg" alt="미다스의 금고 분석서 6쪽"><img src="media/doc-midas-p07.jpg" alt="미다스의 금고 분석서 7쪽"><img src="media/doc-midas-p12.jpg" alt="미다스의 금고 분석서 12쪽"><img src="media/doc-midas-p13.jpg" alt="미다스의 금고 분석서 13쪽"></div>
+    </div>
+  </div>
+  <span class="page-no">07</span>
+</section>
+
+<section id="dungeon" class="page">
+  <div class="doc">
+    <div class="doc-main">
+      <div class="big-no">04</div>
+      <div class="chips" style="margin-top:14px"><span class="chip on">시즌 PvE</span><span class="chip">규칙·보상</span><span class="chip">아이온2</span></div>
+      <h2 class="kr-h">시즌 PvE 규칙·보상 설계 「연전 던전」</h2>
+      <ol class="concl">
+        <li><div><span class="k">분석</span>성장 재화를 얻으려면 같은 상위 던전을 반복해야 하고, 성장 서포트로 신규 유저도 곧바로 그 반복 동선에 들어온다.</div></li>
+        <li><div><span class="k">문제</span>성역은 클리어 칭호를 입장 조건으로 거는 문화와 전멸 기믹 탓에 입문 기회가 줄어, 그 앞 구간에서 성장이 정체된다.</div></li>
+        <li><div><span class="k">제안</span>기존 보스를 격주로 순환 편성하고 최종 보스를 성역 보스로 고정해, 10인 기믹을 파티 규모로 줄인 규칙 4종으로 성역 패턴을 미리 연습하게 한다.</div></li>
+      </ol>
+    </div>
+    <div class="doc-side">
+      <img src="media/lv9-aion-cover.jpg" alt="연전 던전 기획서 표지">
+      <div class="quad"><img src="media/doc-dungeon-p10.jpg" alt="연전 던전 기획서 10쪽"><img src="media/doc-dungeon-p11.jpg" alt="연전 던전 기획서 11쪽"><img src="media/doc-dungeon-p15.jpg" alt="연전 던전 기획서 15쪽"><img src="media/doc-dungeon-p17.jpg" alt="연전 던전 기획서 17쪽"></div>
+    </div>
+  </div>
+  <span class="page-no">08</span>
+</section>
+
+<section id="timeline" class="page">
+  <div class="head">
+    <div><h2 class="d1">Activity</h2></div>
+  </div>
+  <ol class="tl">
+    <li class="st " style="--mh:104px">
+      <time>2011</time><span class="dot"></span>
+      <h4>첫 게임을 만들다</h4>
+      <p>GameMaker로 게임을 만들어 카페에 올리고, 사람들의 반응을 보며 흥미를 느끼고 게임기획자를 꿈꾸기 시작했다.</p>
+      <div class="out"><span>GameMaker 게임 2편</span></div>
+      <div class="gal"><figure><img src="media/lv1-game.png" alt="「경찰과 도둑」"><figcaption>「경찰과 도둑」</figcaption></figure><figure><img src="media/lv1-space.png" alt="space game"><figcaption>space game</figcaption></figure><figure class="wide"><img src="media/lv1-cafe.png" alt="CrazyGM 카페에 올린 「경찰과 도둑 0.5」"><figcaption>CrazyGM 카페에 올린 「경찰과 도둑 0.5」</figcaption></figure></div>
+    </li>
+    <li class="st " style="--mh:150px">
+      <time>2015–16</time><span class="dot"></span>
+      <h4>학창 시절 게임 기획 · 개발</h4>
+      <p>게임기획을 주제로 교내 발표 또는 경진 대회에 꾸준히 참가했다.</p>
+      <div class="out"><span>발표 자료 2편</span><span>교육용 게임</span></div>
+      <div class="gal"><figure><img src="media/lv2-dream.jpg" alt="'나의 꿈 발표대회' 발표 자료 (2015)"><figcaption>'나의 꿈 발표대회' 발표 자료 (2015)</figcaption></figure><figure><img src="media/lv2-edu-game.png" alt="지구과학 교육 게임 (2016)"><figcaption>지구과학 교육 게임 (2016)</figcaption></figure></div>
+    </li>
+    <li class="st " style="--mh:74px">
+      <time>2023</time><span class="dot"></span>
+      <h4>게임 개발 동아리 creator · 기획 스터디</h4>
+      <p>게임기획 스터디에 참여해 동아리 선배들과 주제를 잡고 토론하거나 주제에 맞게 써온 기획서들을 공유하며 피드백하는 시간을 가지면서 본격적인 게임 기획을 시작했다.</p>
+      <div class="out"><span>역기획서 4편</span><span>창작 기획서 2편</span></div>
+      <div class="gal"><figure><img src="media/lv7-hammer.jpg" alt="해머 로얄 창작 기획서"><figcaption>해머 로얄 창작 기획서</figcaption></figure><figure><img src="media/lv7-sect.jpg" alt="약소문파 키우기 아이디어 제안서"><figcaption>약소문파 키우기 아이디어 제안서</figcaption></figure><figure><img src="media/lv7-rummikub.jpg" alt="루미큐브 역기획서"><figcaption>루미큐브 역기획서</figcaption></figure><figure><img src="media/lv7-brotato.jpg" alt="Brotato 강화 시스템 역기획서"><figcaption>Brotato 강화 시스템 역기획서</figcaption></figure><figure><img src="media/lv7-deadcells.jpg" alt="Dead Cells 시스템 역기획서"><figcaption>Dead Cells 시스템 역기획서</figcaption></figure><figure><img src="media/lv9-botw-fsm.jpg" alt="야생의 숨결 몬스터 AI 역기획서"><figcaption>야생의 숨결 몬스터 AI 역기획서</figcaption></figure></div>
+    </li>
+  </ol>
+  <span class="page-no"></span>
+</section>
+
+<section id="timeline2" class="page">
+  <div class="head">
+    <div><h2 class="d1">Activity</h2></div>
+  </div>
+  <ol class="tl b">
+    <li class="st " style="--mh:170px">
+      <time>2024.03–06</time><span class="dot"></span>
+      <h4>모바일 프로그래밍 · BapTalkSU 총괄 기획</h4>
+      <p>교내 사람들과 밥 약속을 잡는 미팅 앱을 개발하고자 총괄 기획을 맡아 기능 명세, 일정 관리, 와이어프레임 제작을 주로 담당했다.</p>
+      <div class="out"><span>요구사항 명세서</span><span>WBS · 간트 차트</span><span>와이어프레임</span><span>개략설계</span><span>사용자 매뉴얼</span><span>시험 절차서 · 결과서</span></div>
+      <div class="gal"><figure><img src="media/lv8-figma.png" alt="피그마 와이어프레임"><figcaption>피그마 와이어프레임</figcaption></figure><figure><img src="media/lv8-gantt.png" alt="WBS · 간트 차트"><figcaption>WBS · 간트 차트</figcaption></figure></div>
+    </li>
+    <li class="st" style="--mh:92px">
+      <time>2026.03–06</time><span class="dot"></span>
+      <h4>산학협력 캡스톤 · Tokyo Desire : Deck Builders 총괄 기획</h4>
+      <p>협력하는 회사가 개발 중지한 에셋을 받아 로그라이크 덱빌딩 게임을 제작하여 스팀 덱빌딩 페스티벌에 데모를 등록했다. 이 데모를 바탕으로 협력사가 이어서 개발 중이며, 현재 버전은 데모와 다르다.</p>
+      <div class="out"><span>기획 문서 13편</span><span>UI 명세서</span><span>데이터 테이블 6종</span><span>에셋 요청 리스트</span><span>스팀 데모 등록</span></div>
+      <div class="gal"><figure><img src="media/lv10-steam.jpg" alt="스팀 라이브러리 페이지 (체험판)"><figcaption>스팀 라이브러리 페이지 (체험판)</figcaption></figure><figure><img src="media/lv10-system.jpg" alt="시스템 기획서 (Act 1 MVP)"><figcaption>시스템 기획서 (Act 1 MVP)</figcaption></figure><figure class="wide"><img src="media/lv10-meeting.jpg" alt="팀 회의"><figcaption>팀 회의</figcaption></figure></div>
+    </li>
+    <li class="st now">
+      <time>2026.11–</time><span class="dot"></span>
+      <h4>모나크 · AI로 개발 중인 리니지라이크 카드 시뮬레이터</h4>
+      <p>플레이어가 길드장이 되어 1시즌 동안 길드를 운영하고 확장한다. AI로 이루어진 길드 또는 개인과의 여러 관계 속에서 경쟁하며 공성전의 승리를 목표로 하는 리니지라이크 카드 시뮬레이터 게임. Claude Code 및 Codex를 활용하여 언리얼 엔진으로 제작 중에 있으며 현재 알파 빌드 단계이다.</p>
+      <div class="out"><span>알파 빌드 1종</span></div>
+      <div class="gal" style="--mh:198px"><figure class="wide"><img src="media/monarch-flow.gif" alt="모나크 한 판 흐름 시연"><figcaption>플레이 영상</figcaption></figure></div>
+    </li>
+  </ol>
+  <span class="page-no"></span>
+</section>
+
+<section id="aiwf" class="page">
+  <div class="head">
+    <div><h2 class="d1">AI Workflow</h2></div>
+  </div>
+  <div class="tlp">
+    <p class="tcap">범용 제작 파이프라인</p>
+    <div class="tline">
+      <div class="tk up " style="left:3.00%;--h:30px"><span class="lb"><i>①</i>장르 선택</span></div><div class="tk dn " style="left:11.00%;--h:30px"><span class="lb"><i>②</i>기입본 생성</span></div><div class="tk up " style="left:19.00%;--h:62px"><span class="lb"><i>③</i>핵심 루프 설계</span></div><div class="tk dn hot" style="left:27.00%;--h:62px"><span class="lb"><i>④</i>프로토타입 제작 ↺</span></div><div class="tk up " style="left:35.00%;--h:30px"><span class="lb"><i>⑤</i>아트 스타일 확정</span></div><div class="tk dn " style="left:43.00%;--h:30px"><span class="lb"><i>⑥</i>상세 시스템 설계</span></div><div class="tk up " style="left:51.00%;--h:62px"><span class="lb"><i>⑦</i>제작 기준 수립</span></div><div class="tk dn " style="left:59.00%;--h:62px"><span class="lb"><i>⑧</i>무결성 검증</span></div><div class="tk up " style="left:67.00%;--h:30px"><span class="lb"><i>⑨</i>사전 패키징 검증</span></div><div class="tk dn " style="left:75.00%;--h:30px"><span class="lb"><i>⑩</i>버티컬 슬라이스</span></div><div class="tk up hot" style="left:83.00%;--h:62px"><span class="lb"><i>⑪</i>알파 빌드 제작</span></div><div class="tk dn " style="left:91.00%;--h:62px"><span class="lb"><i>⑫</i>밸런스 · QA</span></div>
+      <div class="flag">베타</div>
+    </div>
+  </div>
+  <div class="zoom3">
+    <div class="zleft">
+      <div class="zcol">
+        <h4><i>④</i>프로토타입 제작 <small>모나크 적용</small></h4>
+        <ul>
+          <li>프로토타입 첫 버전을 직접 플레이해 보고 재미가 없어 전량 폐기</li>
+          <li>1회차 프로토타입부터 직접 플레이하며 수정 여섯 번 — 카드 조작, 초상화, 길드 태그를 회차마다 고침</li>
+          <li>회차마다 봇 시뮬로 공성 우승률을 재서 목표 범위(20~40%) 안에 들어오는지 확인</li>
+        </ul>
+      </div>
+      <div class="zcol">
+        <h4><i>⑪</i>알파 빌드 제작 <small>모나크 적용</small></h4>
+        <ul>
+          <li>지휘 세션 1개 + 화면·연출 / 규칙·데이터 작업 세션으로 나눠 동시에 구현</li>
+          <li>알파에 넣을 것과 뺄 것을 기입본에 표시해 범위를 고정</li>
+          <li>45턴 한 판 완주, 자동 검사 통과, 실행 파일 검증까지 마친 알파 빌드 완성</li>
+        </ul>
+      </div>
+    </div>
+    <div class="zright"></div>
+  </div>
+  <span class="page-no">11</span>
+</section>
+
+<section id="playrec" class="page">
+  <div class="head">
+    <div><h2 class="d1">Zeus Record</h2></div>
+  </div>
+  <div class="play">
+    <div class="shot"><img src="media/play-zeus-character.jpg" alt="제우스 캐릭터 정보 화면"></div>
+    <div class="pside">
+      <div class="pstats">
+        <div><b>66</b><span>레벨</span></div>
+        <div><b>63,022</b><span>성장도</span></div>
+        <div><b>226<sup>위</sup></b><span>성장도 랭킹</span></div>
+      </div>
+      <dl class="kv">
+        <dt>플레이 기간</dt><dd>출시 후 ~</dd>
+        <dt>서버</dt><dd>아르테미스 1서버</dd>
+        <dt>클래스</dt><dd>레인저</dd>
+        <dt>길드</dt><dd>판도라</dd>
+      </dl>
+      <ol class="pact">
+        <li><em>라인 길드</em>제우스 1서버 라인 길드 소속으로 다수의 인터쟁 경험</li>
+        <li><em>중립 길드</em>이후 중립 길드에서 공성전 제외 모든 콘텐츠 참여중</li>
+      </ol>
+    </div>
+  </div>
+  <span class="page-no">10</span>
+</section>
+
+<section id="playlib" class="page">
+  <div class="head">
+    <div><h2 class="d1">Play Record</h2></div>
+  </div>
+  <div class="glib">
+    <ul class="grows">
+        <li><span>MMORPG</span><div><img src="media/icons/zeus.jpg" alt="제우스: 오만의 신" title="제우스: 오만의 신"><img src="media/icons/eclipse.jpg" alt="이클립스: 더 어웨이크닝" title="이클립스: 더 어웨이크닝"><img src="media/icons/dokkaebi.jpg" alt="도깨비의세계" title="도깨비의세계"><img src="media/icons/aion2.jpg" alt="아이온2" title="아이온2"><i class="more" aria-hidden="true">···</i></div></li>
+        <li><span>RPG</span><div><img src="media/icons/bg3.jpg" alt="발더스 게이트 3" title="발더스 게이트 3"><img src="media/icons/clairobscur.jpg" alt="클레르 옵스퀴르: 33 원정대" title="클레르 옵스퀴르: 33 원정대"><img src="media/icons/chronotrigger.jpg" alt="크로노 트리거" title="크로노 트리거"><img src="media/icons/taleofimmortal.jpg" alt="귀곡팔황" title="귀곡팔황"><i class="more" aria-hidden="true">···</i></div></li>
+        <li><span>전략 · 디펜스</span><div><img src="media/icons/civ5.jpg" alt="시드 마이어의 문명 V" title="시드 마이어의 문명 V"><img src="media/icons/xcom2.jpg" alt="엑스컴 2" title="엑스컴 2"><img src="media/icons/lol.jpg" alt="리그 오브 레전드" title="리그 오브 레전드"><img src="media/icons/kingdomrush.jpg" alt="킹덤 러쉬" title="킹덤 러쉬"><i class="more" aria-hidden="true">···</i></div></li>
+        <li><span>카드 · 덱빌딩</span><div><img src="media/icons/sts.jpg" alt="슬레이 더 스파이어" title="슬레이 더 스파이어"><img src="media/icons/balatro.jpg" alt="발라트로" title="발라트로"><img src="media/icons/hearthstone.jpg" alt="하스스톤" title="하스스톤"><img src="media/icons/nightoffullmoon.jpg" alt="나이트 오브 풀문" title="나이트 오브 풀문"><i class="more" aria-hidden="true">···</i></div></li>
+        <li><span>로그라이크</span><div><img src="media/icons/hades.jpg" alt="하데스" title="하데스"><img src="media/icons/deadcells.jpg" alt="데드 셀" title="데드 셀"><img src="media/icons/brotato.jpg" alt="Brotato" title="Brotato"><img src="media/icons/dungeonmaker.jpg" alt="던전메이커" title="던전메이커"><i class="more" aria-hidden="true">···</i></div></li>
+        <li><span>오픈월드</span><div><img src="media/icons/eldenring.jpg" alt="엘든 링" title="엘든 링"><img src="media/icons/botw.jpg" alt="젤다의 전설 브레스 오브 더 와일드" title="젤다의 전설 브레스 오브 더 와일드"><img src="media/icons/witcher3.jpg" alt="위쳐 3: 와일드 헌트" title="위쳐 3: 와일드 헌트"><img src="media/icons/rdr2.jpg" alt="레드 데드 리뎀션 2" title="레드 데드 리뎀션 2"><i class="more" aria-hidden="true">···</i></div></li>
+        <li><span>액션 · 플랫포머</span><div><img src="media/icons/sekiro.jpg" alt="SEKIRO: SHADOWS DIE TWICE" title="SEKIRO: SHADOWS DIE TWICE"><img src="media/icons/hollowknight.jpg" alt="할로우 나이트" title="할로우 나이트"><img src="media/icons/dmc.jpg" alt="DmC: 데빌 메이 크라이" title="DmC: 데빌 메이 크라이"><img src="media/icons/silksong.jpg" alt="할로우 나이트: 실크송" title="할로우 나이트: 실크송"><i class="more" aria-hidden="true">···</i></div></li>
+        <li><span>슈터</span><div><img src="media/icons/pubg.jpg" alt="PUBG: 배틀그라운드" title="PUBG: 배틀그라운드"><img src="media/icons/arcraiders.jpg" alt="아크 레이더스" title="아크 레이더스"><img src="media/icons/overwatch.jpg" alt="오버워치" title="오버워치"><img src="media/icons/division2.jpg" alt="톰 클랜시의 더 디비전 2" title="톰 클랜시의 더 디비전 2"><i class="more" aria-hidden="true">···</i></div></li>
+        <li><span>샌드박스 · 생존</span><div><img src="media/icons/palworld.jpg" alt="팰월드" title="팰월드"><img src="media/icons/terraria.jpg" alt="테라리아" title="테라리아"><img src="media/icons/minecraft.jpg" alt="마인크래프트" title="마인크래프트"><img src="media/icons/theforest.jpg" alt="더 포레스트" title="더 포레스트"><i class="more" aria-hidden="true">···</i></div></li>
+        <li><span>퍼즐 · 스토리</span><div><img src="media/icons/seoul2033.jpg" alt="서울 2033" title="서울 2033"><img src="media/icons/layton1.jpg" alt="레이튼 교수와 이상한 마을" title="레이튼 교수와 이상한 마을"><img src="media/icons/dredge.jpg" alt="드레지" title="드레지"><img src="media/icons/aceattorney.jpg" alt="역전재판 123 나루호도 셀렉션" title="역전재판 123 나루호도 셀렉션"><i class="more" aria-hidden="true">···</i></div></li>
+    </ul>
+    <div class="gtext"></div>
+  </div>
+  <span class="page-no"></span>
+</section>
+
+
+<section class="page end">
+  <span class="label">Thank you</span>
+  <h2 class="d1" style="margin-top:12px">Ready for<br><em>Next Season.</em></h2>
+  <p class="muted" style="margin-top:28px">이창연 · lcyred001@naver.com</p>
+  <span class="page-no">13</span>
+</section>
+
+</main>
+<script>
+// 화면에서만: 창 너비에 맞춰 페이지를 축소 (인쇄 때는 원래 크기)
+(function () {
+  document.querySelectorAll('.page').forEach(function (p, i) { var n = p.querySelector('.page-no'); if (n) n.textContent = String(i + 1).padStart(2, '0'); });
+  var pages = Array.prototype.slice.call(document.querySelectorAll('.page'));
+  function no(id) { var el = document.getElementById(id); return el ? String(pages.indexOf(el) + 1).padStart(2, '0') : '??'; }
+  document.querySelectorAll('[data-ref]').forEach(function (r) {
+    var v = r.getAttribute('data-ref').split('-');
+    r.textContent = v.length > 1 ? no(v[0]) + '–' + no(v[1]) : no(v[0]);
+  });
+  function fit() {
+    var s = Math.min(1, (window.innerWidth - 32) / 1280);
+    document.querySelectorAll('.page').forEach(function (p) { p.style.zoom = s; });
+  }
+  window.addEventListener('resize', fit); fit();
+  window.addEventListener('beforeprint', function () { document.querySelectorAll('.page').forEach(function (p) { p.style.zoom = 1; }); });
+  window.addEventListener('afterprint', fit);
+})();
+</script>
+</body>
+</html>
