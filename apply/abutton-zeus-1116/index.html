@@ -261,18 +261,30 @@ em { font-style: normal; color: var(--sr-accent); }
 .end { justify-content: center; }
 .end .d1 { font-size: 150px; }
 
+
+.dock { position: fixed; z-index: 50; left: 50%; transform: translateX(-50%); bottom: 18px; display: flex; gap: 2px; padding: 6px; background: rgba(16,16,16,.9); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-radius: 999px; box-shadow: 0 18px 40px -16px rgba(0,0,0,.7), 0 0 0 1px var(--sr-line-soft) inset; }
+.dock .pill { position: absolute; top: 6px; bottom: 6px; left: 0; width: 0; border-radius: 999px; background: var(--sr-accent); transition: left .32s cubic-bezier(.3,.7,.2,1), width .32s cubic-bezier(.3,.7,.2,1); }
+.dock a { position: relative; z-index: 1; padding: 9px 16px; border-radius: 999px; white-space: nowrap; text-decoration: none; font-size: 14px; font-weight: 700; color: var(--sr-ink-2); transition: color .2s; }
+.dock a:hover, .dock a[aria-current="true"] { color: var(--sr-on-accent); }
+.dock a:hover:not([aria-current="true"]) { color: var(--sr-ink); }
+.dock a:focus-visible { outline: 2px solid var(--sr-ink); outline-offset: -2px; }
+.page { scroll-margin-top: 20px; }
+@media (max-width: 760px) { .dock a { padding: 8px 10px; font-size: 12px; } }
+@media (prefers-reduced-motion: reduce) { .dock .pill { transition: none; } }
+
 @media print {
   @page { size: 1280px 720px; margin: 0; }
   html, body { background: var(--sr-bg); }
   .deck { display: block; padding: 0; }
   .page { break-after: page; page-break-after: always; zoom: 1 !important; }
-  }
+    .dock { display: none !important; }
+}
 </style>
 </head>
 <body>
 <main class="deck" id="deck">
 
-<section class="page">
+<section id="cover" class="page">
   <div class="cover" style="flex:1">
     <div class="cover-main">
       <div>
@@ -564,8 +576,9 @@ em { font-style: normal; color: var(--sr-accent); }
 </section>
 
 </main>
+<nav class="dock" aria-label="쪽 이동"><span class="pill" aria-hidden="true"></span><a href="#cover" data-sec="cover">표지</a><a href="#spec" data-sec="spec">Profile</a><a href="#adapt" data-sec="adapt">기획서</a><a href="#timeline" data-sec="timeline">Activity</a><a href="#aiwf" data-sec="aiwf">AI Workflow</a><a href="#playrec" data-sec="playrec">Zeus Record</a><a href="#playlib" data-sec="playlib">Play Record</a></nav>
+
 <script>
-// 화면에서만: 창 너비에 맞춰 페이지를 축소 (인쇄 때는 원래 크기)
 (function () {
   document.querySelectorAll('.page').forEach(function (p, i) { var n = p.querySelector('.page-no'); if (n) n.textContent = String(i + 1).padStart(2, '0'); });
   var pages = Array.prototype.slice.call(document.querySelectorAll('.page'));
@@ -581,6 +594,34 @@ em { font-style: normal; color: var(--sr-accent); }
   window.addEventListener('resize', fit); fit();
   window.addEventListener('beforeprint', function () { document.querySelectorAll('.page').forEach(function (p) { p.style.zoom = 1; }); });
   window.addEventListener('afterprint', fit);
+})();
+</script>
+
+<script>
+(function () {
+  var dock = document.querySelector('.dock'); if (!dock) return;
+  var pill = dock.querySelector('.pill'), links = [].slice.call(dock.querySelectorAll('a'));
+  var group = { field: 'adapt', midas: 'adapt', dungeon: 'adapt', timeline2: 'timeline' };
+  function setActive(id) {
+    id = group[id] || id;
+    links.forEach(function (a) { if (a.dataset.sec === id) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+    var a = dock.querySelector('a[aria-current="true"]'); if (!a) return;
+    pill.style.left = a.offsetLeft + 'px'; pill.style.width = a.offsetWidth + 'px';
+  }
+  var pages = [].slice.call(document.querySelectorAll('section.page[id]'));
+  function onScroll() {
+    var mid = window.innerHeight * 0.4, cur = pages[0];
+    pages.forEach(function (p) { if (p.getBoundingClientRect().top <= mid) cur = p; });
+    if (cur) setActive(cur.id);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  links.forEach(function (a) { a.addEventListener('click', function (e) {
+    var t = document.getElementById(a.dataset.sec); if (!t) return;
+    e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); history.replaceState(null, '', '#' + a.dataset.sec); setActive(a.dataset.sec);
+  }); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(onScroll);
+  onScroll();
 })();
 </script>
 </body>
