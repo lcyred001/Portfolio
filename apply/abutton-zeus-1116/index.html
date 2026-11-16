@@ -224,6 +224,14 @@ em { font-style: normal; color: var(--sr-accent); }
 .grows div { display: flex; gap: 8px; align-items: center; }
 .grows .more { font-style: normal; font-size: 22px; font-weight: 800; letter-spacing: 2px; color: var(--sr-ink-2); margin-left: 4px; line-height: 1; }
 .grows img { width: 52px; height: 52px; border-radius: 9px; border: 1px solid var(--sr-line-soft); }
+.grows li.hl { position: relative; }
+.grows .trace { position: absolute; top: 7px; left: -12px; width: calc(100% + 24px); height: calc(100% - 14px); overflow: visible; pointer-events: none; }
+.grows .trace rect { x: 1px; y: 1px; width: calc(100% - 2px); height: calc(100% - 2px); rx: 12px; fill: none; }
+.grows .trace .base { stroke: rgba(255,50,29,.3); stroke-width: 1.5; }
+.grows .trace .tail { stroke: var(--sr-accent); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 30 70; opacity: .35; animation: trace-tail 3.6s linear infinite; }
+.grows .trace .head { stroke: #ff6a55; stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 12 88; filter: drop-shadow(0 0 3px #ff321d) drop-shadow(0 0 9px rgba(255,50,29,.8)); animation: trace-head 3.6s linear infinite; }
+@keyframes trace-head { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -100; } }
+@keyframes trace-tail { from { stroke-dashoffset: 18; } to { stroke-dashoffset: -82; } }
 .gtext { padding-top: 14px; border-top: 1px solid var(--sr-line); font-size: 16px; line-height: 1.8; }
 .gtext h3 { margin: 0 0 14px; }
 .gtext p { margin: 0 0 16px; color: var(--sr-ink-2); }
@@ -339,6 +347,7 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
   .rv, .rv-mask, .rv-pop { opacity: 1 !important; transform: none !important; clip-path: none !important; }
   .tline::before, .tl::before { transform: none !important; }
   .cover .scribble, .cover .big .q { animation: none !important; }
+  .grows .trace .head, .grows .trace .tail { animation: none !important; }
 }
 </style>
 </head>
@@ -635,7 +644,7 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
   </div>
   <div class="glib">
     <ul class="grows">
-        <li><span>MMORPG</span><div><img src="media/icons/zeus.jpg" alt="제우스: 오만의 신" title="제우스: 오만의 신"><img src="media/icons/eclipse.jpg" alt="이클립스: 더 어웨이크닝" title="이클립스: 더 어웨이크닝"><img src="media/icons/dokkaebi.jpg" alt="도깨비의세계" title="도깨비의세계"><img src="media/icons/aion2.jpg" alt="아이온2" title="아이온2"><i class="more" aria-hidden="true">···</i></div></li>
+        <li class="hl"><svg class="trace" aria-hidden="true"><rect class="base" pathLength="100"/><rect class="tail" pathLength="100"/><rect class="head" pathLength="100"/></svg><span>MMORPG</span><div><img src="media/icons/zeus.jpg" alt="제우스: 오만의 신" title="제우스: 오만의 신"><img src="media/icons/eclipse.jpg" alt="이클립스: 더 어웨이크닝" title="이클립스: 더 어웨이크닝"><img src="media/icons/dokkaebi.jpg" alt="도깨비의세계" title="도깨비의세계"><img src="media/icons/aion2.jpg" alt="아이온2" title="아이온2"><i class="more" aria-hidden="true">···</i></div></li>
         <li><span>RPG</span><div><img src="media/icons/bg3.jpg" alt="발더스 게이트 3" title="발더스 게이트 3"><img src="media/icons/clairobscur.jpg" alt="클레르 옵스퀴르: 33 원정대" title="클레르 옵스퀴르: 33 원정대"><img src="media/icons/chronotrigger.jpg" alt="크로노 트리거" title="크로노 트리거"><img src="media/icons/taleofimmortal.jpg" alt="귀곡팔황" title="귀곡팔황"><i class="more" aria-hidden="true">···</i></div></li>
         <li><span>전략 · 디펜스</span><div><img src="media/icons/civ5.jpg" alt="시드 마이어의 문명 V" title="시드 마이어의 문명 V"><img src="media/icons/xcom2.jpg" alt="엑스컴 2" title="엑스컴 2"><img src="media/icons/lol.jpg" alt="리그 오브 레전드" title="리그 오브 레전드"><img src="media/icons/kingdomrush.jpg" alt="킹덤 러쉬" title="킹덤 러쉬"><i class="more" aria-hidden="true">···</i></div></li>
         <li><span>카드 · 덱빌딩</span><div><img src="media/icons/sts.jpg" alt="슬레이 더 스파이어" title="슬레이 더 스파이어"><img src="media/icons/balatro.jpg" alt="발라트로" title="발라트로"><img src="media/icons/hearthstone.jpg" alt="하스스톤" title="하스스톤"><img src="media/icons/nightoffullmoon.jpg" alt="나이트 오브 풀문" title="나이트 오브 풀문"><i class="more" aria-hidden="true">···</i></div></li>
