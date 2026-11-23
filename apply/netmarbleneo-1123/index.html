@@ -114,7 +114,7 @@ html.motion .cover .appstack { animation: appstack 4.2s ease-in-out infinite; }
 
 .doc { display: grid; grid-template-columns: minmax(0,1fr) 500px; gap: 40px; flex: 1; }
 .doc-main { display: flex; flex-direction: column; }
-.doc .big-no { font-family: var(--sr-display); font-size: 100px; line-height: .85; color: var(--sr-accent); }
+.doc .big-no { font-family: var(--sr-display); font-size: 64px; line-height: .85; color: var(--sr-accent); }
 .doc h2 { font-size: 34px; line-height: 1.2; margin: 14px 0 6px; }
 .doc h2 .t2 { display: inline-block; margin-top: 6px; font-size: 26px; color: var(--sr-accent); }
 .doc .sub { font-size: 17px; color: var(--sr-ink-2); margin: 0 0 16px; }
@@ -208,6 +208,7 @@ html.motion .cover .appstack { animation: appstack 4.2s ease-in-out infinite; }
 .ytbtn { position: absolute; right: 10px; bottom: 10px; z-index: 2; display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px 7px 9px; border-radius: 999px; background: var(--sr-accent); color: var(--sr-on-accent); text-decoration: none; font-size: 12.5px; font-weight: 800; box-shadow: 0 8px 18px -8px rgba(0,0,0,.8); transition: transform .2s; }
 .ytbtn:hover { transform: translateY(-2px); }
 .ytbtn svg { width: 14px; height: 14px; fill: currentColor; }
+.doc-side > .vwrap > img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; background: var(--sr-surface); border: 1px solid var(--sr-line-soft); display: block; }
 .tall { display: grid; grid-template-columns: 315px minmax(0,1fr); gap: 10px; height: 560px; }
 .tall > .vwrap > video { height: 560px; width: 315px; object-fit: contain; background: #000; border: 1px solid var(--sr-line-soft); image-rendering: pixelated; }
 .tall .col { display: grid; grid-template-rows: 1fr 1fr; gap: 10px; min-height: 0; }
@@ -223,6 +224,158 @@ html.motion .cover .appstack { animation: appstack 4.2s ease-in-out infinite; }
 .gp .refs .ref::after { content: attr(data-name); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translate(-50%, 4px); padding: 5px 9px; border-radius: 6px; background: var(--sr-ink); color: var(--sr-bg); font-size: 12px; font-weight: 700; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .15s, transform .15s; z-index: 5; }
 .gp .refs .ref:hover::after { opacity: 1; transform: translate(-50%, 0); }
 .gp .refs .ref:hover img { transform: translateY(-3px); }
+/* 글자 키움 (11-23) */
+.gp h2 { font-size: 34px; }
+.gp h2 .t2 { font-size: 24px; }
+.gp .lbl { font-size: 13.5px; }
+.gp .ov { font-size: 16.5px; }
+.gp .ov.tg { font-size: 15.5px; }
+.gp .pts li { font-size: 15px; }
+.gp .pts b { font-size: 16.5px; }
+.doc h2 .t2, .aip h2 .t2 { font-family: "Noto Sans KR", "Malgun Gothic", sans-serif; font-weight: 800; letter-spacing: -.01em; }
+.gp .big-no { font-size: 64px; }
+.gp .chips { margin-top: 10px !important; }
+.gp .lbl { margin: 9px 0 3px; }
+.gp .pts { gap: 12px; }
+.gp .pts b { margin-bottom: 0; }
+.gp .pts li { line-height: 1.4; }
+.gp .who2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 14.5px; line-height: 1.5; color: var(--sr-ink-2); }
+.gp .who2 > div { padding: 10px 14px; background: var(--sr-surface); border-left: 3px solid var(--sr-line); }
+.gp .who2 > div:first-child { border-left-color: var(--sr-accent); }
+.gp .who2 h4 { margin: 0 0 3px; font-size: 14.5px; color: var(--sr-ink); }
+.aipr { display: flex; flex-direction: column; gap: 10px; }
+.aipr .story { display: grid; grid-template-columns: 1fr 18px 1fr 18px 1fr; align-items: center; gap: 4px; }
+.aipr .story > i { font-style: normal; text-align: center; color: var(--sr-accent); font-size: 16px; }
+.aipr figure { margin: 0; display: flex; flex-direction: column; gap: 5px; }
+.aipr figure img { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; background: #f4f1ea; display: block; }
+.aipr figure.dark img { background: #0d0d10; }
+.aipr figure.px img { image-rendering: pixelated; }
+.aipr figure.wide img { aspect-ratio: 16 / 9; }
+.aipr figcaption { font-size: 12px; line-height: 1.35; color: var(--sr-ink-2); }
+.aipr figcaption b { color: var(--sr-ink); }
+.aipr .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.aipr .nums2 { display: flex; gap: 28px; padding-top: 10px; border-top: 1px solid var(--sr-line-soft); }
+.aipr .nums2 div { font-size: 12.5px; color: var(--sr-ink-2); }
+.aipr .nums2 b { display: block; font-family: var(--sr-display); font-weight: 400; font-size: 28px; line-height: 1; color: var(--sr-ink); }
+.gp .refs img[src$=".svg"] { background: #0d0d0d; }
+.aipr .layers { display: grid; gap: 6px; }
+.aipr .layers div { display: grid; grid-template-columns: 150px minmax(0,1fr); gap: 10px; align-items: center; padding: 9px 12px; background: var(--sr-surface); border-left: 3px solid var(--sr-line); font-size: 13px; color: var(--sr-ink-2); }
+.aipr .layers code { font-family: ui-monospace, Consolas, monospace; font-size: 12.5px; color: var(--sr-ink); }
+.aipr .layers div.me { border-left-color: var(--sr-accent); }
+/* AI 쪽: 파트별 카드 */
+.partpg { display: flex; flex-direction: column; gap: 16px; flex: 1; }
+.partpg .ptop { display: flex; justify-content: space-between; align-items: flex-end; }
+.partpg .big-no { font-family: var(--sr-display); font-size: 50px; line-height: .85; color: var(--sr-accent); }
+.partpg h2 { font-size: 30px; margin: 8px 0 0; display: flex; align-items: baseline; gap: 14px; }
+.partpg h2 .t2 { font-family: "Noto Sans KR", "Malgun Gothic", sans-serif; font-weight: 800; font-size: 18px; color: var(--sr-accent); }
+.partpg .refs { display: flex; align-items: center; gap: 8px; }
+.partpg .refs span { font-size: 12px; font-weight: 800; letter-spacing: .08em; color: var(--sr-ink-3); margin-right: 4px; }
+.partpg .refs .ref { position: relative; display: block; font-style: normal; }
+.partpg .refs img { width: 42px; height: 42px; border-radius: 10px; box-shadow: 0 0 0 1px var(--sr-line); display: block; transition: transform .2s; }
+.partpg .refs img[src$=".svg"] { background: #0d0d0d; }
+.partpg .refs .ref::after { content: attr(data-name); position: absolute; bottom: calc(100% + 8px); right: 0; transform: translateY(4px); padding: 5px 9px; border-radius: 6px; background: var(--sr-ink); color: var(--sr-bg); font-size: 12px; font-weight: 700; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .15s, transform .15s; z-index: 5; }
+.partpg .refs .ref:hover::after { opacity: 1; transform: none; }
+.partpg .refs .ref:hover img { transform: translateY(-3px); }
+.pgrid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px 16px; }
+.pc { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.pc .ph { height: 112px; background: #0d0d10; overflow: hidden; }
+.pc .ph img { width: 100%; height: 100%; display: block; background: #f4f1ea; }
+.pc h4 { margin: 4px 0 0; font-size: 16px; color: var(--sr-ink); display: flex; align-items: baseline; gap: 8px; }
+.pc h4 em { font-style: normal; font-family: var(--sr-display); font-size: 15px; color: var(--sr-accent); }
+.pc p { margin: 0; font-size: 12.5px; line-height: 1.45; color: var(--sr-ink-2); }
+.pc .fl { color: var(--sr-ink); font-weight: 700; font-size: 12.5px; }
+.pc .me, .pc .ai { display: grid; grid-template-columns: 26px minmax(0,1fr); }
+.pc .me b { color: var(--sr-accent); }
+.pc .ai b { color: var(--sr-ink-3); }
+.partpg .ptitle { margin: 0; font-family: "Noto Sans KR", "Malgun Gothic", sans-serif; font-weight: 800; font-size: 26px; color: var(--sr-accent); letter-spacing: -.01em; }
+.pgrid.c2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.pgrid.c2 .pc .ph { height: 96px; }
+.pc h4 .ptl { margin-left: auto; display: flex; gap: 5px; }
+.pc h4 .ref { position: relative; display: block; font-style: normal; }
+.pc h4 .ref img { width: 22px; height: 22px; border-radius: 6px; box-shadow: 0 0 0 1px var(--sr-line); display: block; }
+.pc h4 .ref img[src$=".svg"] { background: #0d0d0d; }
+.pc h4 .ref::after { content: attr(data-name); position: absolute; bottom: calc(100% + 6px); right: 0; padding: 4px 8px; border-radius: 6px; background: var(--sr-ink); color: var(--sr-bg); font-size: 11.5px; font-weight: 700; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .15s; z-index: 5; }
+.pc h4 .ref:hover::after { opacity: 1; }
+.proj-grid.hub { grid-template-columns: repeat(4, minmax(0,1fr)); grid-template-rows: auto auto; gap: 14px; margin-top: 18px; }
+.proj-grid.hub .proj-card { padding: 14px 14px 12px; gap: 7px; }
+.proj-grid.hub .proj-card img { width: 60px; height: 60px; border-radius: 14px; }
+.proj-grid.hub .doc-card img { border-radius: 4px; object-fit: cover; box-shadow: 0 6px 14px rgba(0,0,0,.45), 0 0 0 1px var(--sr-line); }
+.proj-grid.hub .proj-card h3 { font-size: 21px; margin-top: 2px; }
+.proj-grid.hub .proj-card .g { font-size: 12.5px; }
+.proj-grid.hub .proj-card p { font-size: 13.5px; line-height: 1.45; }
+.proj-grid.hub .proj-card .foot { padding-top: 8px; font-size: 12px; }
+.proj-grid.hub { margin-top: 12px; gap: 12px; }
+.proj-grid.hub .proj-card { padding: 12px 13px 10px; gap: 5px; }
+.proj-grid.hub .proj-card img { width: 84px; height: 84px; border-radius: 19px; }
+.proj-grid.hub .doc-card img { width: 150px; height: 84px; border-radius: 6px; object-fit: cover; }
+.proj-grid.hub .proj-card h3 { font-size: 19px; }
+.proj-grid.hub .proj-card .foot { padding-top: 6px; }
+/* 파이프라인 쪽 */
+.pipe-sub { margin-top: 10px; font-family: "Noto Sans KR", "Malgun Gothic", sans-serif; font-weight: 800; font-size: 20px; color: var(--sr-accent); }
+.pipe { display: flex; flex-direction: column; gap: 16px; margin-top: 14px; }
+.stages { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(10, minmax(0,1fr)); gap: 6px; }
+.stages li { display: flex; flex-direction: column; gap: 4px; padding: 9px 9px; background: var(--sr-surface); border-top: 3px solid var(--sr-line); min-height: 96px; }
+.stages li.gate { border-top-color: var(--sr-accent); }
+.stages em { font-style: normal; font-family: var(--sr-display); font-size: 14px; color: var(--sr-ink-3); }
+.stages li.gate em { color: var(--sr-accent); }
+.stages b { font-size: 15px; color: var(--sr-ink); }
+.stages span { font-size: 12px; line-height: 1.4; color: var(--sr-ink-2); }
+.pbot { display: grid; grid-template-columns: 1.25fr 1fr; gap: 28px; }
+.pipe .lbl { display: block; margin: 0 0 8px; font-size: 13.5px; font-weight: 800; letter-spacing: .06em; color: var(--sr-accent); }
+.pipe .lbl small { font-weight: 500; letter-spacing: 0; color: var(--sr-ink-3); margin-left: 6px; }
+.gloop { display: grid; grid-template-columns: 1fr 14px 1fr 14px 1fr 14px 1fr 14px 1fr; align-items: stretch; gap: 4px; }
+.gloop > i { font-style: normal; align-self: center; text-align: center; color: var(--sr-ink-3); }
+.gloop > div { display: flex; flex-direction: column; gap: 4px; padding: 10px; background: var(--sr-surface); border-left: 3px solid var(--sr-line); }
+.gloop > div.me { border-left-color: var(--sr-accent); }
+.gloop b { font-size: 14px; color: var(--sr-ink); }
+.gloop > div.me b { color: var(--sr-accent); }
+.gloop span { font-size: 12px; line-height: 1.4; color: var(--sr-ink-2); }
+.pipe .back { margin: 8px 0 0; font-size: 12.5px; color: var(--sr-ink-2); }
+.prules { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.prules li { font-size: 12.5px; line-height: 1.4; color: var(--sr-ink-2); }
+.prules b { display: block; font-size: 14.5px; color: var(--sr-ink); }
+.pfacts { display: flex; gap: 36px; margin-top: 18px; padding-top: 10px; border-top: 1px solid var(--sr-line-soft); }
+.pfacts div { font-size: 12.5px; line-height: 1.4; color: var(--sr-ink-2); }
+.pfacts b { display: block; font-family: var(--sr-display); font-weight: 400; font-size: 26px; line-height: 1; color: var(--sr-ink); margin-bottom: 4px; }
+.pfacts small { color: var(--sr-ink-3); }
+#pipe .head { margin-bottom: 6px; }
+#pipe .aitools li { padding: 6px 0; }
+#pipe .aitools figure img { width: 32px; height: 32px; }
+.pcap { margin: -6px 0 0; display: flex; justify-content: space-between; }
+.pcap .pidx { font-family: var(--sr-display); font-weight: 400; font-size: 15px; color: var(--sr-ink-3); }
+.pwrap { position: relative; margin-top: 10px; }
+.pview { overflow: hidden; }
+.pslides { display: flex; transition: transform .6s cubic-bezier(.3,.7,.2,1); }
+.zscreen { flex: 0 0 100%; position: relative; height: 430px; display: flex; }
+.zscreen::before { content: ""; position: absolute; left: 0; right: 0; top: 214px; height: 2px; background: var(--sr-line); }
+.zscreen::after { content: ""; position: absolute; left: 0; right: 0; top: 209px; height: 12px; background: repeating-linear-gradient(90deg, var(--sr-line-soft) 0 1px, transparent 1px 16px); }
+.zarea { position: absolute; left: 0; top: 0; bottom: 0; right: 0; }
+.zscreen.last .zarea { right: 220px; }
+.zs { position: absolute; top: 0; bottom: 0; width: 48%; }
+.zs.p1 { left: 0; } .zs.p2 { left: 2%; } .zs.p3 { left: 52%; } .zs.p4 { left: 52%; }
+.zs::before { content: ""; position: absolute; width: 2px; height: 34px; background: var(--sr-line); }
+.zs.p1::before, .zs.p3::before { left: 28px; } .zs.p2::before, .zs.p4::before { right: 28px; }
+.zs.up::before { top: 180px; } .zs.dn::before { top: 216px; }
+.zs.gate::before { background: var(--sr-accent); }
+.zb { position: absolute; left: 0; right: 0; padding: 16px 20px; background: var(--sr-surface); border: 1px solid var(--sr-line); border-radius: 10px; z-index: 1; }
+.zs.up .zb { bottom: 250px; } .zs.dn .zb { top: 250px; }
+.zs.gate .zb { border-color: var(--sr-accent); }
+.zb b { display: block; font-size: 20px; color: var(--sr-ink); margin-bottom: 8px; }
+.zb b i { font-style: normal; font-family: var(--sr-display); font-weight: 400; color: var(--sr-ink-3); margin-right: 10px; }
+.zs.gate .zb b, .zs.gate .zb b i { color: var(--sr-accent); }
+.zb p { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--sr-ink-2); }
+.zend { position: absolute; right: 0; top: 0; bottom: 0; width: 200px; display: flex; align-items: center; justify-content: flex-end; z-index: 2; }
+.zgrid { display: grid; grid-template-columns: 74px 74px; gap: 10px; padding: 12px; background: var(--sr-bg); border-radius: 18px; }
+.zgrid .ref { position: relative; display: block; font-style: normal; }
+.zgrid img, .zgrid .qm { width: 74px; height: 74px; border-radius: 17px; display: grid; place-items: center; box-shadow: 0 0 0 2px rgba(255,255,255,.85), 0 8px 16px rgba(0,0,0,.45); }
+.zgrid .qm { background: var(--sr-surface); font-family: var(--sr-display); font-size: 40px; color: var(--sr-accent); }
+.zgrid .ref::after { content: attr(data-name); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); padding: 4px 9px; border-radius: 6px; background: var(--sr-ink); color: var(--sr-bg); font-size: 12px; font-weight: 700; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .15s; }
+.zgrid .ref:hover::after { opacity: 1; }
+.parr { position: absolute; top: 193px; z-index: 3; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--sr-line); background: var(--sr-surface); color: var(--sr-ink); display: grid; place-items: center; cursor: pointer; transition: background .2s, opacity .2s; }
+.parr:hover { background: var(--sr-accent); border-color: var(--sr-accent); }
+.parr svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.parr.prev { left: -58px; } .parr.next { right: -58px; }
+.parr[disabled] { opacity: .2; cursor: default; background: var(--sr-surface); border-color: var(--sr-line); }
 .tri video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; display: block; border: 1px solid var(--sr-line-soft); background: #000; }
 .tri { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
 .tri img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border: 1px solid var(--sr-line-soft); display: block; image-rendering: pixelated; }
@@ -478,7 +631,7 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
         <span class="ic a1"><img src="media/app-mon.png" alt="모나크"></span>
         <span class="ic a2"><img src="media/app-td.png" alt="Tokyo Desire"></span>
         <span class="ic a3"><img src="media/app-ihd.png" alt="나는 악마가 밉다"></span>
-        <span class="ic a4"><img src="media/app-hr.png" alt="해머로얄"></span>
+        <span class="ic a4"><img src="media/app-hr.png" alt="해머 로얄"></span>
       </span></a>
       <img src="media/profile-sticker.png" alt="이창연 프로필 사진">
     </div>
@@ -514,7 +667,7 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
     <div>
       <h3 class="label">프로젝트</h3>
       <ul class="docs">
-        <li><div><b>해머로얄</b></div><em data-ref="hr"></em></li>
+        <li><div><b>해머 로얄</b></div><em data-ref="hr"></em></li>
         <li><div><b>모나크</b></div><em data-ref="mon"></em></li>
         <li><div><b>나는 악마가 밉다</b></div><em data-ref="ihd"></em></li>
         <li><div><b>Tokyo Desire</b></div><em data-ref="td"></em></li>
@@ -533,13 +686,33 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
 
 <section id="projects" class="page">
   <div class="head" style="margin-bottom:0">
-    <div><h2 class="d1">Projects</h2></div>
+    <div><h2 class="d1">Projects &amp; Documents</h2></div>
   </div>
-  <div class="proj-grid">
-    <a class="proj-card" href="#hr"><img src="media/app-hr.png" alt=""><h3>해머로얄</h3><span class="g">캐주얼 배틀로얄 · 1인 개발</span><p>망치로 상대를 섬 밖으로 날려 보내는 탑뷰 배틀로얄.</p><div class="foot"><span>Godot 엔진 개발</span><em data-ref="hr"></em></div></a>
-    <a class="proj-card" href="#mon"><img src="media/app-mon.png" alt=""><h3>모나크</h3><span class="g">리니지라이크 카드 시뮬레이터 · 1인 개발</span><p>길드장이 되어 45턴 동안 여러 길드들과 경쟁하는 카드 시뮬레이터.</p><div class="foot"><span>Unreal 엔진 개발</span><em data-ref="mon"></em></div></a>
-    <a class="proj-card" href="#ihd"><img src="media/app-ihd.png" alt=""><h3>나는 악마가 밉다</h3><span class="g">다크 로그라이트 오토배틀 · 1인 개발</span><p>영웅을 격자에 배치하여 악마들을 무찌르는 도트 오토배틀.</p><div class="foot"><span>Godot 엔진 개발</span><em data-ref="ihd"></em></div></a>
-    <a class="proj-card" href="#td"><img src="media/app-td.png" alt=""><h3>Tokyo Desire</h3><span class="g">로그라이트 덱빌딩 · 총괄 기획</span><p>악마가 점령한 도시를 카드로 돌파하는 덱빌딩.</p><div class="foot"><span>Unity 엔진 개발</span><em data-ref="td"></em></div></a>
+  <div class="proj-grid hub">
+    <a class="proj-card" href="#hr"><img src="media/app-hr.png" alt=""><h3>해머 로얄</h3><span class="g">캐주얼 배틀로얄 · 1인 개발</span><div class="foot"><span>Godot 엔진 개발</span><em data-ref="hr"></em></div></a>
+    <a class="proj-card" href="#mon"><img src="media/app-mon.png" alt=""><h3>모나크</h3><span class="g">리니지라이크 카드 시뮬레이터 · 1인 개발</span><div class="foot"><span>Unreal 엔진 개발</span><em data-ref="mon"></em></div></a>
+    <a class="proj-card" href="#ihd"><img src="media/app-ihd.png" alt=""><h3>나는 악마가 밉다</h3><span class="g">다크 로그라이트 오토배틀 · 1인 개발</span><div class="foot"><span>Godot 엔진 개발</span><em data-ref="ihd"></em></div></a>
+    <a class="proj-card" href="#td"><img src="media/app-td.png" alt=""><h3>Tokyo Desire</h3><span class="g">로그라이트 덱빌딩 · 총괄 기획</span><div class="foot"><span>Unity 엔진 개발</span><em data-ref="td"></em></div></a>
+    <a class="proj-card doc-card" href="#adapt"><img src="media/lv9-zeus-cover.jpg" alt=""><h3>적응인자</h3><span class="g">창작기획 · 시스템</span><div class="foot"><span>제우스: 오만의 신</span><em data-ref="adapt"></em></div></a>
+    <a class="proj-card doc-card" href="#field"><img src="media/doc-field-cover.jpg" alt=""><h3>필드보스</h3><span class="g">분석 · 시스템</span><div class="foot"><span>제우스: 오만의 신</span><em data-ref="field"></em></div></a>
+    <a class="proj-card doc-card" href="#midas"><img src="media/lv9-midas-cover.jpg" alt=""><h3>미다스의 금고</h3><span class="g">분석 · 시스템</span><div class="foot"><span>제우스: 오만의 신</span><em data-ref="midas"></em></div></a>
+    <a class="proj-card doc-card" href="#dungeon"><img src="media/lv9-aion-cover.jpg" alt=""><h3>연전</h3><span class="g">창작기획 · 시스템</span><div class="foot"><span>아이온2</span><em data-ref="dungeon"></em></div></a>
+    </div>
+  <span class="page-no"></span>
+</section>
+
+<section id="pipe" class="page">
+  <div class="head">
+    <div><h2 class="d1">Pipeline</h2></div>
+  </div>
+  <p class="tcap pcap">게임 제작 파이프라인 <small class="pidx">1 / 2</small></p>
+  <div class="pwrap">
+    <button class="parr prev" type="button" aria-label="이전"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div class="pview"><div class="pslides">
+      <div class="zscreen"><div class="zarea"><div class="zs p1 up gate"><div class="zb"><b><i>01</i>재미 검증</b><p>타겟과 재미, BM을 정한 아이디어로 아트 스타일 후보를 여러 개 만들어 고르고, 그 스타일로 메커닉 위주의 간단한 프로토타입을 만들어 한 사이클을 플레이한다. 기준을 넘으면 본격적인 제작에 착수한다.</p></div></div><div class="zs p2 dn"><div class="zb"><b><i>02</i>기획</b><p>사전 제작한 총괄 기획 기입본을 통해 상세 기획을 진행하고 사용할 AI 툴들을 선정한다. 에디터 없는 스크립팅 작업을 기반으로 데이터 테이블 형태로 최대한 가공한다.</p></div></div><div class="zs p3 up"><div class="zb"><b><i>03</i>맵 · 아트</b><p>랜드마크를 잇게 지시하고 거리는 수치로 말한다. 생성 이미지는 게임 규격에 맞춰 다시 만든다.</p></div></div><div class="zs p4 dn"><div class="zb"><b><i>04</i>사운드</b><p>AI가 프롬프트를 쓰고, 사람이 검수한 뒤 생성한다. 후보를 들어 보고 고른다.</p></div></div></div></div>
+      <div class="zscreen last"><div class="zarea"><div class="zs p1 up"><div class="zb"><b><i>05</i>밸런스</b><p>LLM 없이 도는 봇 대전으로 수치 변경 전후를 잰다. 재미는 사람이 판단한다.</p></div></div><div class="zs p2 dn"><div class="zb"><b><i>06</i>콘텐츠 · BM</b><p>재미가 확인된 뒤에 스킬과 스테이지를 양산한다. BM은 프로토타입에서 정할 것만 적어 둔다.</p></div></div><div class="zs p3 up"><div class="zb"><b><i>07</i>최적화</b><p>고치기 전에 같은 조건에서 병목부터 잰다. 같은 조건의 값끼리만 비교한다.</p></div></div><div class="zs p4 dn gate"><div class="zb"><b><i>08</i>QA</b><p>자동 검사로 걸러 내고, 받은 결과는 다시 검사한다. 마지막 통과는 사람이 직접 플레이해 정한다.</p></div></div></div><div class="zend"><div class="zgrid"><i class="ref" data-name="해머 로얄"><img src="media/app-hr.png" alt="해머 로얄"></i><i class="ref" data-name="모나크"><img src="media/app-mon.png" alt="모나크"></i><i class="ref" data-name="나는 악마가 밉다"><img src="media/app-ihd.png" alt="나는 악마가 밉다"></i><i class="ref" data-name="다음 게임"><span class="qm">?</span></i></div></div></div>
+    </div></div>
+    <button class="parr next" type="button" aria-label="다음"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
   </div>
   <span class="page-no"></span>
 </section>
@@ -548,24 +721,22 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
   <div class="doc gp">
     <div class="doc-main">
       <div class="big-no">01</div>
+      <div class="chips" style="margin-top:14px"><span class="chip on">캐주얼 배틀로얄</span><span class="chip">모바일</span><span class="chip">Godot</span><span class="chip">1인 개발</span></div>
       <div class="refs"><span>레퍼런스</span><i class="ref" data-name="브롤스타즈"><img src="media/icons/brawlstars.jpg" alt="브롤스타즈"></i><i class="ref" data-name="대난투 스매시브라더스"><img src="media/icons/smash.jpg" alt="대난투 스매시브라더스"></i><i class="ref" data-name="배틀그라운드"><img src="media/icons/pubg.jpg" alt="배틀그라운드"></i></div>
-      <div class="chips" style="margin-top:14px"><span class="chip on">AI 활용</span><span class="chip">Godot 4.7</span><span class="chip">캐주얼 배틀로얄</span><span class="chip">1인 개발</span></div>
-      <h2 class="kr-h">해머로얄<br><span class="t2">날려 보내는 손맛, 그 하나를 위해</span></h2>
-      <span class="lbl">게임 설명</span>
-      <p class="ov">각자 망치를 들고 상대를 자기장 밖으로 날려 버려, 최후의 1등을 노리는 캐주얼 배틀로얄입니다.</p>
+      <h2 class="kr-h">해머 로얄<br><span class="t2">망치로 적을 날려버리는 3분 배틀로얄</span></h2>
       <span class="lbl">타겟</span>
-      <p class="ov tg">대중교통으로 이동하는 직장인·학생 · 휴대폰을 자주 쓰는 20~30대</p>
+      <p class="ov tg">대중교통을 자주 이용하거나 캐주얼 모바일 게임을 좋아하는 10~30대</p>
       <span class="lbl">포인트</span>
       <ol class="pts">
-        <li><div><b>날려 버리는 도파민</b>망치로 상대를 날려 자기장에 태울 때의 손맛이 핵심 재미입니다.</div></li>
-        <li><div><b>3~4분의 스피디한 한 판</b>짧은 플레이 타임으로 출퇴근길에도 부담 없이 한 판을 끝냅니다.</div></li>
-        <li><div><b>충돌이 만드는 쇼츠 바이럴</b>수많은 충돌 상호작용에서 예상 밖의 우스꽝스러운 장면이 자주 나와, 그대로 쇼츠가 됩니다.</div></li>
-        <li><div><b>트로피와 스킨</b>브롤스타즈식 트로피로 캐릭터마다 목표를 주고, 이와 연계해 캐릭터 스킨을 판매합니다.</div></li>
-        <li><div><b>확장 가능성</b>팀전, 뱀서라이크 콘텐츠로 PVP·PVE 모두 확장할 수 있습니다.</div></li>
+        <li><div><b>망치의 시원한 타격감</b>적을 자기장으로 날려보내어 킬을 함으로써 발생하는 도파민</div></li>
+        <li><div><b>한 판에 3~4분이 소요되는 스피디한 게임 진행</b>출근길에도 부담 없이 즐길 수 있는 짧은 플레이타임</div></li>
+        <li><div><b>다양한 충돌 상호작용</b>우스꽝스러운 연출들이 자주 발생하여 숏폼을 통한 자발적 바이럴 마케팅 유도</div></li>
+        <li><div><b>트로피 시스템과 스킨을 통한 BM</b>브롤스타즈에서 차용하여 캐릭터별 트로피 목표와 캐릭터 스킨을 연계</div></li>
+        <li><div><b>다양한 콘텐츠 확장 가능성</b>팀전, 뱀서라이크(개인/협동) 등 PVP·PVE로 확장이 가능</div></li>
       </ol>
     </div>
     <div class="doc-side">
-      <div class="vwrap"><video src="media/hr-play-1123.mp4" poster="media/hr-play-1123-poster.jpg" muted autoplay loop playsinline preload="metadata" aria-label="해머로얄 플레이 영상"></video><a class="ytbtn" href="https://www.youtube.com/watch?v=dB_Sy_IUmV0" target="_blank" rel="noopener" aria-label="해머로얄 전체 플레이 영상 YouTube에서 보기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7.5v9l7.5-4.5z"/></svg>전체 플레이 영상</a></div>
+      <div class="vwrap"><video src="media/hr-play-1123.mp4" poster="media/hr-play-1123-poster.jpg" muted autoplay loop playsinline preload="metadata" aria-label="해머 로얄 플레이 영상"></video><a class="ytbtn" href="https://www.youtube.com/watch?v=dB_Sy_IUmV0" target="_blank" rel="noopener" aria-label="해머 로얄 전체 플레이 영상 YouTube에서 보기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7.5v9l7.5-4.5z"/></svg>전체 플레이 영상</a></div>
       <div class="quad"><img src="media/hr-s45.jpg" alt="상대를 날려 처치"><img src="media/hr-s60.jpg" alt="망치 타격"><img src="media/hr-s88.jpg" alt="자기장 근처 교전"><img src="media/hr-s199.jpg" alt="우승 화면"></div>
     </div>
   </div>
@@ -573,30 +744,15 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
 </section>
 
 <section id="hrai" class="page">
-  <div class="aip">
-    <div class="l">
-      <div class="big-no">01<small>AI</small></div>
-      <h2 class="kr-h">해머로얄<span class="t2">AI를 어떻게 썼나</span></h2>
-      <span class="lbl">쓴 AI · 도구</span>
-      <div class="tools"><span><b>Claude Code</b>코드·검사·밸런스 측정</span><span><b>Codex</b>코드 교차 검증·시안 이미지</span><span><b>Tripo</b>3D 모델(내가 생성)</span><span><b>Blender</b>건물 스크립트</span><span><b>ElevenLabs</b>효과음</span></div>
-      <span class="lbl">작업 흐름 <span style="color:var(--sr-ink-3);font-weight:400;letter-spacing:0">(빨간 칸 = 내가 직접)</span></span>
-      <div class="flow"><span class="me">기획서 35장</span><i>→</i><span>하룻밤 무인 구현</span><i>→</i><span class="me">내가 플레이</span><i>→</i><span class="me">명세 쌓기</span><i>→</i><span class="me">「진행」</span><i>→</i><span>지휘소가 분야 세션에 배분</span><i>→</i><span>지휘소 재검증</span><i>→</i><span class="me">「합치기」 승인</span></div>
-      <span class="lbl">나와 AI의 역할</span>
-      <div class="who"><div><h4>내가 쥔 것</h4>핵심 재미 정의 · 시안 고르기와 폐기 · 소리 프롬프트 검수 · 합치기 승인</div><div><h4>AI에게 맡긴 것</h4>구현 · 봇 대전으로 밸런스 측정 · Codex 교차 검증(지적 7건 중 6건 수정)</div></div>
-      <span class="lbl">막힌 곳 → 바꾼 것</span>
-      <ul class="fix"><li><span>8갈래를 병렬로 만들고 한꺼번에 합쳐 수습 불가</span><em>→</em><b>만들기는 병렬, 합치기는 한 갈래씩</b></li><li><span>AI가 Blender로 잡은 달리기 1~3차가 어색</span><em>→</em><b>처음 코드 달리기로 되돌림</b></li><li><span>봇이 문 앞에 끼임, 맹목 수정 4번 실패</span><em>→</em><b>원인 재정의 → 문 구조 변경, 149→5회</b></li></ul>
-    </div>
-    <div class="r">
-      <div class="story">
-        <figure><img src="media/ai-hr-1codex.jpg" alt="Codex 캐릭터 시안"><figcaption><b>① Codex 시안</b><br>캐릭터 첫 그림</figcaption></figure><i>→</i>
-        <figure><img src="media/ai-hr-2apose.jpg" alt="Tripo 입력용 A포즈"><figcaption><b>② Tripo 입력용</b><br>A포즈로 다시 그림</figcaption></figure><i>→</i>
-        <figure class="dark"><img src="media/ai-hr-3game.jpg" alt="게임 시작 화면" style="object-fit:cover"><figcaption><b>③ 게임 적용</b><br>3D 모델은 내가 Tripo로 생성</figcaption></figure>
-      </div>
-      <div class="pair">
-        <figure class="wide"><img src="media/ai-hr-blender.jpg" alt="Blender 건물 시안" style="object-fit:contain;background:#f4f1ea"><figcaption><b>Blender 스크립트 건물</b> — 사방에서 들어갈 수 있게 다시 만듦</figcaption></figure>
-        <figure class="wide"><img src="media/hr-s60.jpg" alt="레드라인 처치 장면"><figcaption><b>봇 대전 측정</b> — 탈락의 84~86%가 날려서 떨어짐</figcaption></figure>
-      </div>
-      <div class="nums"><div><b>568</b>커밋</div><div><b>61</b>Claude 세션</div><div><b>792판</b>봇 밸런스 측정</div><div><b>7일</b>달력 기간</div></div>
+  <div class="partpg">
+    <h2 class="ptitle">파트별 AI 활용</h2>
+    <div class="pgrid c3">
+      <div class="pc"><div class="ph"><img src="media/ai-hr-tuning.jpg" alt="기획" style="object-fit:contain"></div><h4><em>01</em>기획<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><p class="fl">기획서 35장 → 구현 범위 확정 → 수치표</p><p class="me"><b>나</b>동아리 때 쓴 기획서 35장 · 메타(재화·가챠) 제외 결정</p><p class="ai"><b>AI</b>슬라이드별 구현 표 · 빈 수치를 [AI 임시]로 채우고 출처 표시</p></div>
+      <div class="pc"><div class="ph"><img src="media/ai-hr-night1.jpg" alt="구현" style="object-fit:cover"></div><h4><em>02</em>구현<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i><i class="ref" data-name="Godot"><img src="media/icons/tool-godot.jpg" alt="Godot"></i></span></h4><p class="fl">하룻밤 무인 구현 → 내가 플레이 → 수정 요청</p><p class="me"><b>나</b>플레이 후 수정 요청(달리기 자세·모아치기 등)</p><p class="ai"><b>AI</b>Godot 코드 작성 · 판정·리플레이·자동 검사</p></div>
+      <div class="pc"><div class="ph"><img src="media/ai-hr-artstrip.jpg" alt="캐릭터 3D" style="object-fit:contain"></div><h4><em>03</em>캐릭터 3D<span class="ptl"><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i><i class="ref" data-name="Tripo"><img src="media/icons/tool-tripo.jpg" alt="Tripo"></i></span></h4><p class="fl">2D 시안 → A포즈 → 3D 모델 → 게임 적용</p><p class="me"><b>나</b>시안 선택·폐기 · Tripo로 3D 모델 생성</p><p class="ai"><b>AI</b>Codex로 시안·A포즈 그림 · 받은 모델을 게임에 연결</p></div>
+      <div class="pc"><div class="ph"><img src="media/ai-hr-blender.jpg" alt="건물·동작" style="object-fit:contain"></div><h4><em>04</em>건물·동작<span class="ptl"><i class="ref" data-name="Blender"><img src="media/icons/tool-blender.jpg" alt="Blender"></i><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><p class="fl">건물 시안 → Blender 제작 / 달리기 1~3차</p><p class="me"><b>나</b>「사방에서 들어가야 한다」 지적 · 달리기 1~3차 폐기</p><p class="ai"><b>AI</b>Blender 스크립트로 건물 제작 · 달리기 키프레임 시도</p></div>
+      <div class="pc"><div class="ph"><img src="media/ai-hr-sound.jpg" alt="소리" style="object-fit:cover"></div><h4><em>05</em>소리<span class="ptl"><i class="ref" data-name="ElevenLabs"><img src="media/icons/tool-elevenlabs.jpg" alt="ElevenLabs"></i><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><p class="fl">프롬프트 표 → 내 검수 → 생성 → 들어 보고 선택</p><p class="me"><b>나</b>프롬프트 검수 · 후보 청취 후 선택 · 킬 소리 직접 수급</p><p class="ai"><b>AI</b>프롬프트 표 작성 · ElevenLabs 생성 · 듣기 페이지·음량 측정</p></div>
+      <div class="pc"><div class="ph"><img src="media/ai-hr-heatmap.jpg" alt="밸런스·검증" style="object-fit:contain;background:#0d0d10;image-rendering:pixelated"></div><h4><em>06</em>밸런스·검증<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i><i class="ref" data-name="Godot"><img src="media/icons/tool-godot.jpg" alt="Godot"></i></span></h4><p class="fl">봇 대전 측정 → 수치 조정 → 내가 플레이 확인</p><p class="me"><b>나</b>목표치·범위 지정 · 직접 플레이로 최종 확인</p><p class="ai"><b>AI</b>봇 792판 측정 · 끼임 원인 분석(149→5회) · Codex 교차 검증</p></div>
     </div>
   </div>
   <span class="page-no"></span>
@@ -607,15 +763,16 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
     <div class="doc-main">
       <div class="big-no">02</div>
       <div class="refs"><span>레퍼런스</span><i class="ref" data-name="제우스: 오만의 신"><img src="media/icons/zeus.jpg" alt="제우스: 오만의 신"></i><i class="ref" data-name="Reigns"><img src="media/icons/reigns.jpg" alt="Reigns"></i><i class="ref" data-name="Stacklands"><img src="media/icons/stacklands.jpg" alt="Stacklands"></i><i class="ref" data-name="Balatro"><img src="media/icons/balatro.jpg" alt="Balatro"></i></div>
-      <div class="chips" style="margin-top:14px"><span class="chip on">AI 활용</span><span class="chip">Unreal 5 C++</span><span class="chip">길드장 카드 시뮬레이터</span><span class="chip">2026.11</span></div>
-      <h2 class="kr-h">모나크<br><span class="t2">수백 시간의 길드 경쟁을 45턴 한 판으로</span></h2>
-      <span class="lbl">개요</span>
-      <p class="ov">길드장이 되어 카드 45장(45턴) 동안 길드원을 들이고 내보내며, AI 길드 7곳과 쟁과 동맹을 벌이는 카드 시뮬레이터입니다. 필드보스와 강자전, 공성전을 거쳐 한 시즌이 끝납니다.</p>
-      <span class="lbl">포인트 · 기획 의도</span>
+      <div class="chips" style="margin-top:14px"><span class="chip on">카드 시뮬레이터</span><span class="chip">PC</span><span class="chip">Unreal</span><span class="chip">1인 개발</span></div>
+      <h2 class="kr-h">모나크<br><span class="t2">길드장이 되어 서버 권력을 다투는 45턴 카드 게임</span></h2>
+      <span class="lbl">타겟</span>
+      <p class="ov tg">리니지라이크의 길드·쟁 문화를 짧게 맛보고 싶은 20~40대</p>
+      <span class="lbl">포인트</span>
       <ol class="pts">
-        <li><div><b>유저 갈등이 만드는 서사</b>카드는 리니지라이크 서버에서 실제로 있었던 사건을 바탕으로 만들었습니다. 유저끼리 부딪혀 생긴 일이어야 흥미가 생긴다고 봤습니다.</div></li>
-        <li><div><b>명예는 길드원 수</b>혼자서는 강해질 수 없습니다. 길드원은 재화가 아니라 관계로만 붙잡도록 했습니다. 「다이아로 사람을 붙잡을 수 없다」</div></li>
-        <li><div><b>스스로 싸우는 서버</b>모든 규칙을 나와 AI 길드에 똑같이 적용해, 내가 없어도 길드끼리 쟁과 동맹이 생깁니다. 관계가 움직인 길드 쌍 10개 중 8개가 AI 길드끼리였습니다.</div></li>
+        <li><div><b>유저 갈등이 만드는 서사</b>리니지라이크 서버에서 실제로 있었던 사건을 바탕으로 한 시나리오 카드</div></li>
+        <li><div><b>명예는 길드원 수</b>재화가 아닌 관계로만 붙잡는 길드원, 혼자서는 강해질 수 없는 구조</div></li>
+        <li><div><b>스스로 싸우는 서버</b>나와 AI 길드 7곳에 같은 규칙, 내가 없어도 생기는 쟁과 동맹</div></li>
+        <li><div><b>45턴에 담은 대형 콘텐츠</b>필드보스·강자전·공성전으로 이어지는 한 시즌의 흐름</div></li>
       </ol>
     </div>
     <div class="doc-side">
@@ -627,29 +784,15 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
 </section>
 
 <section id="monai" class="page">
-  <div class="aip">
-    <div class="l">
-      <div class="big-no">02<small>AI</small></div>
-      <h2 class="kr-h">모나크<span class="t2">AI를 어떻게 썼나</span></h2>
-      <span class="lbl">쓴 AI · 도구</span>
-      <div class="tools"><span><b>Claude Code</b>기획 세션·엔진 세션</span><span><b>Codex</b>이미지·설계 문서 교차 검증</span><span><b>GPT 이미지</b>초상화</span><span><b>Unreal</b>명령줄 빌드</span></div>
-      <span class="lbl">작업 흐름 <span style="color:var(--sr-ink-3);font-weight:400;letter-spacing:0">(빨간 칸 = 내가 직접)</span></span>
-      <div class="flow"><span>AI가 한 칸씩 질문</span><i>→</i><span class="me">내가 답해 설계 문서 288칸</span><i>→</i><span>엔진 AI는 「이 문서만 입력」</span><i>→</i><span>세션 6개가 무인 구현 약 1시간 50분</span><i>→</i><span class="me">내가 플레이하며 수정</span></div>
-      <span class="lbl">나와 AI의 역할</span>
-      <div class="who"><div><h4>내가 쥔 것</h4>재미 정의 · AI 추천안 기각(「그래도 공성전은 유지야」) · 「다이아로 사람을 붙잡을 수 없다」</div><div><h4>AI에게 맡긴 것</h4>설계 문서 질문 · 구현 · 자동 테스트 73개 · 봇 7종 1만 4천 판</div></div>
-      <span class="lbl">막힌 곳 → 바꾼 것</span>
-      <ul class="fix"><li><span>첫 무인판, 테스트 32개 통과인데 「확실히 재미없군」</span><em>→</em><b>전량 폐기, 재미 확인을 무인 앞으로</b></li><li><span>세션 5개가 한 폴더를 같이 써 빌드 5번 막힘</span><em>→</em><b>2개로 줄이고 잠금</b></li><li><span>세계관에 없는 「사냥터 입장료」를 AI가 지어냄</span><em>→</em><b>허용 목록 안에서만 쓰게 규칙화</b></li></ul>
-    </div>
-    <div class="r">
-      <div class="pair">
-        <figure class="wide dark"><img src="media/ai-mon-1111.jpg" alt="11월 11일 첫 버전"><figcaption><b>11-11 재미 루프 1회차</b> — 초상화 없는 첫 판</figcaption></figure>
-        <figure class="wide dark"><img src="media/ai-mon-portrait.jpg" alt="초상화를 넣은 버전"><figcaption><b>11-11 수정</b> — 초상화·길드원 카드 사이드바</figcaption></figure>
-      </div>
-      <div class="pair">
-        <figure class="wide dark"><img src="media/mon-s30.jpg" alt="최종 빌드 카드 화면"><figcaption><b>11-23 폴리싱 빌드</b> — 카드 화면</figcaption></figure>
-        <figure class="wide dark"><img src="media/mon-s130.jpg" alt="최종 빌드 보스전"><figcaption><b>필드보스 자동 전투</b> — AI 길드도 같은 규칙으로 참전</figcaption></figure>
-      </div>
-      <div class="nums"><div><b>288</b>설계 칸</div><div><b>235</b>커밋</div><div><b>73</b>자동 테스트</div><div><b>12</b>Claude 세션</div></div>
+  <div class="partpg">
+    <h2 class="ptitle">파트별 AI 활용</h2>
+    <div class="pgrid c3">
+      <div class="pc"><div class="ph"><img src="media/ai-mon-doc.jpg" alt="설계 문서" style="object-fit:contain"></div><h4><em>01</em>설계 문서<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><p class="fl">AI 질문 → 내 답 → 설계 문서 288칸</p><p class="me"><b>나</b>재미 정의 · 칸마다 답변 · 누가 정했는지 표시</p><p class="ai"><b>AI</b>칸마다 질문·추천안 · 모순 점검</p></div>
+      <div class="pc"><div class="ph"><img src="media/ai-mon-1111.jpg" alt="방향 전환" style="object-fit:cover;background:#0d0d10"></div><h4><em>02</em>방향 전환<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><p class="fl">첫 판 플레이 → 폐기 → 재설계</p><p class="me"><b>나</b>「확실히 재미없군」 전량 폐기 · AI 추천안 기각(공성전 유지)</p><p class="ai"><b>AI</b>영향 범위 정리 · 재설계 칸 순서 제안</p></div>
+      <div class="pc"><div class="ph"><img src="media/mon-s130.jpg" alt="시나리오" style="object-fit:cover;background:#0d0d10"></div><h4><em>03</em>시나리오<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><p class="fl">실제 사건 조사 → 카드 → 세계관 규칙</p><p class="me"><b>나</b>문체 선택(보고서체) · 세계관에 없는 설정 폐기</p><p class="ai"><b>AI</b>실제 사건 21건 조사 · 문체 3가지 비교안</p></div>
+      <div class="pc"><div class="ph"><img src="media/ai-mon-server.jpg" alt="구현" style="object-fit:cover;background:#0d0d10"></div><h4><em>04</em>구현<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i><i class="ref" data-name="Unreal Engine"><img src="media/icons/ai-unreal.svg" alt="Unreal Engine"></i></span></h4><p class="fl">설계 문서만 입력 → 무인 구현 → 플레이 수정</p><p class="me"><b>나</b>무인 작업 권한·우선순위 지시 · 플레이 후 수정</p><p class="ai"><b>AI</b>C++·데이터·테스트·빌드 · 무인 구현 약 1시간 50분</p></div>
+      <div class="pc"><div class="ph"><img src="media/ai-mon-portraits-top.jpg" alt="아트" style="object-fit:cover;background:#0d0d10"></div><h4><em>05</em>아트<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i></span></h4><p class="fl">초상화 생성기 → 전투 몸 → UI</p><p class="me"><b>나</b>전투 유닛 방향(「카오스팩션처럼」) · UI 테마 되돌림</p><p class="ai"><b>AI</b>코드 생성 초상화 3,072장 · 전투 몸 512벌 · Codex 바닥·아이콘</p></div>
+      <div class="pc"><div class="ph"><img src="media/mon-s335.jpg" alt="검증" style="object-fit:cover;background:#0d0d10"></div><h4><em>06</em>검증<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i></span></h4><p class="fl">자동 테스트 → 봇 시뮬 → 내가 플레이</p><p class="me"><b>나</b>플레이로 버그 다섯 발견 → 카드 66장 전수 검사 지시</p><p class="ai"><b>AI</b>자동 테스트 73개 · 봇 7종 1만 4천 판 · Codex 교차 검증</p></div>
     </div>
   </div>
   <span class="page-no"></span>
@@ -660,15 +803,16 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
     <div class="doc-main">
       <div class="big-no">03</div>
       <div class="refs"><span>레퍼런스</span><i class="ref" data-name="킹갓캐슬"><img src="media/icons/kinggodcastle.jpg" alt="킹갓캐슬"></i><i class="ref" data-name="Slay the Spire"><img src="media/icons/sts.jpg" alt="Slay the Spire"></i><i class="ref" data-name="다키스트 던전"><img src="media/icons/darkestdungeon.jpg" alt="다키스트 던전"></i><i class="ref" data-name="서울 2033"><img src="media/icons/seoul2033.jpg" alt="서울 2033"></i></div>
-      <div class="chips" style="margin-top:14px"><span class="chip on">AI 활용</span><span class="chip">Godot 4.7</span><span class="chip">2D 도트 오토배틀러</span><span class="chip">2026.11</span></div>
-      <h2 class="kr-h">나는 악마가 밉다<br><span class="t2">억까를 내 배치로 이기는 쾌감</span></h2>
-      <span class="lbl">개요</span>
-      <p class="ov">영웅과 용병을 격자에 배치하면 전투는 자동으로 흘러가는 2D 도트 로그라이트 오토배틀러입니다. 방을 고를수록 감지도가 쌓이고, 100을 넘으면 그 층의 악마와 싸웁니다. 구상부터 실행 파일까지 4일 걸렸습니다.</p>
-      <span class="lbl">포인트 · 기획 의도</span>
+      <div class="chips" style="margin-top:14px"><span class="chip on">로그라이트 오토배틀</span><span class="chip">모바일</span><span class="chip">Godot</span><span class="chip">1인 개발</span></div>
+      <h2 class="kr-h">나는 악마가 밉다<br><span class="t2">영웅을 배치해 악마의 층을 돌파하는 도트 오토배틀</span></h2>
+      <span class="lbl">타겟</span>
+      <p class="ov tg">다키스트 던전·슬레이 더 스파이어류 로그라이트를 좋아하는 10~30대 모바일 유저</p>
+      <span class="lbl">포인트</span>
       <ol class="pts">
-        <li><div><b>배치로 이기는 쾌감</b>조작 없는 전투라 승패는 배치와 빌드에서 갈립니다. 봇 실험에서 고른 배치의 완주율은 43~50%, 무작위 배치는 22~25%였습니다.</div></li>
-        <li><div><b>돌아오지 않는 용병</b>죽은 용병은 돌아오지 않고 새로 영입해야 합니다. 층마다 다른 악마가 판의 규칙을 비틉니다. 사역의 악마 층에서는 죽은 용병이 보스로 돌아옵니다.</div></li>
-        <li><div><b>후회가 수요가 된다</b>용병을 잃은 직후 직전 방으로 되감는 「회중시계」. 판단에 후회가 남는 순간이 잦을수록 쓰고 싶어진다고 봤습니다. (BM 가설)</div></li>
+        <li><div><b>배치로 이기는 쾌감</b>조작 없는 자동 전투, 승패를 가르는 배치와 빌드 (봇 실험: 고른 배치 완주율 43~50%, 무작위 22~25%)</div></li>
+        <li><div><b>돌아오지 않는 용병</b>죽으면 사라지는 용병과 새로운 영입, 층마다 규칙을 비트는 악마</div></li>
+        <li><div><b>감지도로 쌓이는 긴장</b>방을 고를수록 차오르는 감지도, 100을 넘으면 그 층의 악마와 결전</div></li>
+        <li><div><b>후회가 수요가 되는 BM</b>용병을 잃은 직후 직전 방으로 되감는 「회중시계」 (가설)</div></li>
       </ol>
     </div>
     <div class="doc-side">
@@ -679,27 +823,15 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
 </section>
 
 <section id="ihdai" class="page">
-  <div class="aip">
-    <div class="l">
-      <div class="big-no">03<small>AI</small></div>
-      <h2 class="kr-h">나는 악마가 밉다<span class="t2">AI를 어떻게 썼나</span></h2>
-      <span class="lbl">쓴 AI · 도구</span>
-      <div class="tools"><span><b>Claude Code</b>지휘소 + 코드·그림·소리·밸런스 세션</span><span><b>Codex</b>도트 이미지 생성</span><span><b>ElevenLabs</b>소리 77종</span><span><b>Tripo·Mixamo·Blender</b>3D 시범(폐기)</span></div>
-      <span class="lbl">작업 흐름 <span style="color:var(--sr-ink-3);font-weight:400;letter-spacing:0">(빨간 칸 = 내가 직접)</span></span>
-      <div class="flow"><span class="me">정면 시안 1장 승인</span><i>→</i><span>Codex 생성</span><i>→</i><span>격자 재정리</span><i>→</i><span>공통 팔레트</span><i>→</i><span>자동 점검(칼 직선·초록 0)</span><i>→</i><span class="me">내 눈</span></div>
-      <span class="lbl">나와 AI의 역할</span>
-      <div class="who"><div><h4>내가 쥔 것</h4>3D를 버리고 2D로 · 자유 배치를 격자로 번복 · 「모션 도트는 아끼고 이펙트에 투자」</div><div><h4>AI에게 맡긴 것</h4>도트 양산 · 전투 규칙과 화면 분리(같은 배치 = 같은 결과) · 진행 봇 120판 단위 측정</div></div>
-      <span class="lbl">막힌 곳 → 바꾼 것</span>
-      <ul class="fix"><li><span>3D 도트는 칼 쥔 자세가 어색</span><em>→</em><b>「이 그래픽은 포기」, 2D 도트로</b></li><li><span>악마 보스만 그림체가 다름</span><em>→</em><b>외곽선·명암 기준을 규칙에 추가</b></li><li><span>다시 재지 않은 「초록 0」 보고</span><em>→</em><b>지휘소가 다시 재니 448픽셀 → 재검증 규칙</b></li></ul>
-    </div>
-    <div class="r">
-      <div class="story">
-        <figure class="dark px"><img src="media/ai-ihd-1_3d.png" alt="3D 도트 시범"><figcaption><b>① 3D 도트 시범</b><br>Tripo·Mixamo — 폐기</figcaption></figure><i>→</i>
-        <figure class="dark px"><img src="media/ai-ihd-2_2d.png" alt="2D 도트 시범" style="object-fit:cover"><figcaption><b>② 2D 도트 시범</b><br>Codex 생성 8회</figcaption></figure><i>→</i>
-        <figure class="dark px"><img src="media/ihd-s205.jpg" alt="최종 게임 보스전" style="object-fit:cover"><figcaption><b>③ 최종 게임</b><br>질투의 악마 보스전</figcaption></figure>
-      </div>
-      <figure class="wide dark px"><img src="media/ai-ihd-sheet.png" alt="도트 수정 전후" style="aspect-ratio:auto;object-fit:contain"><figcaption><b>도트 검수</b> — Codex 결과를 격자·팔레트에 맞춰 정리하고 내 눈으로 마지막 확인</figcaption></figure>
-      <div class="nums"><div><b>4일</b>구상~실행 파일</div><div><b>205</b>커밋</div><div><b>64장</b>유닛 시트, 재생성 0</div><div><b>307</b>Codex 세션</div></div>
+  <div class="partpg">
+    <h2 class="ptitle">파트별 AI 활용</h2>
+    <div class="pgrid c3">
+      <div class="pc"><div class="ph"><img src="media/ihd-c40.jpg" alt="기획" style="object-fit:cover;object-position:center 12%;background:#0d0d10;image-rendering:pixelated"></div><h4><em>01</em>기획<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><p class="fl">3장 기획서 → 플레이 루프 명세 → 격자 번복</p><p class="me"><b>나</b>3장 기획서 · 자유 배치를 격자로 번복 · 층별 악마 컨셉</p><p class="ai"><b>AI</b>플레이 루프 명세 정리 · 2·3층 악마 설계 초안</p></div>
+      <div class="pc"><div class="ph"><img src="media/ai-ihd-1_3d.png" alt="그래픽 방향" style="object-fit:contain;background:#0d0d10;image-rendering:pixelated"></div><h4><em>02</em>그래픽 방향<span class="ptl"><i class="ref" data-name="Tripo"><img src="media/icons/tool-tripo.jpg" alt="Tripo"></i><i class="ref" data-name="Blender"><img src="media/icons/tool-blender.jpg" alt="Blender"></i><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i></span></h4><p class="fl">3D 도트 시범 → 포기 → 2D 도트</p><p class="me"><b>나</b>「이 그래픽은 포기하자」 · 정면 시안 승인</p><p class="ai"><b>AI</b>3D 모델·동작 시범 · 2D 도트 시범 8회</p></div>
+      <div class="pc"><div class="ph"><img src="media/ai-ihd-sheet.png" alt="도트 양산" style="object-fit:contain;background:#0d0d10;image-rendering:pixelated"></div><h4><em>03</em>도트 양산<span class="ptl"><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><p class="fl">Codex 생성 → 격자 정리 → 팔레트 → 자동 점검 → 내 눈</p><p class="me"><b>나</b>최종 눈 검수 · 「칼은 곧게」 기준</p><p class="ai"><b>AI</b>유닛 9종 시트 64장(재생성 0) · 칼 직선·초록 자동 점검</p></div>
+      <div class="pc"><div class="ph"><img src="media/ihd-s520.jpg" alt="스킬·이펙트" style="object-fit:cover;background:#0d0d10;image-rendering:pixelated"></div><h4><em>04</em>스킬·이펙트<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i><i class="ref" data-name="Godot"><img src="media/icons/tool-godot.jpg" alt="Godot"></i></span></h4><p class="fl">검기 1~3차 → 연출 원칙 → 스킬 구현</p><p class="me"><b>나</b>「마법처럼 나가면 안 되지」 · 「모션 도트는 아끼고 이펙트에 투자」</p><p class="ai"><b>AI</b>직업별·적 스킬 13종 · 분신·궤적 이펙트</p></div>
+      <div class="pc"><div class="ph"><img src="media/ai-ihd-sound.jpg" alt="소리" style="object-fit:cover;background:#0d0d10"></div><h4><em>05</em>소리<span class="ptl"><i class="ref" data-name="ElevenLabs"><img src="media/icons/tool-elevenlabs.jpg" alt="ElevenLabs"></i><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><p class="fl">프롬프트 표 → 내 검수 → 생성 → 전수 청취</p><p class="me"><b>나</b>프롬프트 검수 · 변주까지 전수 청취</p><p class="ai"><b>AI</b>소리 77종 생성 · 자동 측정(길이·음량)</p></div>
+      <div class="pc"><div class="ph"><img src="media/ihd-s200.jpg" alt="밸런스" style="object-fit:cover;background:#0d0d10;image-rendering:pixelated"></div><h4><em>06</em>밸런스<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i><i class="ref" data-name="Godot"><img src="media/icons/tool-godot.jpg" alt="Godot"></i></span></h4><p class="fl">진행 봇 측정 → 배치 실험 → 시점은 내가 결정</p><p class="me"><b>나</b>밸런스 시작 시점 결정 · 목표치 위임</p><p class="ai"><b>AI</b>진행 봇 120판 단위 측정 · 배치 실험(43~50% vs 22~25%)</p></div>
     </div>
   </div>
   <span class="page-no"></span>
@@ -709,15 +841,17 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
   <div class="doc gp">
     <div class="doc-main">
       <div class="big-no">04</div>
-      <div class="chips" style="margin-top:14px"><span class="chip on">산학협력</span><span class="chip">총괄 기획</span><span class="chip">로그라이트 덱빌딩</span><span class="chip">2026.03 – 06</span></div>
-      <h2 class="kr-h">Tokyo Desire : Deck Builders<br><span class="t2">개발 제약 속 범위 재설계로 스팀 데모 등록</span></h2>
-      <span class="lbl">개요</span>
-      <p class="ov">악마가 나타난 도시에서 카드로 싸우며 권역을 돌파하는 로그라이트 덱빌딩입니다. 선택지 3개 중 하나를 고를 때마다 감지도가 쌓이고, 임계치를 넘으면 권역 보스와 싸웁니다. 산학협력 캡스톤에서 총괄 기획을 맡아, 기획 문서를 AI 문서 하네스로 관리하며 개발자에게 넘겼고 기한 안에 스팀 데모를 등록했습니다.</p>
-      <span class="lbl">포인트 · 기획 의도</span>
+      <div class="refs"><span>협력사</span><i class="ref" data-name="Minimum Studio"><img src="media/icons/minimumstudio.jpg" alt="Minimum Studio"></i></div>
+      <div class="chips" style="margin-top:14px"><span class="chip on">로그라이트 덱빌딩</span><span class="chip">PC</span><span class="chip">Unity</span><span class="chip">팀 · 총괄 기획</span></div>
+      <h2 class="kr-h">Tokyo Desire : Deck Builders<br><span class="t2">악마의 계약으로 덱을 완성하는 로그라이트 덱빌딩</span></h2>
+      <span class="lbl">타겟</span>
+      <p class="ov tg">슬레이 더 스파이어류 덱빌딩 로그라이트를 즐기는 PC 게이머</p>
+      <span class="lbl">포인트</span>
       <ol class="pts">
-        <li><div><b>감지도가 만드는 진행 압박</b>선택지마다 감지도가 붙어 있어, 무엇을 고르느냐가 보스까지 남은 시간을 정합니다. 쌓일수록 일반 선택지를 고를 여유가 줄어듭니다.</div></li>
-        <li><div><b>거절하면 대가를 치르는 계약</b>권역 악마의 계약을 거절하면 최대 체력이 깎이고, 받으면 덱의 컨셉을 정하는 핵심 유물을 얻습니다.</div></li>
-        <li><div><b>다섯 갈래의 빌드</b>지옥불, 약화·손상, 성흔 폭발, 가시와 방어도, 스탯 압살. 같은 시작 덱에서 런마다 다른 덱이 만들어집니다.</div></li>
+        <li><div><b>감지도가 만드는 진행 압박</b>선택지마다 붙은 감지도, 무엇을 고르느냐로 정해지는 보스까지의 시간</div></li>
+        <li><div><b>거절하면 대가를 치르는 계약</b>거절 시 최대 체력 감소, 수락 시 덱 컨셉을 정하는 핵심 유물</div></li>
+        <li><div><b>다섯 갈래의 빌드</b>지옥불·약화·성흔·가시·스탯, 같은 시작 덱에서 런마다 갈라지는 덱</div></li>
+        <li><div><b>범위 재설계로 지킨 데모 일정</b>개발 팀원 피드백에 따라 핵심이던 「통찰」 제외, 기한 안 스팀 데모 등록</div></li>
       </ol>
     </div>
     <div class="doc-side">
@@ -729,32 +863,13 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
 </section>
 
 <section id="tdai" class="page">
-  <div class="aip">
-    <div class="l">
-      <div class="big-no">04<small>AI</small></div>
-      <h2 class="kr-h">Tokyo Desire<span class="t2">AI로 기획 문서를 관리하다</span></h2>
-      <span class="lbl">쓴 AI · 도구</span>
-      <div class="tools"><span><b>Codex</b>문서 하네스</span><span><b>AGENTS.md · CLAUDE.md</b>AI 작업 규칙</span><span><b>PowerShell</b>하네스 검증 스크립트</span></div>
-      <span class="lbl">작업 흐름 <span style="color:var(--sr-ink-3);font-weight:400;letter-spacing:0">(빨간 칸 = 내가 직접)</span></span>
-      <div class="flow"><span class="me">내 원문 기획</span><i>→</i><span>AI가 작업 문서로 구조화</span><i>→</i><span>기준 문서로 승격</span><i>→</i><span>품질 기준으로 평가</span><i>→</i><span>검증 스크립트</span><i>→</i><span class="me">개발자에게 전달</span></div>
-      <span class="lbl">나와 AI의 역할</span>
-      <div class="who"><div><h4>내가 쥔 것</h4>원문 기획 의도 · 범위 결정(통찰 제외) · 개발자 전달 여부 판단</div><div><h4>AI에게 맡긴 것</h4>원문을 구조화한 문서 초안 · 문서끼리 충돌 점검 · 열린 질문 정리 · 검증 보고서</div></div>
-      <span class="lbl">하네스에 둔 규칙</span>
-      <ul class="fix"><li><span>사용자의 원문 기획 의도를 잃지 않는다</span><em>→</em><b>원문 칸을 최우선 출처로</b></li><li><span>새 문서를 늘리기보다</span><em>→</em><b>기존 기준선을 안정화</b></li><li><span>읽고 끝내지 않는다</span><em>→</em><b>개발자에게 넘길 수준인지 평가</b></li></ul>
-    </div>
-    <div class="r">
-      <div class="layers">
-        <div class="me"><code>_author_inputs/</code>내 원문 기획 — 가장 먼저 믿는 출처</div>
-        <div><code>_working_specs/</code>AI가 구조화하는 작업 문서</div>
-        <div><code>*.md (기준 문서)</code>팀 기준선 — 핵심 루프·감지도·계약·상점·휴식·보상</div>
-        <div><code>_ops/</code>품질 기준 · 작성 플레이북 · 검증 스크립트</div>
-        <div><code>_reports/</code>하네스 검증 보고 19회 (04-19 ~ 06-12)</div>
-      </div>
-      <div class="pair">
-        <figure class="wide dark"><img src="media/td-s-choice.jpg" alt="감지도 선택지"><figcaption><b>문서 → 데모</b> — 감지도 선택지</figcaption></figure>
-        <figure class="wide dark"><img src="media/td-s-contract.jpg" alt="악마의 계약"><figcaption><b>문서 → 데모</b> — 악마의 계약</figcaption></figure>
-      </div>
-      <div class="nums"><div><b>13편</b>기획 문서</div><div><b>6종</b>데이터 테이블</div><div><b>19회</b>하네스 검증 보고</div><div><b>2026.04–06</b>운영 기간</div></div>
+  <div class="partpg">
+    <h2 class="ptitle">파트별 AI 활용</h2>
+    <div class="pgrid c2">
+      <div class="pc"><div class="ph"><img src="media/ai-td-input.jpg" alt="원문 → 문서 구조" style="object-fit:cover"></div><h4><em>01</em>원문 → 문서 구조<span class="ptl"><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i></span></h4><p class="fl">내 원문 기획 → AI 작업 문서 → 팀 기준 문서</p><p class="me"><b>나</b>원문 기획 작성 · 기준 문서로 올릴지 판단</p><p class="ai"><b>AI</b>원문 구조화 · 기준 문서 초안 · 열린 질문 정리</p></div>
+      <div class="pc"><div class="ph"><img src="media/ai-td-rubric.jpg" alt="품질 평가" style="object-fit:cover"></div><h4><em>02</em>품질 평가<span class="ptl"><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i></span></h4><p class="fl">기준표로 평가 → 부족한 곳 보완</p><p class="me"><b>나</b>평가 기준 확정 · 보완 방향 결정</p><p class="ai"><b>AI</b>문서마다 항목별 점수 · 모호성·누락·충돌 정리</p></div>
+      <div class="pc"><div class="ph"><img src="media/ai-td-report.jpg" alt="검증" style="object-fit:cover"></div><h4><em>03</em>검증<span class="ptl"><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i></span></h4><p class="fl">검증 스크립트 → 보고서 → 경고 처리</p><p class="me"><b>나</b>경고 항목 처리 여부 판단</p><p class="ai"><b>AI</b>문서 간 링크·구조 점검 · 검증 보고 19회</p></div>
+      <div class="pc"><div class="ph"><img src="media/td-s-choice.jpg" alt="개발 전달" style="object-fit:cover;background:#0d0d10"></div><h4><em>04</em>개발 전달<span class="ptl"><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i></span></h4><p class="fl">기준 문서 → 개발자 전달 → 데모</p><p class="me"><b>나</b>기획 문서 13편·데이터 테이블 6종 전달 · 범위 재설계</p><p class="ai"><b>AI</b>문서 간 용어·규칙 충돌 점검</p></div>
     </div>
   </div>
   <span class="page-no"></span>
@@ -771,10 +886,9 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
         <li><div><span class="k">문제</span>우세 서버가 보스를 독점하면 열세 서버는 쟁 자체를 포기한다.</div></li>
         <li><div><span class="k">제안</span>3회 연속 독점 시 보스가 적응해, 독점 서버는 약화되고 독점을 끊은 서버는 보상이 커진다.</div></li>
       </ol>
-      <a class="pdfbtn" href="media/pdf/doc-zeus-adapt.pdf" target="_blank" rel="noopener" aria-label="적응인자 기획서 PDF 열기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4V20.5H7z"/><path d="M14 3.5v4h4"/></svg><span>기획서 PDF 보기</span><em>18쪽</em><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9.5 8H16v6.5"/></svg></a>
     </div>
     <div class="doc-side">
-      <img src="media/lv9-zeus-cover.jpg" alt="적응인자 기획서 표지">
+      <div class="vwrap"><img src="media/lv9-zeus-cover.jpg" alt="적응인자 기획서 표지"><a class="ytbtn" href="media/pdf/doc-zeus-adapt.pdf" target="_blank" rel="noopener" aria-label="기획서 PDF 열기"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2"><path d="M7 3.5h7l4 4V20.5H7z"/><path d="M14 3.5v4h4"/></svg>기획서 PDF 보기 · 18쪽</a></div>
       <div class="quad"><img src="media/doc-adapt-p10.jpg" alt="적응인자 기획서 10쪽"><img src="media/doc-adapt-p11.jpg" alt="적응인자 기획서 11쪽"><img src="media/doc-adapt-p13.jpg" alt="적응인자 기획서 13쪽"><img src="media/doc-adapt-p17.jpg" alt="적응인자 기획서 17쪽"></div>
     </div>
   </div>
@@ -792,10 +906,9 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
         <li><div><span class="k">문제</span>신규 보스가 늘면 재화가 모자라 소과금 유저가 보스 루틴을 유지하지 못한다.</div></li>
         <li><div><span class="k">제안</span>신규 맵 연동 테마 패스로 소과금 유저의 루틴 진입을 돕는다.</div></li>
       </ol>
-      <a class="pdfbtn" href="media/pdf/doc-zeus-fieldboss.pdf" target="_blank" rel="noopener" aria-label="필드보스 기획서 PDF 열기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4V20.5H7z"/><path d="M14 3.5v4h4"/></svg><span>기획서 PDF 보기</span><em>21쪽</em><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9.5 8H16v6.5"/></svg></a>
     </div>
     <div class="doc-side">
-      <img src="media/doc-field-cover.jpg" alt="필드보스 분석서 표지">
+      <div class="vwrap"><img src="media/doc-field-cover.jpg" alt="필드보스 분석서 표지"><a class="ytbtn" href="media/pdf/doc-zeus-fieldboss.pdf" target="_blank" rel="noopener" aria-label="기획서 PDF 열기"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2"><path d="M7 3.5h7l4 4V20.5H7z"/><path d="M14 3.5v4h4"/></svg>기획서 PDF 보기 · 21쪽</a></div>
       <div class="quad"><img src="media/doc-field-p05.jpg" alt="필드보스 분석서 5쪽"><img src="media/doc-field-p07.jpg" alt="필드보스 분석서 7쪽"><img src="media/doc-field-p12.jpg" alt="필드보스 분석서 12쪽"><img src="media/doc-field-p19.jpg" alt="필드보스 분석서 19쪽 밸런스 시트"></div>
     </div>
   </div>
@@ -813,10 +926,9 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
         <li><div><span class="k">문제</span>거래소에 쌓인 잉여 희귀 장비는 이 순환에 닿지 않는다.</div></li>
         <li><div><span class="k">제안</span>6번째 '서버 전용 슬롯'이 이를 사들여 반응형 소각과 순환을 만든다.</div></li>
       </ol>
-      <a class="pdfbtn" href="media/pdf/doc-zeus-midas.pdf" target="_blank" rel="noopener" aria-label="미다스의 금고 기획서 PDF 열기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4V20.5H7z"/><path d="M14 3.5v4h4"/></svg><span>기획서 PDF 보기</span><em>16쪽</em><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9.5 8H16v6.5"/></svg></a>
     </div>
     <div class="doc-side">
-      <img src="media/lv9-midas-cover.jpg" alt="미다스의 금고 분석서 표지">
+      <div class="vwrap"><img src="media/lv9-midas-cover.jpg" alt="미다스의 금고 분석서 표지"><a class="ytbtn" href="media/pdf/doc-zeus-midas.pdf" target="_blank" rel="noopener" aria-label="기획서 PDF 열기"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2"><path d="M7 3.5h7l4 4V20.5H7z"/><path d="M14 3.5v4h4"/></svg>기획서 PDF 보기 · 16쪽</a></div>
       <div class="quad"><img src="media/doc-midas-p06.jpg" alt="미다스의 금고 분석서 6쪽"><img src="media/doc-midas-p07.jpg" alt="미다스의 금고 분석서 7쪽"><img src="media/doc-midas-p12.jpg" alt="미다스의 금고 분석서 12쪽"><img src="media/doc-midas-p13.jpg" alt="미다스의 금고 분석서 13쪽"></div>
     </div>
   </div>
@@ -834,10 +946,9 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
         <li><div><span class="k">문제</span>성역은 입장 조건과 전멸 기믹 탓에 입문 기회가 줄어든다.</div></li>
         <li><div><span class="k">제안</span>기존 보스를 격주로 순환 편성하고, 성역 보스로 패턴을 미리 연습시킨다.</div></li>
       </ol>
-      <a class="pdfbtn" href="media/pdf/doc-aion2-dungeon.pdf" target="_blank" rel="noopener" aria-label="연전 던전 기획서 PDF 열기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4V20.5H7z"/><path d="M14 3.5v4h4"/></svg><span>기획서 PDF 보기</span><em>17쪽</em><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9.5 8H16v6.5"/></svg></a>
     </div>
     <div class="doc-side">
-      <img src="media/lv9-aion-cover.jpg" alt="연전 던전 기획서 표지">
+      <div class="vwrap"><img src="media/lv9-aion-cover.jpg" alt="연전 던전 기획서 표지"><a class="ytbtn" href="media/pdf/doc-aion2-dungeon.pdf" target="_blank" rel="noopener" aria-label="기획서 PDF 열기"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2"><path d="M7 3.5h7l4 4V20.5H7z"/><path d="M14 3.5v4h4"/></svg>기획서 PDF 보기 · 17쪽</a></div>
       <div class="quad"><img src="media/doc-dungeon-p10.jpg" alt="연전 던전 기획서 10쪽"><img src="media/doc-dungeon-p11.jpg" alt="연전 던전 기획서 11쪽"><img src="media/doc-dungeon-p15.jpg" alt="연전 던전 기획서 15쪽"><img src="media/doc-dungeon-p17.jpg" alt="연전 던전 기획서 17쪽"></div>
     </div>
   </div>
@@ -904,86 +1015,7 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
   <span class="page-no"></span>
 </section>
 
-<section id="aiwf" class="page">
-  <div class="head">
-    <div><h2 class="d1">AI Workflow</h2></div>
-  </div>
-  <div class="tlp">
-    <p class="tcap">범용 제작 파이프라인</p>
-    <div class="tline">
-      <div class="tk up " style="left:3.00%;--h:30px"><span class="lb"><i>①</i>장르 선택</span></div><div class="tk dn " style="left:11.00%;--h:30px"><span class="lb"><i>②</i>기입본 생성</span></div><div class="tk up " style="left:19.00%;--h:62px"><span class="lb"><i>③</i>핵심 루프 설계</span></div><div class="tk dn hot" style="left:27.00%;--h:62px"><span class="lb"><i>④</i>프로토타입 제작 ↺</span></div><div class="tk up " style="left:35.00%;--h:30px"><span class="lb"><i>⑤</i>아트 스타일 확정</span></div><div class="tk dn " style="left:43.00%;--h:30px"><span class="lb"><i>⑥</i>상세 시스템 설계</span></div><div class="tk up " style="left:51.00%;--h:62px"><span class="lb"><i>⑦</i>제작 기준 수립</span></div><div class="tk dn " style="left:59.00%;--h:62px"><span class="lb"><i>⑧</i>무결성 검증</span></div><div class="tk up " style="left:67.00%;--h:30px"><span class="lb"><i>⑨</i>사전 패키징 검증</span></div><div class="tk dn " style="left:75.00%;--h:30px"><span class="lb"><i>⑩</i>버티컬 슬라이스</span></div><div class="tk up hot" style="left:83.00%;--h:62px"><span class="lb"><i>⑪</i>알파 빌드 제작</span></div><div class="tk dn " style="left:91.00%;--h:62px"><span class="lb"><i>⑫</i>밸런스 · QA</span></div>
-      <div class="flag">베타</div>
-    </div>
-  </div>
-  <div class="zoom3">
-    <div class="zleft">
-      <div class="zcol">
-        <h4><i>④</i>프로토타입 제작 <small>모나크 적용</small></h4>
-        <ul>
-          <li>프로토타입 첫 버전을 직접 플레이해 보고 재미가 없어 전량 폐기</li>
-          <li>1회차 프로토타입부터 직접 플레이하며 여섯 차례 수정 — 카드 조작, 초상화, 길드 태그를 회차마다 고침</li>
-          <li>회차마다 봇 시뮬로 공성 우승률을 재서 목표 범위(20~40%) 안에 들어오는지 확인</li>
-        </ul>
-      </div>
-      <div class="zcol">
-        <h4><i>⑪</i>알파 빌드 제작 <small>모나크 적용</small></h4>
-        <ul>
-          <li>지휘 세션 1개 + 화면·연출 / 규칙·데이터 작업 세션으로 나눠 동시에 구현</li>
-          <li>알파에 넣을 것과 뺄 것을 기입본에 표시해 범위를 고정</li>
-          <li>45턴 한 판 완주, 자동 검사 통과, 실행 파일 검증까지 마친 알파 빌드 제작</li>
-        </ul>
-      </div>
-    </div>
-    <div class="zright">
-      <h3 class="label">파트별 툴</h3>
-      <ul class="aitools">
-        <li><span class="part">기획 및 검증</span><div class="tools">
-          <figure><img src="media/icons/ai-claude.png" alt="Claude Code"><figcaption><b>Claude Code</b><small>기획 검증</small></figcaption></figure>
-          <figure><img src="media/icons/ai-codex.svg" alt="Codex CLI"><figcaption><b>Codex CLI</b><small>교차 검증</small></figcaption></figure>
-        </div></li>
-        <li><span class="part">게임 제작</span><div class="tools">
-          <figure><img src="media/icons/ai-unreal.svg" alt="Unreal Engine 5"><figcaption><b>Unreal Engine 5</b><small>C++ 알파 빌드</small></figcaption></figure>
-          <figure><img src="media/icons/ai-claude.png" alt="Claude Code"><figcaption><b>Claude Code</b><small>바이브 코딩 · 자동 검사</small></figcaption></figure>
-        </div></li>
-        <li><span class="part">아트</span><div class="tools">
-          <figure><img src="media/icons/ai-tripo3d.png" alt="Tripo3D"><figcaption><b>Tripo3D</b><small>3D 모델</small></figcaption></figure>
-          <figure><img src="media/icons/ai-claude.png" alt="Claude Code"><figcaption><b>Claude Code</b><small>SVG 2D 아트</small></figcaption></figure>
-        </div></li>
-        <li><span class="part">사운드</span><div class="tools">
-          <figure><img src="media/icons/ai-elevenlabs.png" alt="ElevenLabs"><figcaption><b>ElevenLabs</b><small>효과음 생성</small></figcaption></figure>
-        </div></li>
-      </ul>
-    </div>
-  </div>
-  <span class="page-no">11</span>
-</section>
 
-<section id="playrec" class="page">
-  <div class="head">
-    <div><h2 class="d1">Zeus Record</h2></div>
-  </div>
-  <div class="play">
-    <div class="shot"><img src="media/play-zeus-character.jpg" alt="제우스 캐릭터 정보 화면"></div>
-    <div class="pside">
-      <div class="pstats">
-        <div><b>66</b><span>레벨</span></div>
-        <div><b>63,022</b><span>성장도</span></div>
-        <div><b>226<sup>위</sup></b><span>성장도 랭킹</span></div>
-      </div>
-      <dl class="kv">
-        <dt>플레이 기간</dt><dd>출시 이후 현재까지 플레이 중</dd>
-        <dt>서버</dt><dd>아르테미스 1서버</dd>
-        <dt>클래스</dt><dd>레인저</dd>
-        <dt>길드</dt><dd>판도라</dd>
-      </dl>
-      <ol class="pact">
-        <li><em>라인 길드</em>제우스 1서버 라인 길드 「악」 소속으로 다수의 인터쟁 경험</li>
-        <li><em>중립 길드</em>이후 아르테미스 1서버로 이전해, 중립 길드에서 공성전을 제외한 모든 콘텐츠에 참여 중</li>
-      </ol>
-    </div>
-  </div>
-  <span class="page-no">10</span>
-</section>
 
 <section id="playlib" class="page">
   <div class="head">
@@ -1019,7 +1051,7 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
 </section>
 
 </main>
-<nav class="dock" aria-label="쪽 이동"><span class="pill" aria-hidden="true"></span><a href="#cover" data-sec="cover"><svg viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="17" rx="1.5"/><path d="M9 8.5h6M9 12h4"/></svg><span>표지</span></a><a href="#spec" data-sec="spec"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c1.2-3.6 3.8-5.5 7-5.5s5.8 1.9 7 5.5"/></svg><span>프로필</span></a><a href="#projects" data-sec="projects"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.6"/><rect x="13" y="13" width="7" height="7" rx="1.6"/></svg><span>프로젝트</span></a><a href="#adapt" data-sec="adapt"><svg viewBox="0 0 24 24"><path d="M7 3.5h7l4 4V20.5H7z"/><path d="M14 3.5v4h4M9.5 12h6M9.5 15.5h6"/></svg><span>기획서</span></a><a href="#timeline" data-sec="timeline"><svg viewBox="0 0 24 24"><path d="M3.5 12h17"/><circle cx="6.5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="17.5" cy="12" r="1.8"/><path d="M6.5 8V5.5M12 16v2.5M17.5 8V5.5"/></svg><span>활동</span></a><a href="#aiwf" data-sec="aiwf"><svg viewBox="0 0 24 24"><rect x="3.5" y="4" width="6" height="5" rx="1"/><rect x="14.5" y="4" width="6" height="5" rx="1"/><rect x="9" y="15" width="6" height="5" rx="1"/><path d="M6.5 9v2.5h11V9M12 11.5V15"/></svg><span>AI 워크플로우</span></a><a href="#playrec" data-sec="playrec"><svg viewBox="0 0 24 24"><path d="M4 20.5h16"/><rect x="5.5" y="12" width="3" height="6.5"/><rect x="10.5" y="7" width="3" height="11.5"/><rect x="15.5" y="9.5" width="3" height="9"/></svg><span>기록</span></a></nav>
+<nav class="dock" aria-label="쪽 이동"><span class="pill" aria-hidden="true"></span><a href="#cover" data-sec="cover"><svg viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="17" rx="1.5"/><path d="M9 8.5h6M9 12h4"/></svg><span>표지</span></a><a href="#spec" data-sec="spec"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c1.2-3.6 3.8-5.5 7-5.5s5.8 1.9 7 5.5"/></svg><span>프로필</span></a><a href="#projects" data-sec="projects"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.6"/><rect x="13" y="13" width="7" height="7" rx="1.6"/></svg><span>프로젝트</span></a><a href="#adapt" data-sec="adapt"><svg viewBox="0 0 24 24"><path d="M7 3.5h7l4 4V20.5H7z"/><path d="M14 3.5v4h4M9.5 12h6M9.5 15.5h6"/></svg><span>기획서</span></a><a href="#timeline" data-sec="timeline"><svg viewBox="0 0 24 24"><path d="M3.5 12h17"/><circle cx="6.5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="17.5" cy="12" r="1.8"/><path d="M6.5 8V5.5M12 16v2.5M17.5 8V5.5"/></svg><span>활동</span></a><a href="#playlib" data-sec="playlib"><svg viewBox="0 0 24 24"><path d="M4 20.5h16"/><rect x="5.5" y="12" width="3" height="6.5"/><rect x="10.5" y="7" width="3" height="11.5"/><rect x="15.5" y="9.5" width="3" height="9"/></svg><span>기록</span></a></nav>
 
 <script>
 (function () {
@@ -1044,7 +1076,7 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
 (function () {
   var dock = document.querySelector('.dock'); if (!dock) return;
   var pill = dock.querySelector('.pill'), links = [].slice.call(dock.querySelectorAll('a'));
-  var group = { hr: 'projects', mon: 'projects', ihd: 'projects', td: 'projects', hrai: 'projects', monai: 'projects', ihdai: 'projects', tdai: 'projects', field: 'adapt', midas: 'adapt', dungeon: 'adapt', timeline2: 'timeline', playlib: 'playrec', end: 'playrec' };
+  var group = { pipe: 'projects', hr: 'projects', mon: 'projects', ihd: 'projects', td: 'projects', hrai: 'projects', monai: 'projects', ihdai: 'projects', tdai: 'projects', field: 'adapt', midas: 'adapt', dungeon: 'adapt', timeline2: 'timeline', end: 'playlib' };
   function setActive(id) {
     id = group[id] || id;
     links.forEach(function (a) { if (a.dataset.sec === id) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
@@ -1055,26 +1087,28 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
   function onScroll() {
     var mid = window.innerHeight * 0.4, cur = pages[0];
     pages.forEach(function (p) { if (p.getBoundingClientRect().top <= mid) cur = p; });
-    if (cur) setActive(cur.id);
+    if (cur && !locked) setActive(cur.id);
     var all = [].slice.call(document.querySelectorAll('section.page')), idx = all.indexOf(cur) + 1, cnt = dock.querySelector('.cnt');
     if (cnt) { cnt.querySelector('b').textContent = String(idx).padStart(2, '0'); cnt.lastChild.textContent = ' / ' + String(all.length).padStart(2, '0'); }
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
-  var gliding = 0;
+  var gliding = 0, locked = false, glideStart = 0;
   function glide(t) {
     var from = window.scrollY, to = Math.max(0, t.getBoundingClientRect().top + from - 20), d = to - from;
     var dur = Math.min(1500, Math.max(650, Math.abs(d) * .35)), t0 = performance.now(), id = ++gliding;
+    locked = true; glideStart = t0; // 이동 중에는 지나가는 쪽에 따라 알약이 바뀌지 않게, 누른 탭만 켬
     function ease(k) { return k < .5 ? 8 * k * k * k * k : 1 - Math.pow(-2 * k + 2, 4) / 2; }
     (function step(now) {
-      if (id !== gliding) return;
+      if (id !== gliding) return; // 새 이동이 시작됐으면 잠금은 새 이동이 관리
       var k = Math.min(1, (now - t0) / dur);
       window.scrollTo(0, from + d * ease(k));
-      if (k < 1) requestAnimationFrame(step);
+      if (k < 1) requestAnimationFrame(step); else { locked = false; onScroll(); }
     })(t0);
   }
-  window.addEventListener('wheel', function () { gliding++; }, { passive: true });
-  window.addEventListener('touchstart', function () { gliding++; }, { passive: true });
+  // 클릭 직후 남아 있는 관성 휠(작은 값)은 무시하고, 사용자가 확실히 굴렸을 때만 이동을 멈춤
+  window.addEventListener('wheel', function (e) { if (!locked) { gliding++; return; } if (performance.now() - glideStart < 350 || Math.abs(e.deltaY) < 30) return; gliding++; locked = false; }, { passive: true });
+  window.addEventListener('touchstart', function () { gliding++; locked = false; }, { passive: true });
   links.forEach(function (a) { a.addEventListener('click', function (e) {
     var t = document.getElementById(a.dataset.sec); if (!t) return;
     e.preventDefault(); glide(t); history.replaceState(null, '', '#' + a.dataset.sec); setActive(a.dataset.sec);
@@ -1134,6 +1168,20 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
   document.querySelectorAll('.pdfbtn').forEach(function (b) {
     b.addEventListener('mousemove', function (e) { var r = b.getBoundingClientRect(); b.style.transform = 'translate(' + ((e.clientX - r.left - r.width / 2) * .15) + 'px,' + ((e.clientY - r.top - r.height / 2) * .25 - 2) + 'px)'; });
     b.addEventListener('mouseleave', function () { b.style.transform = ''; });
+  });
+})();
+</script>
+
+<script>
+(function () {
+  document.querySelectorAll('.pwrap').forEach(function (w) {
+    var sl = w.querySelector('.pslides'), n = sl.children.length, k = 0, pv = w.querySelector('.prev'), nx = w.querySelector('.next');
+    var idx = w.parentElement.querySelector('.pidx');
+    function go(t) { k = Math.max(0, Math.min(n - 1, t)); sl.style.transform = 'translateX(' + (-100 * k) + '%)'; pv.disabled = k === 0; nx.disabled = k === n - 1; if (idx) idx.textContent = (k + 1) + ' / ' + n; }
+    pv.addEventListener('click', function () { go(k - 1); }); nx.addEventListener('click', function () { go(k + 1); });
+    var sx = null; w.addEventListener('pointerdown', function (e) { sx = e.clientX; });
+    w.addEventListener('pointerup', function (e) { if (sx === null) return; var d = e.clientX - sx; if (Math.abs(d) > 60) go(k + (d < 0 ? 1 : -1)); sx = null; });
+    go(0);
   });
 })();
 </script>
