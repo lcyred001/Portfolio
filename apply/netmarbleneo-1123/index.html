@@ -620,7 +620,7 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
 :root { --sr-bg: #f3efe6; --sr-surface: #fbf9f4; --sr-ink: #1c1a17; --sr-ink-2: #5d5850; --sr-ink-3: #8f897f; --sr-accent: #e33529; --sr-accent-fill: #e33529; --sr-ember: #f4ced3; --sr-on-accent: #ffffff; --sr-line: rgba(28,26,23,.22); --sr-line-soft: rgba(28,26,23,.10); --sr-ghost: rgba(28,26,23,.04); color-scheme: light; }
 html, body { background: #e9e3d8; }
 .page { box-shadow: 0 1px 0 var(--sr-line-soft), 0 18px 40px -28px rgba(0,0,0,.25); }
-.cover .portrait > img { filter: none; }
+.cover .portrait > img { filter: saturate(1.18) contrast(1.06) brightness(1.05); }
 .dock { background: rgba(255,255,255,.86) !important; border-color: var(--sr-line) !important; box-shadow: 0 10px 30px -12px rgba(0,0,0,.25) !important; }
 .zgrid { background: var(--sr-bg); }
 .zgrid img, .zgrid .qm, .cover .appstack .ic img, .proj-card img { box-shadow: 0 0 0 2px #ffffff, 0 8px 16px rgba(0,0,0,.18) !important; }
@@ -934,24 +934,10 @@ html, body { background: #e9e3d8; }
   <span class="page-no"></span>
 </section>
 
-<section id="pipe" class="page">
-  <h2 class="ptitle">게임 제작 파이프라인</h2>
-  <p class="tcap pcap"><small class="pidx">1 / 2</small></p>
-  <div class="pwrap">
-    <button class="parr prev" type="button" aria-label="이전"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
-    <div class="pview"><div class="pslides">
-      <div class="zscreen"><div class="zarea"><div class="zs p1 up gate"><div class="zb"><b><i>01</i>재미 검증</b><p>타겟과 재미, BM을 정한 아이디어로 아트 스타일 후보를 여러 개 만들어 고르고, 그 스타일로 메커닉 위주의 간단한 프로토타입을 만들어 한 사이클을 플레이한다. 기준을 넘으면 본격적인 제작에 착수한다.</p></div></div><div class="zs p2 dn"><div class="zb"><b><i>02</i>기획</b><p>사전 제작한 총괄 기획 기입본을 통해 상세 기획을 진행하고 사용할 AI 툴들을 선정한다. 아트 일관성과 같은 파트별 규칙들을 마크다운 파일을 통해 하네싱한 후, 에디터 없는 스크립팅 작업을 기반으로 데이터 테이블 형태로 최대한 가공한다.</p></div></div><div class="zs p3 up"><div class="zb"><b><i>03</i>맵 · 아트</b><p>랜드마크를 잇게 지시하고 거리는 수치로 말한다. 생성 이미지는 게임 규격에 맞춰 다시 만든다.</p></div></div><div class="zs p4 dn"><div class="zb"><b><i>04</i>사운드</b><p>AI가 프롬프트를 쓰고, 사람이 검수한 뒤 생성한다. 후보를 들어 보고 고른다.</p></div></div></div></div>
-      <div class="zscreen last"><div class="zarea"><div class="zs p1 up"><div class="zb"><b><i>05</i>콘텐츠 · BM</b><p>재미가 확인된 뒤에 스킬과 스테이지를 양산한다. BM은 프로토타입에서 정할 것만 적어 둔다.</p></div></div><div class="zs p2 dn"><div class="zb"><b><i>06</i>밸런스</b><p>LLM 없이 도는 봇 대전으로 수치 변경 전후를 잰다. 시뮬레이션을 통해 무인작업 검증을 진행하고 보고한다. 재미는 사람이 판단한다.</p></div></div><div class="zs p3 up"><div class="zb"><b><i>07</i>최적화</b><p>고치기 전에 같은 조건에서 병목부터 잰다. 같은 조건의 값끼리만 비교한다.</p></div></div><div class="zs p4 dn gate"><div class="zb"><b><i>08</i>QA</b><p>자동 검사로 걸러 내고, 받은 결과는 다시 검사한다. 마지막 통과는 사람이 직접 플레이해 정한다.</p></div></div></div><div class="zend"><div class="zgrid"><i class="ref" data-name="해머 로얄"><img src="media/app-hr.png" alt="해머 로얄"></i><i class="ref" data-name="모나크"><img src="media/app-mon.png" alt="모나크"></i><i class="ref" data-name="나는 악마가 밉다"><img src="media/app-ihd.png" alt="나는 악마가 밉다"></i><i class="ref" data-name="다음 게임"><span class="qm">?</span></i></div></div></div>
-    </div></div>
-    <button class="parr next" type="button" aria-label="다음"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
-  </div>
-  <span class="page-no"></span>
-</section>
-
 <section id="field" class="page">
   <div class="doc">
     <div class="doc-main">
-      <div class="big-no">02</div>
+      <div class="big-no">05</div>
       <div class="chips" style="margin-top:14px"><span class="chip on">쟁유발</span><span class="chip on">경제</span><span class="chip">분석</span></div>
       <h2 class="kr-h">제우스 : 오만의 신 필드보스 시스템 분석서<br><span class="t2">실타래가 만드는 수요와 BM 제안</span></h2>
       <ol class="concl">
@@ -971,7 +957,7 @@ html, body { background: #e9e3d8; }
 <section id="midas" class="page">
   <div class="doc">
     <div class="doc-main">
-      <div class="big-no">03</div>
+      <div class="big-no">06</div>
       <div class="chips" style="margin-top:14px"><span class="chip on">경제</span><span class="chip">분석</span></div>
       <h2 class="kr-h">제우스 : 오만의 신 미다스의 금고 시스템 분석서<br><span class="t2">미다스의 금고는 어떻게 경제에 개입하는가</span></h2>
       <ol class="concl">
@@ -1110,7 +1096,7 @@ html, body { background: #e9e3d8; }
 (function () {
   var dock = document.querySelector('.dock'); if (!dock) return;
   var pill = dock.querySelector('.pill'), links = [].slice.call(dock.querySelectorAll('a'));
-  var group = { pipe: 'projects', hr: 'projects', mon: 'projects', ihd: 'projects', td: 'projects', hrai: 'projects', monai: 'projects', ihdai: 'projects', tdai: 'projects', midas: 'field', timeline2: 'timeline', end: 'playlib' };
+  var group = { hr: 'projects', mon: 'projects', ihd: 'projects', td: 'projects', hrai: 'projects', monai: 'projects', ihdai: 'projects', tdai: 'projects', midas: 'field', timeline2: 'timeline', end: 'playlib' };
   function setActive(id) {
     id = group[id] || id;
     links.forEach(function (a) { if (a.dataset.sec === id) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
