@@ -376,6 +376,7 @@ html.motion .cover .appstack { animation: appstack 4.2s ease-in-out infinite; }
 .parr svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 .parr.prev { left: -58px; } .parr.next { right: -58px; }
 .parr[disabled] { opacity: .2; cursor: default; background: var(--sr-surface); border-color: var(--sr-line); }
+#playlib .label { font-family: "Noto Sans KR", "Malgun Gothic", sans-serif; font-size: 14px; font-weight: 800; letter-spacing: 0; text-transform: none; color: var(--sr-ink); }
 .tri video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; display: block; border: 1px solid var(--sr-line-soft); background: #000; }
 .tri { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
 .tri img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border: 1px solid var(--sr-line-soft); display: block; image-rendering: pixelated; }
@@ -709,8 +710,8 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
   <div class="pwrap">
     <button class="parr prev" type="button" aria-label="이전"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
     <div class="pview"><div class="pslides">
-      <div class="zscreen"><div class="zarea"><div class="zs p1 up gate"><div class="zb"><b><i>01</i>재미 검증</b><p>타겟과 재미, BM을 정한 아이디어로 아트 스타일 후보를 여러 개 만들어 고르고, 그 스타일로 메커닉 위주의 간단한 프로토타입을 만들어 한 사이클을 플레이한다. 기준을 넘으면 본격적인 제작에 착수한다.</p></div></div><div class="zs p2 dn"><div class="zb"><b><i>02</i>기획</b><p>사전 제작한 총괄 기획 기입본을 통해 상세 기획을 진행하고 사용할 AI 툴들을 선정한다. 에디터 없는 스크립팅 작업을 기반으로 데이터 테이블 형태로 최대한 가공한다.</p></div></div><div class="zs p3 up"><div class="zb"><b><i>03</i>맵 · 아트</b><p>랜드마크를 잇게 지시하고 거리는 수치로 말한다. 생성 이미지는 게임 규격에 맞춰 다시 만든다.</p></div></div><div class="zs p4 dn"><div class="zb"><b><i>04</i>사운드</b><p>AI가 프롬프트를 쓰고, 사람이 검수한 뒤 생성한다. 후보를 들어 보고 고른다.</p></div></div></div></div>
-      <div class="zscreen last"><div class="zarea"><div class="zs p1 up"><div class="zb"><b><i>05</i>밸런스</b><p>LLM 없이 도는 봇 대전으로 수치 변경 전후를 잰다. 재미는 사람이 판단한다.</p></div></div><div class="zs p2 dn"><div class="zb"><b><i>06</i>콘텐츠 · BM</b><p>재미가 확인된 뒤에 스킬과 스테이지를 양산한다. BM은 프로토타입에서 정할 것만 적어 둔다.</p></div></div><div class="zs p3 up"><div class="zb"><b><i>07</i>최적화</b><p>고치기 전에 같은 조건에서 병목부터 잰다. 같은 조건의 값끼리만 비교한다.</p></div></div><div class="zs p4 dn gate"><div class="zb"><b><i>08</i>QA</b><p>자동 검사로 걸러 내고, 받은 결과는 다시 검사한다. 마지막 통과는 사람이 직접 플레이해 정한다.</p></div></div></div><div class="zend"><div class="zgrid"><i class="ref" data-name="해머 로얄"><img src="media/app-hr.png" alt="해머 로얄"></i><i class="ref" data-name="모나크"><img src="media/app-mon.png" alt="모나크"></i><i class="ref" data-name="나는 악마가 밉다"><img src="media/app-ihd.png" alt="나는 악마가 밉다"></i><i class="ref" data-name="다음 게임"><span class="qm">?</span></i></div></div></div>
+      <div class="zscreen"><div class="zarea"><div class="zs p1 up gate"><div class="zb"><b><i>01</i>재미 검증</b><p>타겟과 재미, BM을 정한 아이디어로 아트 스타일 후보를 여러 개 만들어 고르고, 그 스타일로 메커닉 위주의 간단한 프로토타입을 만들어 한 사이클을 플레이한다. 기준을 넘으면 본격적인 제작에 착수한다.</p></div></div><div class="zs p2 dn"><div class="zb"><b><i>02</i>기획</b><p>사전 제작한 총괄 기획 기입본을 통해 상세 기획을 진행하고 사용할 AI 툴들을 선정한다. 아트 일관성과 같은 파트별 규칙들을 마크다운 파일을 통해 하네싱한 후, 에디터 없는 스크립팅 작업을 기반으로 데이터 테이블 형태로 최대한 가공한다.</p></div></div><div class="zs p3 up"><div class="zb"><b><i>03</i>맵 · 아트</b><p>랜드마크를 잇게 지시하고 거리는 수치로 말한다. 생성 이미지는 게임 규격에 맞춰 다시 만든다.</p></div></div><div class="zs p4 dn"><div class="zb"><b><i>04</i>사운드</b><p>AI가 프롬프트를 쓰고, 사람이 검수한 뒤 생성한다. 후보를 들어 보고 고른다.</p></div></div></div></div>
+      <div class="zscreen last"><div class="zarea"><div class="zs p1 up"><div class="zb"><b><i>05</i>콘텐츠 · BM</b><p>재미가 확인된 뒤에 스킬과 스테이지를 양산한다. BM은 프로토타입에서 정할 것만 적어 둔다.</p></div></div><div class="zs p2 dn"><div class="zb"><b><i>06</i>밸런스</b><p>LLM 없이 도는 봇 대전으로 수치 변경 전후를 잰다. 시뮬레이션을 통해 무인작업 검증을 진행하고 보고한다. 재미는 사람이 판단한다.</p></div></div><div class="zs p3 up"><div class="zb"><b><i>07</i>최적화</b><p>고치기 전에 같은 조건에서 병목부터 잰다. 같은 조건의 값끼리만 비교한다.</p></div></div><div class="zs p4 dn gate"><div class="zb"><b><i>08</i>QA</b><p>자동 검사로 걸러 내고, 받은 결과는 다시 검사한다. 마지막 통과는 사람이 직접 플레이해 정한다.</p></div></div></div><div class="zend"><div class="zgrid"><i class="ref" data-name="해머 로얄"><img src="media/app-hr.png" alt="해머 로얄"></i><i class="ref" data-name="모나크"><img src="media/app-mon.png" alt="모나크"></i><i class="ref" data-name="나는 악마가 밉다"><img src="media/app-ihd.png" alt="나는 악마가 밉다"></i><i class="ref" data-name="다음 게임"><span class="qm">?</span></i></div></div></div>
     </div></div>
     <button class="parr next" type="button" aria-label="다음"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
   </div>
@@ -1005,11 +1006,11 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
       <div class="gal"><figure class="wide"><video src="media/tokyo-trailer.mp4" poster="media/tokyo-trailer-poster.jpg" muted autoplay loop playsinline controls preload="metadata" aria-label="Tokyo Desire 스팀 데모 트레일러"></video><figcaption>스팀 데모 트레일러</figcaption></figure><figure><img src="media/lv10-system.jpg" alt="시스템 기획서 (Act 1 MVP)"><figcaption>시스템 기획서 (Act 1 MVP)</figcaption></figure><figure><img src="media/lv10-meeting.jpg" alt="팀 회의"><figcaption>팀 회의</figcaption></figure></div>
     </li>
     <li class="st now">
-      <time>2026.11–</time><span class="dot"></span>
-      <h4>모나크 · AI로 개발 중인 리니지라이크 카드 시뮬레이터</h4>
-      <p>플레이어가 길드장이 되어 1시즌 동안 길드를 운영하고 확장한다. AI로 이루어진 길드 또는 개인과의 여러 관계 속에서 경쟁하며 공성전의 승리를 목표로 하는 리니지라이크 카드 시뮬레이터 게임. Claude Code 및 Codex를 활용하여 언리얼 엔진으로 제작 중이며 현재 알파 빌드 단계이다.</p>
-      <div class="out"><span>알파 빌드 1종</span></div>
-      <div class="gal" style="--mh:198px"><figure class="wide"><img src="media/monarch-flow.gif" alt="모나크 한 판 흐름 시연"><figcaption>플레이 영상</figcaption></figure></div>
+      <time>2026.07–</time><span class="dot"></span>
+      <h4>MMORPG 기획서 · AI 활용 게임 개발</h4>
+      <p>제우스: 오만의 신과 아이온2를 분석해 시스템 기획서 4편을 썼다. 이어서 Claude Code와 Codex로 게임 3종을 직접 만들며, 기획부터 QA까지 이어지는 제작 파이프라인을 세웠다. AI 에이전트 응용과 다양한 도메인 지식을 목표로 학습 중이다.</p>
+      <div class="out"><span>기획서 4편</span><span>AI 게임 3종</span><span>제작 파이프라인</span></div>
+      <div class="gal" style="--mh:198px"><figure><img src="media/lv9-zeus-cover.jpg" alt="적응인자 기획서 표지"><figcaption>시스템 기획서</figcaption></figure><figure><img src="media/hr-play-1123-poster.jpg" alt="해머 로얄 플레이 화면"><figcaption>AI 활용 게임</figcaption></figure></div>
     </li>
   </ol>
   <span class="page-no"></span>
@@ -1036,8 +1037,8 @@ html.motion .cover .big .q { animation: blink 1.4s steps(1) infinite; }
     </ul>
     <div class="gtext">
       <h3 class="label">게임을 보는 눈</h3>
-      <p>제우스로 리니지라이크를 처음 접하며, 경쟁형 MMORPG가 주는 재미는 <b>유저 간 갈등에서 생겨나는 서사</b>에 있다는 것을 깨달았습니다. 특히 유저를 불편하게 만드는 시스템이 어떤 정교한 의도로 설계됐는지 따져 가며 분석할수록 그 매력에 더 빠져들었습니다.</p>
-      <p>그동안 여러 장르의 게임들을 플레이하며, 개발사가 내건 재미의 가치에 맞춰 게임마다 시스템과 콘텐츠가 설계된다는 것을 보아 왔습니다. 그 가운데 제우스의 가치에 맞는 시스템을 레퍼런스로 가져와 조합해, 단순한 RvR을 넘어 <b>유저들이 부딪히며 서사를 만드는 콘텐츠</b>를 설계하고 싶습니다.</p>
+      <p>장르와 플랫폼을 가리지 않고 플레이하면서 각 개발사가 내민 재미의 가치에 맞추어서 게임마다 시스템과 콘텐츠가 설계되는 것을 몸소 느껴 왔습니다.</p>
+      <p>폭넓은 플레이 경험에서 각 재미들을 퍼즐처럼 조합하여 게임이 나아가려는 방향에 시스템 설계 측면에서 보탬이 되고 싶습니다.</p>
     </div>
   </div>
   <span class="page-no"></span>
