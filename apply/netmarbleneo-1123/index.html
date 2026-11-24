@@ -697,6 +697,53 @@ html, body { background: #e9e3d8; }
 .pc .ng { margin-top: 4px; padding-top: 6px; border-top: 1px dashed var(--sr-line-soft); color: var(--sr-ink); }
 .pc .ng b { color: var(--sr-ink); }
 
+.pgrid.c3.hrpts .pc .ph { height: 290px; }
+.pgrid.c4.hrpts .pc .ph { height: 220px; }
+.pgrid.c4 .pc .ph.flowdg { gap: 1px; padding: 4px 12px; }
+.pgrid.c4 .flowdg > div { padding: 4px 6px; font-size: 13.5px; }
+.pgrid.c4 .flowdg > div small { font-size: 11px; margin-top: 0; }
+.pgrid.c4 .flowdg .fd-row span { padding: 4px 0; font-size: 12px; }
+.pc ul.pt { margin: 2px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.pc ul.pt li { position: relative; padding-left: 12px; font-size: 13.5px; line-height: 1.45; color: var(--sr-ink-2); }
+.pc ul.pt li::before { content: ""; position: absolute; left: 0; top: .62em; width: 4px; height: 4px; border-radius: 50%; background: var(--sr-accent); }
+.pc .ph.flowdg { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 10px 16px; background: var(--sr-surface) !important; }
+.flowdg > div { width: 100%; text-align: center; font-size: 15px; font-weight: 800; color: var(--sr-ink); padding: 6px 8px; border-radius: 8px; border: 1px solid var(--sr-line); background: var(--sr-bg); }
+.flowdg > div small { display: block; margin-top: 2px; font-size: 12px; font-weight: 500; color: var(--sr-ink-3); }
+.flowdg .fd-top { border-color: var(--sr-accent); color: var(--sr-accent); }
+.flowdg .fd-row { display: flex; gap: 6px; padding: 0; border: 0; background: none; }
+.flowdg .fd-row span { flex: 1; padding: 6px 0; border-radius: 8px; border: 1px dashed var(--sr-line); font-size: 13px; font-weight: 700; color: var(--sr-ink-2); background: var(--sr-bg); }
+.flowdg .fd-ar { width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 7px solid var(--sr-ink-3); }
+
+.tdops { margin-top: 14px; display: flex; flex-direction: column; gap: 12px; }
+.tdflow { display: flex; align-items: center; justify-content: space-between; gap: 3px; }
+.tdflow span { font-size: 12px; font-weight: 700; color: var(--sr-ink); padding: 4px 7px; border-radius: 6px; border: 1px solid var(--sr-line); background: var(--sr-surface); white-space: nowrap; }
+.tdflow span.end { border-color: var(--sr-accent); color: var(--sr-accent); }
+.tdflow i { width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 6px solid var(--sr-ink-3); }
+.tdcols { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.tdcols > div { padding: 11px 12px; border-radius: 8px; border: 1px solid var(--sr-line-soft); background: var(--sr-surface); }
+.tdcols h5 { margin: 0 0 7px; font-size: 14px; font-weight: 800; color: var(--sr-accent); }
+.tdcols ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.tdcols li { position: relative; padding-left: 10px; font-size: 12.5px; line-height: 1.4; color: var(--sr-ink-2); }
+.tdcols li::before { content: ""; position: absolute; left: 0; top: .6em; width: 4px; height: 4px; border-radius: 50%; background: var(--sr-ink-3); }
+
+.doc.tdwork { grid-template-columns: 470px minmax(0,1fr); gap: 34px; }
+.tw-left { gap: 0; }
+.tdwork .chips { margin-top: 12px !important; }
+.tdwork h2 { font-size: 27px; }
+.tdwork h2 .t2 { font-size: 19px; }
+.tw-left .kr-h { margin: 8px 0 18px; }
+.tw-role { margin: 12px 0 12px; font-size: 14px; line-height: 1.5; color: var(--sr-ink-2); }
+.tw-role b { display: block; font-size: 13px; color: var(--sr-accent); margin-bottom: 2px; }
+.tw-video video { width: 100%; display: block; border-radius: 6px; border: 1px solid var(--sr-line-soft); }
+.tw-right { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.tw-h { margin: 0; font-size: 20px; font-weight: 800; color: var(--sr-ink); }
+.tw-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px 20px; }
+.tw-grid figure { margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.tw-grid img { height: 178px; width: 100%; object-fit: cover; object-position: left top; border-radius: 6px; border: 1px solid var(--sr-line); background: #fff; cursor: zoom-in; transition: transform .5s var(--ease-out), box-shadow .5s var(--ease-out); }
+.tw-grid img:hover { position: relative; z-index: 2; transform: translateY(-4px) scale(1.025); box-shadow: 0 22px 40px -22px rgba(0,0,0,.6); }
+.tw-grid figcaption { font-size: 13px; line-height: 1.5; color: var(--sr-ink-2); }
+.tw-grid figcaption b { display: block; font-size: 15px; color: var(--sr-ink); margin-bottom: 4px; }
+
 .pc .ph, .aipr figure.dark img, .tall > .vwrap > video, .tall .col img, .quad4 > *, .tri video, .tri img, .doc-side > video { background: var(--sr-surface) !important; }
 .pc .ph img, .aipr figure img { background: var(--sr-surface) !important; }
 .pc .ph, .aipr figure img, .aipr .layers div { border: 1px solid var(--sr-line-soft); }
@@ -815,13 +862,11 @@ html, body { background: #e9e3d8; }
 <section id="hrai" class="page">
   <div class="partpg">
     <h2 class="ptitle">파트별 AI 활용</h2>
-    <div class="pgrid c4">
-      <div class="pc" hidden><div class="ph"><img src="media/ai-hr-tuning.jpg" alt="기획" style="object-fit:contain"></div><h4><em>01</em>기획<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><p class="fl">기획서 35장 → 구현 범위 확정 → 수치표</p><p class="me"><b>나</b>동아리 때 쓴 기획서 35장 · 메타(재화·가챠) 제외 결정</p><p class="ai"><b>AI</b>슬라이드별 구현 표 · 빈 수치를 [AI 임시]로 채우고 출처 표시</p></div>
-      <div class="pc"><div class="ph"><img src="media/ai-hr-night1.jpg" alt="구현" style="object-fit:cover"></div><h4><em>01</em>구현<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i><i class="ref" data-name="Godot"><img src="media/icons/tool-godot.jpg" alt="Godot"></i></span></h4><p class="fl">하룻밤 무인 구현 → 내가 플레이 → 수정 요청</p><p class="me"><b>나</b>플레이 후 수정 요청(달리기 자세·모아치기 등)</p><p class="ai"><b>AI</b>Godot 코드 작성 · 판정·리플레이·자동 검사</p><p class="ng"><b>막힘</b>모아치기를 올려치기로 구현 → 전방 차징 휘두르기로 수정</p></div>
-      <div class="pc"><div class="ph"><img src="media/ai-hr-artstrip.jpg" alt="캐릭터 3D" style="object-fit:contain"></div><h4><em>02</em>캐릭터 3D<span class="ptl"><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i><i class="ref" data-name="Tripo"><img src="media/icons/tool-tripo.jpg" alt="Tripo"></i></span></h4><p class="fl">2D 시안 → A포즈 → 3D 모델 → 게임 적용</p><p class="me"><b>나</b>시안 선택·폐기 · Tripo로 3D 모델 생성</p><p class="ai"><b>AI</b>Codex로 시안·A포즈 그림 · 받은 모델을 게임에 연결</p><p class="ng"><b>막힘</b>망치 든 시안은 팔·망치가 엉켜 리깅 불가 → A포즈·망치 분리</p></div>
-      <div class="pc"><div class="ph"><img src="media/ai-hr-blender.jpg" alt="건물·동작" style="object-fit:contain"></div><h4><em>03</em>건물·동작<span class="ptl"><i class="ref" data-name="Blender"><img src="media/icons/tool-blender.jpg" alt="Blender"></i><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><p class="fl">건물 시안 → Blender 제작 / 달리기 1~3차</p><p class="me"><b>나</b>「사방에서 들어가야 한다」 지적 · 달리기 1~3차 폐기</p><p class="ai"><b>AI</b>Blender 스크립트로 건물 제작 · 달리기 키프레임 시도</p><p class="ng"><b>막힘</b>Tripo 집은 문 하나, 판정은 사방 문 → Blender로 직접 제작</p></div>
-      <div class="pc" hidden><div class="ph"><img src="media/ai-hr-sound.jpg" alt="소리" style="object-fit:cover"></div><h4><em>05</em>소리<span class="ptl"><i class="ref" data-name="ElevenLabs"><img src="media/icons/tool-elevenlabs.jpg" alt="ElevenLabs"></i><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><p class="fl">프롬프트 표 → 내 검수 → 생성 → 들어 보고 선택</p><p class="me"><b>나</b>프롬프트 검수 · 후보 청취 후 선택 · 킬 소리 직접 수급</p><p class="ai"><b>AI</b>프롬프트 표 작성 · ElevenLabs 생성 · 듣기 페이지·음량 측정</p></div>
-      <div class="pc"><div class="ph"><img src="media/ai-hr-heatmap.jpg" alt="밸런스·검증" style="object-fit:contain;background:var(--sr-surface);image-rendering:pixelated"></div><h4><em>04</em>밸런스·검증<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i><i class="ref" data-name="Godot"><img src="media/icons/tool-godot.jpg" alt="Godot"></i></span></h4><p class="fl">봇 대전 측정 → 수치 조정 → 내가 플레이 확인</p><p class="me"><b>나</b>목표치·범위 지정 · 직접 플레이로 최종 확인</p><p class="ai"><b>AI</b>봇 792판 측정 · 끼임 원인 분석(149→5회) · Codex 교차 검증</p><p class="ng"><b>막힘</b>봇 문 끼임 수정 4번 효과 없음 → 수정 멈추고 시험 장면으로 원인 재정의</p></div>
+    <div class="pgrid c4 hrpts">
+      <div class="pc"><div class="ph"><img src="media/ai-hr-night1.jpg" alt="하룻밤 무인 구현" style="object-fit:cover"></div><h4><em>01</em>하룻밤 무인 구현<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i><i class="ref" data-name="Godot"><img src="media/icons/tool-godot.jpg" alt="Godot"></i></span></h4><ul class="pt"><li>기획서 35장을 하룻밤 무인으로 구현 (커밋 112개)</li><li>판정을 한 곳·고정 틱으로 → 같은 시드면 같은 결과, 리플레이·봇 검증의 바탕</li><li>봇 대전 측정으로 「걸어서 탈락 53%」의 진짜 원인(물에 갇힘)을 찾아 수정</li></ul></div>
+      <div class="pc"><div class="ph"><img src="media/ai-hr-model2motion.jpg" alt="3D 모델 → 동작" style="object-fit:cover"></div><h4><em>02</em>3D 모델 → 동작<span class="ptl"><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i><i class="ref" data-name="Tripo"><img src="media/icons/tool-tripo.jpg" alt="Tripo"></i><i class="ref" data-name="Blender"><img src="media/icons/tool-blender.jpg" alt="Blender"></i></span></h4><ul class="pt"><li>Codex 시안 → A포즈 그림 → Tripo 3D·자동 리깅 → 게임 연결</li><li>망치 든 시안은 리깅 불가 → A포즈로 다시 그리고 망치 분리</li><li>Blender MCP 연결로 AI가 Blender를 직접 조작해 달리기 키프레임 제작, 이후 재현 가능한 스크립트로 전환</li><li>달리기 3차 수정 끝에 「맨 처음 뛰는 걸로」 되돌림</li></ul></div>
+      <div class="pc"><div class="ph"><img src="media/ai-hr-sound.jpg" alt="사운드" style="object-fit:cover;object-position:left top;background:var(--sr-surface)"></div><h4><em>03</em>사운드<span class="ptl"><i class="ref" data-name="ElevenLabs"><img src="media/icons/tool-elevenlabs.jpg" alt="ElevenLabs"></i><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><ul class="pt"><li>ElevenLabs API 연결, 프롬프트 표를 내가 검수한 뒤 생성</li><li>후보를 표 형태 듣기 페이지로 받아 청음 후 효과음·배경음 직접 선택</li><li>망치 타격음: 「빵」·「깡」·「모루」 세 차례 후보 모두 탈락, 결국 기존 소리 유지</li></ul></div>
+      <div class="pc"><div class="ph flowdg"><div class="fd-top">나 <small>플레이 · 명세 110건 · 승인</small></div><i class="fd-ar"></i><div class="fd-hq">지휘소 <small>명세 분배 · 결과 재검사</small></div><i class="fd-ar"></i><div class="fd-row"><span>판정</span><span>화면</span><span>소리</span><span>밸런스</span></div><i class="fd-ar"></i><div class="fd-hq">통합 <small>한 갈래씩 · 빌드</small></div></div><h4><em>04</em>AI 세션 운영<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><ul class="pt"><li>지휘소가 내 명세를 분야별 AI 세션에 나누고, 「통과」 보고도 다시 검사</li><li>여러 갈래를 동시에 벌렸다가 합치기가 꼬임 → 한 갈래씩 합치고 확인</li><li>문맥·한도를 실측해 교대 규칙을 만들고 제작 파이프라인에 반영</li></ul></div>
     </div>
   </div>
   <span class="page-no"></span>
@@ -835,13 +880,14 @@ html, body { background: #e9e3d8; }
       <div class="chips" style="margin-top:14px"><span class="chip on">카드 시뮬레이터</span><span class="chip">PC</span><span class="chip">Unreal</span><span class="chip">1인 개발</span></div>
       <h2 class="kr-h">모나크<br><span class="t2">길드장이 되어 서버 권력을 다투는 45턴 카드 게임</span></h2>
       <span class="lbl">타겟</span>
-      <p class="ov tg">리니지라이크의 길드·쟁 문화를 짧게 맛보고 싶은 20~40대</p>
+      <p class="ov tg">리니지라이크 장르를 접해보거나 관심만 있는 20~40대</p>
       <span class="lbl">포인트</span>
       <ol class="pts">
-        <li><div><b>유저 갈등이 만드는 서사</b>리니지라이크 서버에서 실제로 있었던 사건을 바탕으로 한 시나리오 카드</div></li>
-        <li><div><b>명예는 길드원 수</b>재화가 아닌 관계로만 붙잡는 길드원, 혼자서는 강해질 수 없는 구조</div></li>
-        <li><div><b>스스로 싸우는 서버</b>나와 AI 길드 7곳에 같은 규칙, 내가 없어도 생기는 쟁과 동맹</div></li>
-        <li><div><b>45턴에 담은 대형 콘텐츠</b>필드보스·강자전·공성전으로 이어지는 한 시즌의 흐름</div></li>
+        <li><div><b>길드원들을 육성하여 성장</b>유저들의 잠재력을 파악하고 좋은 길드원들을 수집하고 육성하여 길드를 키우는 재미</div></li>
+        <li><div><b>유기적인 시나리오</b>AI 유저에게 다양한 성향 태그를 붙여 관계에 따른 다양한 연계 시나리오 발생</div></li>
+        <li><div><b>성장을 압축</b>성장에 필요한 재화와 시간을 압축하여 콘텐츠 및 사건 위주로 진행</div></li>
+        <li><div><b>낮은 진입장벽</b>컴팩트한 게임 구조로 장르의 진입장벽을 낮춤</div></li>
+        <li><div><b>콘텐츠 위주의 DLC 판매</b>다양한 콘텐츠와 시즌을 확장하면서 DLC 위주의 BM 설계 가능</div></li>
       </ol>
     </div>
     <div class="doc-side">
@@ -855,13 +901,11 @@ html, body { background: #e9e3d8; }
 <section id="monai" class="page">
   <div class="partpg">
     <h2 class="ptitle">파트별 AI 활용</h2>
-    <div class="pgrid c4">
-      <div class="pc" hidden><div class="ph"><img src="media/ai-mon-doc.jpg" alt="설계 문서" style="object-fit:contain"></div><h4><em>01</em>설계 문서<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><p class="fl">AI 질문 → 내 답 → 설계 문서 288칸</p><p class="me"><b>나</b>재미 정의 · 칸마다 답변 · 누가 정했는지 표시</p><p class="ai"><b>AI</b>칸마다 질문·추천안 · 모순 점검</p></div>
-      <div class="pc"><div class="ph"><img src="media/ai-mon-1111.jpg" alt="방향 전환" style="object-fit:cover;background:var(--sr-surface)"></div><h4><em>01</em>방향 전환<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><p class="fl">첫 판 플레이 → 폐기 → 재설계</p><p class="me"><b>나</b>「확실히 재미없군」 전량 폐기 · AI 추천안 기각(공성전 유지)</p><p class="ai"><b>AI</b>영향 범위 정리 · 재설계 칸 순서 제안</p><p class="ng"><b>막힘</b>재미 확인 없이 무인으로 끝까지 진행 → 대화형·무인 구간 분리</p></div>
-      <div class="pc"><div class="ph"><img src="media/mon-s130.jpg" alt="시나리오" style="object-fit:cover;background:var(--sr-surface)"></div><h4><em>02</em>시나리오<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><p class="fl">실제 사건 조사 → 카드 → 세계관 규칙</p><p class="me"><b>나</b>문체 선택(보고서체) · 세계관에 없는 설정 폐기</p><p class="ai"><b>AI</b>실제 사건 21건 조사 · 문체 3가지 비교안</p><p class="ng"><b>막힘</b>AI가 사냥터 입장료 같은 설정 창작 → 세계관 문법 문서로 제한</p></div>
-      <div class="pc"><div class="ph"><img src="media/ai-mon-server.jpg" alt="구현" style="object-fit:cover;background:var(--sr-surface)"></div><h4><em>03</em>구현<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i><i class="ref" data-name="Unreal Engine"><img src="media/icons/ai-unreal.svg" alt="Unreal Engine"></i></span></h4><p class="fl">설계 문서만 입력 → 무인 구현 → 플레이 수정</p><p class="me"><b>나</b>무인 작업 권한·우선순위 지시 · 플레이 후 수정</p><p class="ai"><b>AI</b>C++·데이터·테스트·빌드 · 무인 구현 약 1시간 50분</p><p class="ng"><b>막힘</b>자동 테스트 다 통과했는데 카드 선택이 판에 무관 → 선택 배선 연결</p></div>
-      <div class="pc" hidden><div class="ph"><img src="media/ai-mon-portraits-top.jpg" alt="아트" style="object-fit:cover;background:var(--sr-surface)"></div><h4><em>05</em>아트<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i></span></h4><p class="fl">초상화 생성기 → 전투 몸 → UI</p><p class="me"><b>나</b>전투 유닛 방향(「카오스팩션처럼」) · UI 테마 되돌림</p><p class="ai"><b>AI</b>코드 생성 초상화 3,072장 · 전투 몸 512벌 · Codex 바닥·아이콘</p></div>
-      <div class="pc"><div class="ph"><img src="media/mon-s335.jpg" alt="검증" style="object-fit:cover;background:var(--sr-surface)"></div><h4><em>04</em>검증<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i></span></h4><p class="fl">자동 테스트 → 봇 시뮬 → 내가 플레이</p><p class="me"><b>나</b>플레이로 버그 다섯 발견 → 카드 66장 전수 검사 지시</p><p class="ai"><b>AI</b>자동 테스트 73개 · 봇 7종 1만 4천 판 · Codex 교차 검증</p><p class="ng"><b>막힘</b>66장 중 42장이 조건 없이 등장 → 조건 8종 부여</p></div>
+    <div class="pgrid c4 hrpts">
+      <div class="pc"><div class="ph"><img src="media/ai-mon-1111.jpg" alt="방향 전환" style="object-fit:cover;background:var(--sr-surface)"></div><h4><em>01</em>방향 전환<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><ul class="pt"><li>설계 문서만 주고 무인 구현 → 첫 판 플레이 「확실히 재미없군」, 전량 폐기</li><li>재미 확인 없이 끝까지 간 게 원인 → 재미 확인(대화형)과 무인 구현 구간을 나눔</li><li>재설계 때 AI 추천안 일부(공성전 제외)는 기각</li></ul></div>
+      <div class="pc"><div class="ph"><img src="media/mon-s130.jpg" alt="시나리오" style="object-fit:cover;background:var(--sr-surface)"></div><h4><em>02</em>시나리오<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><ul class="pt"><li>AI가 실제 사건 21건을 조사해 카드 시나리오로, 문체는 3안 중 보고서체 선택</li><li>AI가 세계관에 없는 설정(사냥터 입장료 등)을 지어냄 → 세계관 문법 문서로 창작 범위 제한</li></ul></div>
+      <div class="pc"><div class="ph"><img src="media/mon-s335.jpg" alt="구현·검증" style="object-fit:cover;background:var(--sr-surface)"></div><h4><em>03</em>구현·검증<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i></span></h4><ul class="pt"><li>C++·데이터·테스트·빌드까지 무인 구현 (약 1시간 50분)</li><li>자동 테스트는 다 통과했는데 카드 선택이 판에 반영 안 됨 → 「통과 ≠ 도는 게임」, 배선 연결</li><li>봇 7종 1만 4천 판 + 카드 66장 전수 검사 → 42장이 조건 없이 등장, 조건 8종 부여</li></ul></div>
+      <div class="pc"><div class="ph"><img src="media/ai-mon-portraits-top.jpg" alt="그림·소리" style="object-fit:cover;background:var(--sr-surface)"></div><h4><em>04</em>그림·소리<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i></span></h4><ul class="pt"><li>Codex CLI 설치, Claude가 Codex에게 이미지 생성을 맡기는 구조로 연결</li><li>초상화는 이미지 AI 대신 코드 생성기로 128명 × 장비 4 × 감정 6 = 3,072장</li><li>효과음 27종은 파이썬 코드로 합성, 같은 시드면 같은 소리</li><li>엔진은 MCP 없이 C++·명령줄 빌드·헤드리스 테스트</li></ul></div>
     </div>
   </div>
   <span class="page-no"></span>
@@ -878,10 +922,10 @@ html, body { background: #e9e3d8; }
       <p class="ov tg">다키스트 던전·슬레이 더 스파이어류 로그라이트를 좋아하는 10~30대 모바일 유저</p>
       <span class="lbl">포인트</span>
       <ol class="pts">
-        <li><div><b>배치로 이기는 쾌감</b>조작 없는 자동 전투, 승패를 가르는 배치와 빌드 (봇 실험: 고른 배치 완주율 43~50%, 무작위 22~25%)</div></li>
-        <li><div><b>돌아오지 않는 용병</b>죽으면 사라지는 용병과 새로운 영입, 층마다 규칙을 비트는 악마</div></li>
-        <li><div><b>감지도로 쌓이는 긴장</b>방을 고를수록 차오르는 감지도, 100을 넘으면 그 층의 악마와 결전</div></li>
-        <li><div><b>후회가 수요가 되는 BM</b>용병을 잃은 직후 직전 방으로 되감는 「회중시계」 (가설)</div></li>
+        <li><div><b>유닛의 영구적 사망이 불러오는 긴장감</b>한 번의 배치 실수가 유닛의 사망으로 이어지는 긴장감이 전략적 배치의 재미를 가중</div></li>
+        <li><div><b>각 층의 악마들이 불러오는 불합리한 기믹</b>악마별로 다양한 불합리 기믹들을 가져와 이를 이겨내고 클리어했을 때의 쾌감</div></li>
+        <li><div><b>실수를 되돌리는 회중시계 BM</b>빠른 진행과 영구적 사망이 부르는 잦은 실수를 직전 방 선택으로 한 번 되감는 소모품 유료 판매</div></li>
+        <li><div><b>카르마로 쌓는 영구 성장</b>업적 달성을 통해 쌓이는 포인트로 사전 성장이 가능하게 하여, 해금 항목에 대한 번들 및 플레이어블 캐릭터 판매를 통해 BM 확장 가능</div></li>
       </ol>
     </div>
     <div class="doc-side">
@@ -894,51 +938,27 @@ html, body { background: #e9e3d8; }
 <section id="ihdai" class="page">
   <div class="partpg">
     <h2 class="ptitle">파트별 AI 활용</h2>
-    <div class="pgrid c4">
-      <div class="pc" hidden><div class="ph"><img src="media/ihd-c40.jpg" alt="기획" style="object-fit:cover;object-position:center 12%;background:var(--sr-surface);image-rendering:pixelated"></div><h4><em>01</em>기획<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><p class="fl">3장 기획서 → 플레이 루프 명세 → 격자 번복</p><p class="me"><b>나</b>3장 기획서 · 자유 배치를 격자로 번복 · 층별 악마 컨셉</p><p class="ai"><b>AI</b>플레이 루프 명세 정리 · 2·3층 악마 설계 초안</p></div>
-      <div class="pc"><div class="ph"><img src="media/ai-ihd-1_3d.png" alt="그래픽 방향" style="object-fit:contain;background:var(--sr-surface);image-rendering:pixelated"></div><h4><em>01</em>그래픽 방향<span class="ptl"><i class="ref" data-name="Tripo"><img src="media/icons/tool-tripo.jpg" alt="Tripo"></i><i class="ref" data-name="Blender"><img src="media/icons/tool-blender.jpg" alt="Blender"></i><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i></span></h4><p class="fl">3D 도트 시범 → 포기 → 2D 도트</p><p class="me"><b>나</b>「이 그래픽은 포기하자」 · 정면 시안 승인</p><p class="ai"><b>AI</b>3D 모델·동작 시범 · 2D 도트 시범 8회</p><p class="ng"><b>막힘</b>3D 도트에서 검 날이 1~2픽셀로 묻힘 → 3D 포기, 2D 도트로 전환</p></div>
-      <div class="pc"><div class="ph"><img src="media/ai-ihd-sheet.png" alt="도트 양산" style="object-fit:contain;background:var(--sr-surface);image-rendering:pixelated"></div><h4><em>02</em>도트 양산<span class="ptl"><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><p class="fl">Codex 생성 → 격자 정리 → 팔레트 → 자동 점검 → 내 눈</p><p class="me"><b>나</b>최종 눈 검수 · 「칼은 곧게」 기준</p><p class="ai"><b>AI</b>유닛 9종 시트 64장(재생성 0) · 칼 직선·초록 자동 점검</p><p class="ng"><b>막힘</b>AI가 그린 칼이 휨 → 칼 직선 검사를 규칙에 넣고 칼날 다시 찍음</p></div>
-      <div class="pc"><div class="ph"><img src="media/ihd-s520.jpg" alt="스킬·이펙트" style="object-fit:cover;background:var(--sr-surface);image-rendering:pixelated"></div><h4><em>03</em>스킬·이펙트<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i><i class="ref" data-name="Godot"><img src="media/icons/tool-godot.jpg" alt="Godot"></i></span></h4><p class="fl">검기 1~3차 → 연출 원칙 → 스킬 구현</p><p class="me"><b>나</b>「마법처럼 나가면 안 되지」 · 「모션 도트는 아끼고 이펙트에 투자」</p><p class="ai"><b>AI</b>직업별·적 스킬 13종 · 분신·궤적 이펙트</p><p class="ng"><b>막힘</b>검기가 모였다 뻗는 마법 모양 → 가로베기 첫 프레임에서 바로 발사</p></div>
-      <div class="pc" hidden><div class="ph"><img src="media/ai-ihd-sound.jpg" alt="소리" style="object-fit:cover;background:var(--sr-surface)"></div><h4><em>05</em>소리<span class="ptl"><i class="ref" data-name="ElevenLabs"><img src="media/icons/tool-elevenlabs.jpg" alt="ElevenLabs"></i><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><p class="fl">프롬프트 표 → 내 검수 → 생성 → 전수 청취</p><p class="me"><b>나</b>프롬프트 검수 · 변주까지 전수 청취</p><p class="ai"><b>AI</b>소리 77종 생성 · 자동 측정(길이·음량)</p></div>
-      <div class="pc"><div class="ph"><img src="media/ihd-s200.jpg" alt="밸런스" style="object-fit:cover;background:var(--sr-surface);image-rendering:pixelated"></div><h4><em>04</em>밸런스<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i><i class="ref" data-name="Godot"><img src="media/icons/tool-godot.jpg" alt="Godot"></i></span></h4><p class="fl">진행 봇 측정 → 배치 실험 → 시점은 내가 결정</p><p class="me"><b>나</b>밸런스 시작 시점 결정 · 목표치 위임</p><p class="ai"><b>AI</b>진행 봇 120판 단위 측정 · 배치 실험(43~50% vs 22~25%)</p><p class="ng"><b>막힘</b>콘텐츠 추가마다 수치가 틀어짐 → 측정 중단, 시작은 내가 정함</p></div>
+    <div class="pgrid c4 hrpts">
+      <div class="pc"><div class="ph"><img src="media/ai-ihd-1_3d.png" alt="그래픽 방향" style="object-fit:contain;image-rendering:pixelated;background:var(--sr-surface)"></div><h4><em>01</em>그래픽 방향<span class="ptl"><i class="ref" data-name="Tripo"><img src="media/icons/tool-tripo.jpg" alt="Tripo"></i><i class="ref" data-name="Blender"><img src="media/icons/tool-blender.jpg" alt="Blender"></i><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i></span></h4><ul class="pt"><li>3D 모델 → 도트 렌더 시범: 검 날이 1~2픽셀로 묻히고 자세가 어색</li><li>「이 그래픽은 포기하자」 → 2D 도트로 전환, 정면 시안 승인 후 양산</li></ul></div>
+      <div class="pc"><div class="ph"><img src="media/ai-ihd-sheet.png" alt="도트 양산" style="object-fit:contain;image-rendering:pixelated;background:var(--sr-surface)"></div><h4><em>02</em>도트 양산<span class="ptl"><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><ul class="pt"><li>Codex 생성 → 격자 정리 → 공통 팔레트 → 자동 점검 → 내 눈 검수</li><li>유닛 9종 시트 64장, 재생성 0</li><li>AI가 그린 칼이 휨 → 칼 직선 검사를 규칙에 넣고 칼날만 다시 찍음</li></ul></div>
+      <div class="pc"><div class="ph"><img src="media/ihd-s520.jpg" alt="스킬·이펙트" style="object-fit:cover;image-rendering:pixelated;background:var(--sr-surface)"></div><h4><em>03</em>스킬·이펙트<span class="ptl"><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i><i class="ref" data-name="Godot"><img src="media/icons/tool-godot.jpg" alt="Godot"></i></span></h4><ul class="pt"><li>검기가 모였다 뻗는 마법 모양 → 「마법처럼 나가면 안 되지」, 가로베기 첫 프레임에서 바로 발사</li><li>「모션 도트는 아끼고 이펙트에 투자」 → 기존 프레임 분신·궤적으로 스킬 13종</li></ul></div>
+      <div class="pc"><div class="ph"><img src="media/ai-ihd-sound.jpg" alt="사운드" style="object-fit:cover;object-position:left top;background:var(--sr-surface)"></div><h4><em>04</em>사운드<span class="ptl"><i class="ref" data-name="ElevenLabs"><img src="media/icons/tool-elevenlabs.jpg" alt="ElevenLabs"></i><i class="ref" data-name="Claude Code"><img src="media/icons/tool-claude.jpg" alt="Claude Code"></i></span></h4><ul class="pt"><li>ElevenLabs API로 배경음 4·징글 4·효과음 69종 생성</li><li>다크 레트로 RPG 톤으로 소리 기획부터 생성·적용까지 AI에 위임</li><li>AI는 소리를 못 들어 자동 측정으로 불량만 거르고, 후보는 듣기 목록 페이지로 받아 청음</li></ul></div>
     </div>
   </div>
   <span class="page-no"></span>
 </section>
 
 <section id="td" class="page">
-  <div class="doc gp">
-    <div class="doc-main">
-      <div class="big-no">04</div>
-      <div class="refs"><span>협력사</span><i class="ref" data-name="Minimum Studio"><img src="media/icons/minimumstudio.jpg" alt="Minimum Studio"></i></div>
+  <div class="doc gp tdwork">
+    <div class="doc-main tw-left">
+      <div class="big-no">04</div><div class="refs"><span>협력사</span><i class="ref" data-name="Minimum Studio"><img src="media/icons/minimumstudio.jpg" alt="Minimum Studio"></i></div>
       <div class="chips" style="margin-top:14px"><span class="chip on">로그라이트 덱빌딩</span><span class="chip">PC</span><span class="chip">Unity</span><span class="chip">팀 · 총괄 기획</span></div>
       <h2 class="kr-h">Tokyo Desire : Deck Builders<br><span class="t2">악마의 계약으로 덱을 완성하는 로그라이트 덱빌딩</span></h2>
-      <span class="lbl">타겟</span>
-      <p class="ov tg">슬레이 더 스파이어류 덱빌딩 로그라이트를 즐기는 PC 게이머</p>
-      <span class="lbl">포인트</span>
-      <ol class="pts">
-        <li><div><b>감지도가 만드는 진행 압박</b>선택지마다 붙은 감지도, 무엇을 고르느냐로 정해지는 보스까지의 시간</div></li>
-        <li><div><b>거절하면 대가를 치르는 계약</b>거절 시 최대 체력 감소, 수락 시 덱 컨셉을 정하는 핵심 유물</div></li>
-        <li><div><b>다섯 갈래의 빌드</b>지옥불·약화·성흔·가시·스탯, 같은 시작 덱에서 런마다 갈라지는 덱</div></li>
-        <li><div><b>범위 재설계로 지킨 데모 일정</b>개발 팀원 피드백에 따라 핵심이던 「통찰」 제외, 기한 안 스팀 데모 등록</div></li>
-      </ol>
+      <div class="tw-video"><video src="media/td-trailer-cut.mp4" poster="media/td-trailer-cut-poster.jpg" muted autoplay loop playsinline preload="metadata" aria-label="Tokyo Desire 스팀 데모 트레일러"></video></div>
     </div>
-    <div class="doc-side">
-      <video src="media/td-trailer-cut.mp4" poster="media/td-trailer-cut-poster.jpg" muted autoplay loop playsinline preload="metadata" aria-label="Tokyo Desire 스팀 데모 트레일러"></video>
-      <div class="quad"><img src="media/td-s-battle.jpg" alt="전투"><img src="media/td-s-choice.jpg" alt="감지도 선택지"><img src="media/td-s-shop.jpg" alt="상점"><img src="media/td-s-contract.jpg" alt="악마의 계약"></div>
-    </div>
-  </div>
-  <span class="page-no"></span>
-</section>
-
-<section id="tdai" class="page">
-  <div class="partpg">
-    <h2 class="ptitle">파트별 AI 활용</h2>
-    <div class="pgrid c4">
-      <div class="pc"><div class="ph"><img src="media/ai-td-input.jpg" alt="원문 → 문서 구조" style="object-fit:cover;object-position:left top"></div><h4><em>01</em>원문 → 문서 구조<span class="ptl"><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i></span></h4><p class="fl">내 원문 기획 → AI 작업 문서 → 팀 기준 문서</p><p class="me"><b>나</b>원문 기획 작성 · 기준 문서로 올릴지 판단</p><p class="ai"><b>AI</b>원문 구조화 · 기준 문서 초안 · 열린 질문 정리</p><p class="ng"><b>막힘</b>PPT에서 뽑은 문서마다 미정 항목 누적 → 원본을 내가 쓴 md로 전환</p></div>
-      <div class="pc"><div class="ph"><img src="media/ai-td-rubric.jpg" alt="품질 평가" style="object-fit:cover;object-position:left top"></div><h4><em>02</em>품질 평가<span class="ptl"><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i></span></h4><p class="fl">기준표로 평가 → 부족한 곳 보완</p><p class="me"><b>나</b>평가 기준 확정 · 보완 방향 결정</p><p class="ai"><b>AI</b>문서마다 항목별 점수 · 모호성·누락·충돌 정리</p><p class="ng"><b>막힘</b>1막 콘텐츠·밸런스 입력이 「공백」 평가 → 목표를 1막 완성으로 축소</p></div>
-      <div class="pc"><div class="ph"><img src="media/ai-td-report.jpg" alt="검증" style="object-fit:cover;object-position:left top"></div><h4><em>03</em>검증<span class="ptl"><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i></span></h4><p class="fl">검증 스크립트 → 보고서 → 경고 처리</p><p class="me"><b>나</b>경고 항목 처리 여부 판단</p><p class="ai"><b>AI</b>문서 간 링크·구조 점검 · 검증 보고 19회</p><p class="ng"><b>막힘</b>폴더 이름 변경 후 깨진 링크 16건 → 경로 일괄 수정, 이틀 뒤 오류 0</p></div>
-      <div class="pc"><div class="ph"><img src="media/td-s-choice.jpg" alt="개발 전달" style="object-fit:cover;background:var(--sr-surface)"></div><h4><em>04</em>개발 전달<span class="ptl"><i class="ref" data-name="Codex"><img src="media/icons/ai-codex.svg" alt="Codex"></i></span></h4><p class="fl">기준 문서 → 개발자 전달 → 데모</p><p class="me"><b>나</b>기획 문서 13편·데이터 테이블 6종 전달 · 범위 재설계</p><p class="ai"><b>AI</b>문서 간 용어·규칙 충돌 점검</p><p class="ng"><b>막힘</b>입력 문서 두 편의 보상 조건 충돌 → 「등장 여부」 기준으로 확정</p></div>
+    <div class="tw-right">
+      <h3 class="tw-h">총괄 기획으로 일한 방식</h3>
+      <div class="tw-grid"><figure><img src="media/td-plan-hub.jpg" alt="노션 기획 문서"><figcaption><b>노션 기획 문서</b>노션 기반 기획 문서 작성 및 팀 공유</figcaption></figure><figure><img src="media/td-plan-sheets.jpg" alt="구글 시트 테이블·에셋 요청"><figcaption><b>구글 시트 테이블·에셋 요청</b>구글 시트 기반 전체 데이터 테이블 관리 및 협력사 대상 에셋·사운드 요청 리스트 제공</figcaption></figure><figure><img src="media/td-plan-meet.jpg" alt="작업·일정 관리"><figcaption><b>작업·일정 관리</b>회의 후 작업 체크리스트 관리 및 마일스톤 일정 관리</figcaption></figure><figure><img src="media/td-plan-steam.jpg" alt="스팀 스토어 등록"><figcaption><b>스팀 스토어 등록</b>Minimum Studio 배급, 스팀 스토어 페이지 공개</figcaption></figure></div>
     </div>
   </div>
   <span class="page-no"></span>
@@ -1106,7 +1126,7 @@ html, body { background: #e9e3d8; }
 (function () {
   var dock = document.querySelector('.dock'); if (!dock) return;
   var pill = dock.querySelector('.pill'), links = [].slice.call(dock.querySelectorAll('a'));
-  var group = { hr: 'projects', mon: 'projects', ihd: 'projects', td: 'projects', hrai: 'projects', monai: 'projects', ihdai: 'projects', tdai: 'projects', midas: 'field', timeline2: 'timeline', end: 'playlib' };
+  var group = { hr: 'projects', mon: 'projects', ihd: 'projects', td: 'projects', hrai: 'projects', monai: 'projects', ihdai: 'projects', midas: 'field', timeline2: 'timeline', end: 'playlib' };
   function setActive(id) {
     id = group[id] || id;
     links.forEach(function (a) { if (a.dataset.sec === id) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
@@ -1218,7 +1238,7 @@ html, body { background: #e9e3d8; }
 <div class="lbox" aria-hidden="true"><img alt=""><p></p></div>
 <script>
 (function () {
-  var SEL = '.doc-side > img, .doc-side > .vwrap > img, .quad img, .tall .col img, .tri img, .quad4 > img, .st .gal img, .play .shot img, .pc .ph img';
+  var SEL = '.doc-side > img, .doc-side > .vwrap > img, .quad img, .tall .col img, .tri img, .quad4 > img, .st .gal img, .play .shot img, .pc .ph img, .tw-grid img';
   var box = document.querySelector('.lbox'), big = box.querySelector('img'), cap = box.querySelector('p');
   function close() { box.classList.remove('on'); box.setAttribute('aria-hidden', 'true'); document.documentElement.style.overflow = ''; }
   document.addEventListener('click', function (e) {
