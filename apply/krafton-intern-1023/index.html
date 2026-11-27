@@ -1,0 +1,872 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}</style>
+<title>이창연 게임기획 포트폴리오</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+/* Color: 포트폴리오 추천 팔레트 'Studio Concrete'
+   Charcoal #2B2D33 · Mid-gray #6E7278 · Off-white #F4F1ED · Orange-red #FF5C39 (포인트는 5% 이하로만)
+   Type: Noto Sans KR (가독성 우선) */
+:root {
+  --bg: #f4f1ed;
+  --surface: #fbfaf8;
+  --ink: #2b2d33;
+  --muted: #6e7278;
+  --line: #e2ddd6;
+  --accent: #ff5c39;
+  --accent-soft: #ece7e0;
+  --done: #2b2d33;
+  --done-soft: #ece7e0;
+  --path: #c9c4bd;
+  --body: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --display: var(--body);
+  color-scheme: light;
+}h1, h2, h3, .brand { font-family: var(--display); }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); }
+/* 페이지 폭: 최대 1440px, 좌우 여백은 화면 폭의 8% (34~144px) */
+.wrap {
+  max-width: 1440px; margin: 0 auto;
+  padding-left: max(clamp(34px, 8vw, 144px), env(safe-area-inset-left, 0px));
+  padding-right: max(clamp(34px, 8vw, 144px), env(safe-area-inset-right, 0px));
+}
+
+/* ---------- 하단 떠 있는 알약 메뉴 ---------- */
+.dock-nav {
+  position: fixed; z-index: 20; left: 50%; transform: translateX(-50%);
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  display: flex; align-items: center; gap: 2px; padding: 6px;
+  background: rgba(43, 45, 51, .92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-radius: 999px; box-shadow: 0 18px 40px -16px rgba(20, 20, 24, .55), 0 0 0 1px rgba(255, 255, 255, .06) inset;
+}
+.dock-nav .pill { position: absolute; top: 6px; bottom: 6px; left: 0; width: 0; border-radius: 999px; background: var(--accent); transition: left .32s cubic-bezier(.3, .7, .2, 1), width .32s cubic-bezier(.3, .7, .2, 1); }
+.dock-nav a {
+  position: relative; z-index: 1; display: flex; align-items: center; gap: 7px; white-space: nowrap;
+  text-decoration: none; color: rgba(244, 241, 237, .72); font-size: 14px; font-weight: 500;
+  padding: 10px 16px; border-radius: 999px; transition: color .2s;
+}
+.dock-nav a svg { width: 17px; height: 17px; flex: none; }
+.dock-nav a:hover { color: #fff; }
+.dock-nav a[aria-current="page"] { color: #fff; }
+.dock-nav a:focus-visible { outline: 2px solid #fff; outline-offset: -2px; }
+@media (max-width: 560px) {
+  .dock-nav a { padding: 10px 12px; }
+  .dock-nav a span { display: none; }
+  .dock-nav a[aria-current="page"] span { display: inline; }
+}
+@media (prefers-reduced-motion: reduce) { .dock-nav .pill { transition: none; } }
+
+main.wrap { padding-block: clamp(40px, 6vw, 80px) calc(clamp(56px, 8vw, 106px) + 80px); }
+
+/* ---------- 플레이 라이브러리 ---------- */
+/* 필터는 항상 한 줄: 넘치면 줄바꿈 대신 가로 스크롤 */
+.filters {
+  display: flex; flex-wrap: nowrap; gap: 6px; margin: 0 0 28px;
+  overflow-x: auto; scrollbar-width: thin; padding-bottom: 4px;
+}
+.filter {
+  flex: 0 0 auto; white-space: nowrap;
+  font: inherit; font-size: 13px; cursor: pointer;
+  border: 1px solid var(--line); background: transparent; color: var(--ink);
+  padding: 6px 11px; border-radius: 999px;
+}
+.filter:hover { background: var(--accent-soft); }
+.filter[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+.filter:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.filter .n { font-size: 11px; opacity: .7; margin-left: 4px; font-variant-numeric: tabular-nums; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); gap: 22px 16px; list-style: none; margin: 0; padding: 0; }
+@media (max-width: 460px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 12px; } }
+.game { display: grid; gap: 8px; align-content: start; min-width: 0; }
+.icon {
+  aspect-ratio: 1; width: 100%; max-width: 100%; border-radius: 22%;
+  overflow: hidden; background: var(--accent-soft);
+  box-shadow: 0 0 0 1px var(--line), 0 6px 14px -8px rgba(20, 22, 28, .35);
+  display: grid; place-items: center;
+}
+.icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.icon .initial { font-size: 32px; font-weight: 500; color: var(--accent); }
+.name {
+  font-size: 13px; font-weight: 500; line-height: 1.35; text-align: center;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  word-break: keep-all; overflow-wrap: anywhere;
+}
+
+/* ---------- 타임라인 (스테이지 지도) ---------- */
+.map {
+  position: relative; border-radius: 18px; padding: 36px 20px;
+  background:
+    radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 1.5px) 0 0 / 22px 22px,
+    var(--surface);
+  box-shadow: 0 0 0 1px var(--line);
+}
+.map svg.trail { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.trail .done { fill: none; stroke: var(--path); stroke-width: 6; stroke-linecap: round; }
+.trail .todo { fill: none; stroke: var(--path); stroke-width: 3; stroke-dasharray: 2 9; stroke-linecap: round; }
+/* 왼쪽에 세로 직선 하나, 오른쪽에 넓은 설명 영역 */
+.stages { list-style: none; margin: 0; padding: 0; display: grid; gap: 44px; position: relative; }
+.stage { display: grid; grid-template-columns: 96px minmax(0, 1fr); align-items: start; gap: 28px; }
+.stage .spot { display: grid; justify-items: center; gap: 6px; }
+.stage .card { min-width: 0; padding-top: 6px; }
+
+.node {
+  width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--surface); border: 3px solid var(--path); position: relative; z-index: 1;
+}
+.node svg { width: 20px; height: 20px; }
+.stage[data-state="done"] .node { border-color: var(--done); background: var(--done-soft); color: var(--done); }
+.stage[data-state="current"] .node { border-color: var(--accent); background: var(--accent); color: #fff; box-shadow: 0 0 0 6px var(--accent-soft); }
+.stage[data-state="goal"] .node { border-style: dashed; color: var(--muted); }
+.stage[data-highlight] .node { width: 56px; height: 56px; }
+.lv { font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: .02em; color: var(--muted); background: var(--surface); padding: 1px 9px; border-radius: 999px; box-shadow: 0 0 0 1px var(--line); position: relative; z-index: 1; white-space: nowrap; }
+.stage[data-state="done"] .lv { color: var(--done); }
+.stage[data-state="current"] .lv { color: var(--ink); }
+
+.card { max-width: 860px; display: grid; gap: 10px; }
+.card .year { font-size: 13px; font-weight: 600; letter-spacing: .06em; color: var(--muted); font-variant-numeric: tabular-nums; margin-bottom: -6px; }
+
+.card .head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
+.card h3 { margin: 0; font-size: 19px; font-weight: 600; line-height: 1.35; text-wrap: balance; }
+.card p { margin: 0; font-size: 15px; line-height: 1.75; color: var(--muted); word-break: keep-all; max-width: 68ch; }
+.badge { font-size: 11px; font-weight: 600; letter-spacing: .04em; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 999px; }
+.outputs { display: flex; align-items: baseline; gap: 12px; }
+.outputs > span { flex: none; font-size: 12px; font-weight: 700; color: var(--ink); padding: 1px 8px; border-radius: 999px; background: var(--accent-soft); }
+.outputs ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 2px 0; }
+.outputs li { font-size: 15px; font-weight: 700; color: var(--accent); word-break: keep-all; }
+.outputs li + li::before { content: "·"; margin: 0 8px; color: var(--path); font-weight: 400; }
+.media { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 4px; }
+.ph {
+  aspect-ratio: 16 / 10; max-width: 100%; border: 2px dashed var(--line); border-radius: 10px;
+  display: grid; place-items: center; text-align: center; padding: 8px;
+  font-size: 12px; color: var(--muted); background: var(--bg);
+}
+.ph::before { content: "이미지"; display: block; font-size: 10px; letter-spacing: .08em; opacity: .7; }
+.ph span { display: block; }
+.shot { margin: 0; display: grid; gap: 6px; min-width: 0; }
+.shot-btn {
+  padding: 0; border: 0; cursor: zoom-in; display: block; width: 100%;
+  aspect-ratio: 16 / 10; border-radius: 10px; overflow: hidden;
+  background: var(--bg); box-shadow: 0 0 0 1px var(--line);
+}
+.shot-btn img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.shot-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.shot figcaption { font-size: 12px; color: var(--muted); line-height: 1.45; }
+.links { display: flex; flex-wrap: wrap; gap: 8px; }
+.links a {
+  font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none;
+  padding: 6px 12px; border-radius: 8px; background: var(--ink); color: #fff;
+}
+.links a:hover { text-decoration: underline; }
+.links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* 이미지 크게 보기 */
+.viewer {
+  position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; gap: 10px;
+  padding: max(24px, env(safe-area-inset-top, 0px)) max(24px, env(safe-area-inset-right, 0px)) max(24px, env(safe-area-inset-bottom, 0px)) max(24px, env(safe-area-inset-left, 0px));
+  background: rgba(10, 12, 16, .82); cursor: zoom-out;
+}
+.viewer img { max-width: 100%; max-height: calc(100vh - 120px); border-radius: 8px; background: #fff; }
+.viewer p { margin: 0; color: #e8eaef; font-size: 14px; text-align: center; }
+
+/* ---------- 홈 ---------- */
+.hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); align-items: center; gap: 40px; padding-block: 12px 56px; }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .14em; color: var(--accent); display: flex; align-items: center; gap: 8px; }
+.eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--accent); }
+.hero h1 { margin: 0; font-size: clamp(36px, 5.4vw, 72px); line-height: 1.12; letter-spacing: -.035em; font-weight: 600; text-wrap: balance; word-break: keep-all; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero .sub { margin: 22px 0 0; font-size: 17px; line-height: 1.7; color: var(--muted); max-width: 34em; word-break: keep-all; }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+.btn { text-decoration: none; font-size: 15px; font-weight: 600; padding: 12px 22px; border-radius: 999px; box-shadow: 0 0 0 1px var(--line); color: var(--ink); background: var(--surface); }
+.btn.primary { background: var(--ink); color: var(--bg); box-shadow: none; }
+.btn:hover { box-shadow: 0 0 0 1px var(--ink); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.photo { position: relative; justify-self: end; width: min(100%, 460px); }
+.photo { isolation: isolate; padding: 0; }
+
+
+.photo img { width: 100%; height: auto; display: block; position: relative; margin-bottom: 0; }
+.photo .spark { position: absolute; z-index: 1; color: var(--ink); font-size: 22px; line-height: 1; }
+.photo .tag { position: absolute; z-index: 2; left: -4px; bottom: 18%; background: var(--surface); box-shadow: 0 0 0 1px var(--line), 0 10px 24px -14px rgba(20, 22, 28, .45); border-radius: 12px; padding: 10px 14px; font-size: 13px; display: grid; gap: 2px; }
+.photo .tag b { font-size: 12px; color: var(--ink); letter-spacing: .06em; }
+@media (max-width: 860px) {
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .photo { justify-self: center; width: min(100%, 360px); order: -1; }
+}
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--line); margin-bottom: 72px; }
+.stats div { padding: 22px 20px; display: grid; gap: 4px; }
+.stats div + div { border-left: 1px solid var(--line); }
+.stats strong { font-size: clamp(26px, 3vw, 36px); font-weight: 600; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.stats span { font-size: 13px; color: var(--muted); }
+@media (max-width: 720px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .stats div:nth-child(3) { border-left: 0; } .stats div:nth-child(n+3) { border-top: 1px solid var(--line); } }
+.home-sec { margin-bottom: 80px; }
+.sec-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+.sec-head .num { font-size: 13px; font-weight: 600; color: var(--accent); letter-spacing: .08em; }
+.sec-head h2 { margin: 4px 0 0; font-size: clamp(26px, 3vw, 36px); font-weight: 600; letter-spacing: -.02em; }
+.sec-head a { font-size: 14px; font-weight: 600; color: var(--ink); text-decoration: none; }
+.sec-head a:hover { text-decoration: underline; }
+.picks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+@media (max-width: 860px) { .picks { grid-template-columns: minmax(0, 1fr); } }
+.pick { text-decoration: none; color: inherit; display: grid; gap: 12px; align-content: start; }
+/* 카드끼리 이미지·제목·요약·질문 줄을 공유해, 요약 길이가 달라도 Q 박스 높이와 위치가 맞도록 */
+@supports (grid-template-rows: subgrid) {
+  .picks { row-gap: 0; }
+  .pick { grid-row: span 4; grid-template-rows: subgrid; row-gap: 12px; }
+  .pick .q { align-self: stretch; }
+  @media (max-width: 860px) {
+    .picks { row-gap: 28px; }
+    .pick { grid-row: auto; grid-template-rows: none; }
+  }
+}
+.pick .img { aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; box-shadow: 0 0 0 1px var(--line); background: var(--surface); padding: 0; border: 0; width: 100%; cursor: pointer; display: block; }
+.pick img { width: 100%; height: 100%; object-fit: contain; display: block; transition: transform .25s ease; }
+.pick .img:hover img { transform: scale(1.03); }
+.pick .img:focus-visible, .shelf a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.shelf a { display: block; border-radius: 22%; }
+.shelf a img { transition: transform .2s ease; }
+.shelf a:hover img { transform: translateY(-3px); }
+.pick .k { font-size: 12px; font-weight: 600; color: var(--accent); }
+.pick h3 { margin: 0; font-size: 18px; font-weight: 600; }
+.pick p { margin: -4px 0 0; font-size: 14px; color: var(--muted); line-height: 1.6; }
+/* 기획서가 던진 질문: 강조 */
+.pick .q, .work .q { margin: 2px 0 0; padding: 10px 14px; border-left: 3px solid var(--accent); border-radius: 0; background: var(--surface); box-shadow: 0 0 0 1px var(--line); font-size: 15px; font-weight: 700; line-height: 1.5; color: var(--ink); word-break: keep-all; }
+.pick .q::before, .work .q::before { content: "Q. "; color: var(--accent); }
+.pick:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 12px; }
+.method { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; list-style: none; margin: 0; padding: 0; counter-reset: step; }
+@media (max-width: 860px) { .method { grid-template-columns: minmax(0, 1fr); } }
+.method li { background: var(--surface); border-radius: 14px; box-shadow: 0 0 0 1px var(--line); padding: 20px; display: grid; gap: 8px; align-content: start; }
+.method li::before { counter-increment: step; content: "STEP " counter(step); font-size: 11px; font-weight: 600; letter-spacing: .1em; color: var(--accent); }
+.method b { font-size: 18px; font-weight: 600; }
+.method span { font-size: 13px; color: var(--muted); line-height: 1.6; word-break: keep-all; }
+.shelf { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 860px) { .shelf { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+.shelf img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 22%; box-shadow: 0 0 0 1px var(--line); display: block; }
+.shelf .spot { grid-column: span 2; margin: 0; display: grid; gap: 8px; align-content: start; justify-items: center; }
+.shelf .spot img { width: 66%; box-shadow: 0 0 0 5px var(--accent); }
+.shelf .spot figcaption { font-size: 14px; font-weight: 600; text-align: center; word-break: keep-all; }
+.site-foot { border-top: 1px solid var(--line); padding-block: 28px 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--muted); }
+.site-foot b { color: var(--ink); }
+
+/* ---------- About ---------- */
+.about { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-block: 1px solid var(--line); margin-bottom: 80px; }
+.about > div { padding: 26px 28px 28px 0; display: grid; gap: 14px; align-content: start; min-width: 0; }
+.about > div + div { padding-left: 28px; border-left: 1px solid var(--line); }
+@media (max-width: 860px) { .about { grid-template-columns: minmax(0, 1fr); } .about > div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); } .about > div { padding-right: 0; } }
+.about h3 { margin: 0; font-size: 13px; font-weight: 600; color: var(--muted); letter-spacing: .04em; }
+.about dl { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 16px; font-size: 14px; }
+.about dt { color: var(--muted); white-space: nowrap; }
+.about dd { margin: 0; word-break: keep-all; }
+.about ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.about li { font-size: 14px; line-height: 1.55; display: grid; gap: 2px; word-break: keep-all; }
+.about li b { font-weight: 600; }
+.about li span { color: var(--muted); font-size: 13px; }
+.about .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.about .chips span { font-size: 13px; padding: 4px 10px; border-radius: 999px; background: var(--surface); box-shadow: 0 0 0 1px var(--line); }
+.about dd .sub { color: var(--muted); font-size: 13px; }
+.about .tools { grid-template-columns: 52px minmax(0, 1fr); gap: 10px 12px; align-items: center; }
+.about .timeline-mini li { grid-template-columns: 44px minmax(0, 1fr); column-gap: 10px; word-break: keep-all; }
+.about .timeline-mini time { grid-row: span 2; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 1px; }
+.about .note { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.6; word-break: keep-all; }
+/* ---------- 타임라인 요약 ---------- */
+.lead { margin: 0 0 28px; display: grid; gap: 14px; }
+.lead h2 { margin: 0; font-size: clamp(24px, 3.4vw, 34px); font-weight: 600; letter-spacing: -.02em; line-height: 1.3; text-wrap: balance; word-break: keep-all; }
+.lead h2 em { font-style: normal; color: var(--accent); }
+.lead p { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.8; word-break: keep-all; }
+.philo { margin: -14px 0 28px; display: grid; gap: 18px; }
+.philo-lead { margin: 0; font-size: 16px; line-height: 1.8; color: var(--muted); word-break: keep-all; }
+.philo-end { margin: 14px 0 0; padding-left: 14px; border-left: 3px solid var(--accent); font-size: 19px; line-height: 1.5; font-weight: 700; color: var(--ink); word-break: keep-all; }
+.philo-cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 720px) { .philo-cases { grid-template-columns: minmax(0, 1fr); } }
+.philo-cases .case { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px; align-items: start; padding: 16px 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+.philo-cases img { width: 52px; height: 52px; border-radius: 12px; object-fit: cover; }
+.philo-cases .case > div { display: grid; gap: 4px; }
+.philo-cases b { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+.philo-cases p { margin: 0; display: grid; grid-template-columns: 44px minmax(0, 1fr); font-size: 14px; line-height: 1.6; color: var(--ink); word-break: keep-all; }
+.philo-cases p span { font-size: 12px; font-weight: 700; color: var(--muted); padding-top: 1px; }
+.philo-cases p + p span { color: var(--accent); }
+/* ---------- 장르 간 시스템 이식 ---------- */
+.transfer { --tw: 170px; margin: 0 0 32px; padding: 20px 24px; box-sizing: border-box; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; display: grid; grid-template-columns: auto 76px minmax(0, var(--tw)) minmax(0, 1fr); align-items: start; row-gap: 12px; }
+.transfer-tag { grid-column: 1 / -1; margin: 0; justify-self: start; padding: 3px 10px; border-radius: 999px; background: var(--accent-soft); font-size: 12px; font-weight: 700; color: var(--ink); }
+.transfer-srcs { display: grid; grid-template-columns: minmax(0, var(--tw)) 24px minmax(0, var(--tw)); align-items: start; }
+.transfer-srcs .plus { margin-top: calc(var(--tw) * 9 / 32 - 11px); text-align: center; font-size: 18px; font-weight: 700; color: var(--muted); }
+.transfer-link { display: grid; justify-items: center; gap: 2px; margin-top: calc(var(--tw) * 9 / 32 - 26px); color: var(--accent); }
+.transfer-link .bulb { width: 20px; height: 20px; }
+.transfer-link span { font-size: 12px; font-weight: 700; }
+.transfer-link .line { width: 56px; height: 10px; }
+.transfer-end { margin: 0; display: grid; gap: 10px; min-width: 0; }
+.transfer-end .shot-btn { aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: var(--ink); box-shadow: 0 1px 3px rgba(43, 45, 51, .12), 0 12px 24px -10px rgba(43, 45, 51, .4); }
+.transfer-end .shot-btn img { object-fit: cover; }
+.transfer-end figcaption { display: grid; gap: 1px; }
+.transfer-end span { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: .02em; word-break: keep-all; }
+.transfer-end b { font-size: 14px; font-weight: 700; word-break: keep-all; }
+.transfer-why { margin-left: 28px; padding-left: 28px; border-left: 1px solid var(--line); align-self: stretch; display: grid; align-content: center; gap: 8px; }
+.transfer-why b { font-size: 18px; font-weight: 700; line-height: 1.4; word-break: keep-all; }
+.transfer-why p { margin: 0; font-size: 14px; line-height: 1.7; color: var(--muted); word-break: keep-all; }
+@media (max-width: 1080px) {
+  .transfer { grid-template-columns: auto 76px minmax(0, var(--tw)); }
+  .transfer-why { grid-column: 1 / -1; margin: 4px 0 0; padding: 14px 0 0; border-left: 0; border-top: 1px solid var(--line); }
+}
+@media (max-width: 720px) {
+  .transfer { padding: 16px; grid-template-columns: minmax(0, 1fr); }
+  .transfer-srcs { grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr); }
+  .transfer-srcs .plus { margin-top: calc((100vw - 32px - 32px - 20px) / 2 * 9 / 32 - 11px); }
+  .transfer-link { grid-template-columns: auto auto auto; align-items: center; justify-content: center; gap: 6px; margin: 0; }
+  .transfer-link .line { width: 28px; transform: rotate(90deg); }
+  .transfer-end.dst { justify-self: center; width: calc((100% - 20px) / 2); }
+  .transfer-why b { font-size: 16px; }
+}
+/* ---------- 포트폴리오 ---------- */
+.section-title { margin: 0 0 18px; font-size: 13px; font-weight: 600; letter-spacing: .08em; color: var(--muted); }
+.featured { display: grid; gap: 28px; margin-bottom: 56px; }
+.others { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 960px) { .others { grid-template-columns: minmax(0, 1fr); } }
+/* 대표 작업: 왼쪽 표지, 오른쪽 내용 */
+.featured .work { grid-template-rows: none; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); align-items: center; }
+.featured .work .cover { margin: 24px 0 24px 24px; width: auto; border-radius: 10px; overflow: hidden; box-shadow: 0 0 0 1px var(--line); }
+.featured .work .body { padding: 24px 32px; gap: 12px; }
+@media (max-width: 960px) {
+  .featured .work { grid-template-columns: minmax(0, 1fr); }
+  .featured .work .cover { margin: 16px 16px 0; }
+}
+.work .hook { margin: 0; font-size: 16px; font-weight: 600; color: var(--ink); line-height: 1.5; }
+.work .label { font-size: 12px; font-weight: 600; letter-spacing: .06em; color: var(--accent); margin: 4px 0 -4px; }
+.work ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+.work li { font-size: 14px; line-height: 1.65; color: var(--muted); word-break: keep-all; }
+.work .spec { display: flex; flex-wrap: wrap; gap: 6px; }
+.work .spec span { font-size: 12px; padding: 3px 9px; border-radius: 999px; background: var(--bg); color: var(--muted); }
+.work .note { font-size: 12px; color: var(--muted); font-style: italic; }
+.work { display: grid; grid-template-rows: auto 1fr; background: var(--surface); border-radius: 14px; overflow: hidden; box-shadow: 0 0 0 1px var(--line); min-width: 0; }
+.work .cover { padding: 0; border: 0; cursor: zoom-in; display: block; width: 100%; aspect-ratio: 16 / 9; background: var(--bg); }
+.work .cover img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.work .cover:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.work .body { padding: 18px 20px 20px; display: grid; gap: 10px; align-content: start; }
+.work .meta { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: 12px; color: var(--muted); }
+.work .kind { font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 999px; }
+.work h3 { margin: 0; font-size: 19px; font-weight: 600; line-height: 1.35; text-wrap: balance; }
+.work .game { font-size: 13px; color: var(--muted); margin-top: -6px; }
+.work p { margin: 0; font-size: 14px; line-height: 1.7; color: var(--muted); word-break: keep-all; }
+.work .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.work .tags span { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--accent); color: #fff; }
+.work .thumbs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.work .thumbs .shot-btn { aspect-ratio: 16 / 9; border-radius: 6px; }
+.others .work h3 { font-size: 16px; }
+
+@media (max-width: 720px) {
+  .map { padding: 24px 14px; }
+  .stage { grid-template-columns: 60px minmax(0, 1fr); gap: 14px; }
+  .media { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+}
+</style>
+</head>
+<body>
+
+
+<nav class="dock-nav nav" aria-label="페이지">
+  <span class="pill" aria-hidden="true"></span>
+  <a href="#home" id="nav-home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg><span>홈</span></a>
+  <a href="#portfolio" id="nav-portfolio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/></svg><span>포트폴리오</span></a>
+  <a href="#timeline" id="nav-timeline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><path d="M6 8v8"/><path d="M11 6h9M11 18h9M11 12h6"/></svg><span>활동</span></a>
+  <a href="#library" id="nav-library"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7" width="19" height="11" rx="5.5"/><path d="M7.5 10.5v4M5.5 12.5h4"/><circle cx="15.5" cy="11.5" r=".6" fill="currentColor"/><circle cx="17.5" cy="13.5" r=".6" fill="currentColor"/></svg><span>게임</span></a>
+</nav>
+
+<main class="wrap">
+  <section id="view-home" aria-labelledby="nav-home">
+    <div class="hero">
+      <div>
+        
+        <h1>'<em>왜?</em>'를 쫓아 의도를 읽는 기획자</h1>
+        <p class="sub">장르를 막론하고, 게임이 추구하는 가치와 방향을 먼저 찾습니다. 그리고 시스템이 그 방향에 맞게 설계되었는지, 의도대로 작동하는지를 탐구합니다.</p>
+        
+      </div>
+      <div class="photo">
+        <img src="media/profile-sticker.png" alt="이창연 프로필 사진">
+      </div>
+    </div>
+
+    <section class="about" aria-label="소개">
+      <div>
+        <h3>PROFILE</h3>
+        <dl>
+          <dt>이름</dt><dd>이창연</dd>
+          <dt>생년월일</dt><dd>1999.09.14</dd>
+          <dt>지원 직무</dt><dd>게임 시스템 기획</dd>
+          <dt>학력</dt><dd>삼육대학교 소프트웨어전공<br><span class="sub">2022.03 – 2026.08 졸업</span></dd>
+          <dt>이메일</dt><dd>lcyred001@naver.com</dd>
+        </dl>
+      </div>
+      <div>
+        <h3>EXPERIENCE</h3>
+        <ul class="timeline-mini">
+          <li><time>2026</time><b>라이브 MMORPG 시스템 기획서 3편</b><span>아이온2, 제우스: 오만의 신 분석 및 창작</span></li>
+          <li><time>2026</time><b>산학협력 캡스톤 디자인 · Tokyo Desire</b><span>총괄 기획, 스팀 데모 등록</span></li>
+          <li><time>2024</time><b>캡스톤 디자인 · BapTalkSU</b><span>총괄 기획, 기능 명세 및 일정 관리</span></li>
+          <li><time>2023</time><b>게임 개발 동아리 creator</b><span>기획 스터디, 역기획서 4편 및 창작 기획서 2편</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>TOOLS</h3>
+        <dl class="tools">
+          <dt>문서</dt><dd class="chips"><span>Word</span><span>PowerPoint</span><span>Notion</span></dd>
+          <dt>데이터</dt><dd class="chips"><span>Excel</span><span>Google Sheets</span></dd>
+          <dt>설계</dt><dd class="chips"><span>Figma</span></dd>
+          <dt>엔진</dt><dd class="chips"><span>Unity</span></dd>
+          <dt>AI</dt><dd class="chips"><span>Claude Code</span><span>Codex</span></dd>
+        </dl>
+      </div>
+    </section>
+    <div class="home-sec">
+      <div class="sec-head"><div><h2>포트폴리오</h2></div></div>
+      <div class="picks" id="picks"></div>
+    </div>
+
+    <div class="home-sec">
+      <div class="sec-head"><div><h2>활동</h2></div></div>
+      <div class="picks" id="projects"></div>
+    </div>
+
+    <div class="home-sec">
+      <div class="sec-head"><div><h2>최근 플레이한 게임</h2></div></div>
+      <div class="shelf" id="shelf"></div>
+    </div>
+
+  </section>
+
+  <section id="view-portfolio" aria-labelledby="nav-portfolio" hidden>
+    <div class="lead"><h2>모든 기획서는 시스템과 그 구조에 <em>의문</em>을 품음으로써 시작합니다.</h2></div>
+    <div class="philo">
+      <p class="philo-lead">시스템은 개발사가 정한 방향 아래에서 설계됩니다. 그래서 시스템의 구조를 이해하려면, 먼저 개발사의 의도를 읽어야 합니다.</p>
+      <div class="philo-cases">
+        <div class="case">
+          <img src="icons/zeus.jpg" alt="">
+          <div>
+            <b>제우스: 오만의 신</b>
+            <p><span>방향</span>모두가 즐기는 경쟁과 편의성</p>
+            <p><span>시스템</span>바쁜 현대인을 위한 AI 모드, 모두를 위한 오디세이아 콘텐츠</p>
+          </div>
+        </div>
+        <div class="case">
+          <img src="icons/duckov.jpg" alt="">
+          <div>
+            <b>Escape from Duckov</b>
+            <p><span>방향</span>캐주얼 익스트랙션 슈터</p>
+            <p><span>시스템</span>복잡성은 줄이되, 사망 시 아이템을 잃는 하드코어 요소는 유지</p>
+          </div>
+        </div>
+      </div>
+      <p class="philo-end">제 기획서는 게임이 추구하는 재미와 시스템 사이의 유기적인 연결을 포착합니다.</p>
+    </div>
+    <div class="featured" id="featured"></div>
+  </section>
+
+  <section id="view-timeline" aria-labelledby="nav-timeline" hidden>
+    <div class="lead">
+      <h2 id="lead-title"></h2>
+      <p>첫 게임 제작부터 학창 시절 출품, 전공, 동아리, 출시 프로젝트, 시스템 기획서까지.</p>
+    </div>
+    <div class="map" id="map">
+      <svg class="trail" id="trail" aria-hidden="true"><path class="todo" id="trail-todo" d=""/><path class="done" id="trail-done" d=""/></svg>
+      <ol class="stages" id="stages"></ol>
+    </div>
+  </section>
+
+  <section id="view-library" aria-labelledby="nav-library" hidden>
+    <div class="lead"><h2 id="library-title"></h2></div>
+    <div class="transfer">
+      <p class="transfer-tag">예시</p>
+      <div class="transfer-srcs">
+        <figure class="transfer-end">
+          <button type="button" class="shot-btn" data-src="media/ref-sekiro.jpg" data-caption="SEKIRO: SHADOWS DIE TWICE" aria-label="세키로 크게 보기"><img src="media/ref-sekiro.jpg" alt=""></button>
+          <figcaption><span>SEKIRO · 액션</span><b>보스 연전 「사투답파」</b></figcaption>
+        </figure>
+        <span class="plus" aria-hidden="true">+</span>
+        <figure class="transfer-end">
+          <button type="button" class="shot-btn" data-src="media/ref-deadcells.jpg" data-caption="Dead Cells" aria-label="데드 셀 크게 보기"><img src="media/ref-deadcells.jpg" alt=""></button>
+          <figcaption><span>DEAD CELLS · 로그라이트</span><b>보스 러시 모드</b></figcaption>
+        </figure>
+      </div>
+      <div class="transfer-link">
+        <svg class="bulb" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>영감</span>
+        <svg class="line" viewBox="0 0 64 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 6h54" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 4" stroke-linecap="round"/><path d="M54 1.5l6 4.5-6 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <figure class="transfer-end dst">
+        <button type="button" class="shot-btn" data-src="media/lv9-aion-cover.jpg" data-caption="연전 시스템 창작 기획서" aria-label="연전 시스템 창작 기획서 크게 보기"><img src="media/lv9-aion-cover.jpg" alt=""></button>
+        <figcaption><span>AION2 · MMORPG</span><b>연전 시스템 창작 기획서</b></figcaption>
+      </figure>
+      <div class="transfer-why">
+        <b>싱글 액션의 보스 연전을, MMO 협동 PVE로</b>
+        <p>성장 정체 구간의 유저에게, 기존 던전 보스들을 연속으로 격파하는 협동 PVE로 새로운 플레이 동기를 부여합니다.</p>
+      </div>
+    </div>
+    <div class="filters" id="filters" role="group" aria-label="장르 필터"></div>
+    <ul class="grid" id="grid"></ul>
+  </section>
+</main>
+
+<div class="viewer" id="viewer" hidden><img src="" alt=""><p></p></div>
+
+<script id="games-data" type="application/json">[
+{"id":"pubg","name":"PUBG: 배틀그라운드","platform":"steam","genre":"shooter","src":"steam","q":"PUBG: BATTLEGROUNDS","appid":578080,"tags":["생존","슈팅","배틀 로얄"],"tab":"shooter","year":2017},
+{"id":"cyberpunk","name":"사이버펑크 2077","platform":"steam","genre":"openworld","src":"steam","q":"Cyberpunk 2077","appid":1091500,"tags":["오픈 월드","RPG","1인칭 슈팅"],"tab":"openworld","year":2020},
+{"id":"rdr2","name":"레드 데드 리뎀션 2","platform":"steam","genre":"openworld","src":"steam","q":"Red Dead Redemption 2","appid":1174180,"tags":["오픈 월드","어드벤처","액션"],"tab":"openworld","year":2018},
+{"id":"arcraiders","name":"아크 레이더스","platform":"steam","genre":"shooter","src":"steam","q":"ARC Raiders","tags":["익스트랙션 슈터","3인칭 슈팅","생존"],"tab":"shooter","year":2025},
+{"id":"eldenring","name":"엘든 링","platform":"steam","genre":"action","src":"steam","q":"ELDEN RING","appid":1245620,"tags":["소울라이크","오픈 월드","액션 RPG"],"tab":"openworld","year":2022},
+{"id":"palworld","name":"팰월드","platform":"steam","genre":"survival","src":"steam","q":"Palworld","appid":1623730,"tags":["오픈 월드","생존","생명체 수집"],"tab":"sandbox","year":2024},
+{"id":"sts","name":"슬레이 더 스파이어","platform":"steam","genre":"card","src":"steam","q":"Slay the Spire","appid":646570,"tags":["로그라이크 덱빌딩","카드 게임","턴제"],"tab":"card","year":2017},
+{"id":"bg3","name":"발더스 게이트 3","platform":"steam","genre":"rpg","src":"steam","q":"Baldur's Gate 3","appid":1086940,"tags":["RPG","CRPG","턴제 전투"],"tab":"rpg","year":2020},
+{"id":"division2","name":"톰 클랜시의 더 디비전 2","platform":"steam","genre":"shooter","src":"steam","q":"Tom Clancy's The Division 2","tags":["약탈 슈팅","오픈 월드","3인칭 슈팅"],"tab":"shooter","year":2019},
+{"id":"clairobscur","name":"클레르 옵스퀴르: 33 원정대","platform":"steam","genre":"rpg","src":"steam","q":"Clair Obscur: Expedition 33","tags":["턴제 전투","RPG","JRPG"],"tab":"rpg","year":2025},
+{"id":"mordor","name":"미들 어스: 섀도우 오브 모르도르","platform":"steam","genre":"openworld","src":"steam","q":"Middle-earth: Shadow of Mordor","appid":241930,"tags":["오픈 월드","액션","어드벤처"],"tab":"openworld","year":2014},
+{"id":"cotl","name":"컬트 오브 더 램","platform":"steam","genre":"rogue","src":"steam","q":"Cult of the Lamb","appid":1313140,"tags":["기지 건설","액션 로그라이크","던전 크롤러"],"tab":"rogue","year":2022},
+{"id":"darkestdungeon","name":"다키스트 던전","platform":"steam","genre":"rogue","src":"steam","q":"Darkest Dungeon","appid":262060,"tags":["턴제 전투","던전 크롤러","로그라이크"],"tab":"rogue","year":2015},
+{"id":"l4d2","name":"레프트 4 데드 2","platform":"steam","genre":"shooter","src":"steam","q":"Left 4 Dead 2","appid":550,"tags":["1인칭 슈팅","협동","생존"],"tab":"shooter","year":2009},
+{"id":"acbf","name":"어쌔신 크리드 IV 블랙 플래그","platform":"steam","genre":"openworld","src":"steam","q":"Assassin's Creed IV Black Flag","appid":242050,"tags":["오픈 월드","액션 어드벤처","잠입"],"tab":"openworld","year":2013},
+{"id":"acod","name":"어쌔신 크리드 오디세이","platform":"steam","genre":"openworld","src":"steam","q":"Assassin's Creed Odyssey","appid":812140,"tags":["오픈 월드","액션 어드벤처","RPG"],"tab":"openworld","year":2018},
+{"id":"dmc","name":"DmC: 데빌 메이 크라이","platform":"steam","genre":"action","src":"steam","q":"DmC: Devil May Cry","appid":220440,"tags":["액션","핵 앤 슬래시","캐릭터 액션 게임"],"tab":"action","year":2013},
+{"id":"witcher3","name":"위쳐 3: 와일드 헌트","platform":"steam","genre":"openworld","src":"steam","q":"The Witcher 3: Wild Hunt","appid":292030,"tags":["오픈 월드","RPG","액션 RPG"],"tab":"openworld","year":2015},
+{"id":"kcd1","name":"킹덤 컴: 딜리버런스","platform":"steam","genre":"openworld","src":"steam","q":"Kingdom Come: Deliverance","appid":379430,"tags":["RPG","오픈 월드","어드벤처"],"tab":"openworld","year":2018},
+{"id":"kcd","name":"킹덤 컴: 딜리버런스 II","platform":"steam","genre":"openworld","src":"steam","q":"Kingdom Come: Deliverance II","appid":1771300,"tags":["RPG","오픈 월드","어드벤처"],"tab":"openworld","year":2025},
+{"id":"sekiro","name":"SEKIRO: SHADOWS DIE TWICE","platform":"steam","genre":"action","src":"steam","q":"Sekiro: Shadows Die Twice","appid":814380,"tags":["소울라이크","액션","잠입"],"tab":"action","year":2019},
+{"id":"dredge","name":"드레지","platform":"steam","genre":"narrative","src":"steam","q":"DREDGE","appid":1562430,"tags":["어드벤처","탐험","낚시"],"tab":"story","year":2023},
+{"id":"hollowknight","name":"할로우 나이트","platform":"steam","genre":"action","src":"steam","q":"Hollow Knight","appid":367520,"tags":["메트로배니아","플랫폼","소울라이크"],"tab":"action","year":2017},
+{"id":"silksong","name":"할로우 나이트: 실크송","platform":"steam","genre":"action","src":"steam","q":"Hollow Knight: Silksong","appid":1030300,"tags":["메트로배니아","소울라이크","플랫폼"],"tab":"action","year":2025},
+{"id":"xcom2","name":"엑스컴 2","platform":"steam","genre":"tactics","src":"steam","q":"XCOM 2","appid":268500,"tags":["턴제 전술","전략","RPG"],"tab":"strategy","year":2016},
+{"id":"chainedechoes","name":"체인드 에코즈","platform":"steam","genre":"rpg","src":"steam","q":"Chained Echoes","appid":1229240,"tags":["JRPG","턴제 전투","RPG"],"tab":"rpg","year":2022},
+{"id":"hades","name":"하데스","platform":"steam","genre":"rogue","src":"steam","q":"Hades","appid":1145360,"tags":["액션 로그라이크","로그라이트","핵 앤 슬래시"],"tab":"rogue","year":2018},
+{"id":"theforest","name":"더 포레스트","platform":"steam","genre":"survival","src":"steam","q":"The Forest","appid":242760,"tags":["오픈 월드 생존 제작","생존","생존 공포"],"tab":"sandbox","year":2014},
+{"id":"davethediver","name":"데이브 더 다이버","platform":"steam","genre":"narrative","src":"steam","q":"DAVE THE DIVER","appid":1868140,"tags":["경영","어드벤처","캐주얼"],"tab":"strategy","year":2022},
+{"id":"skul","name":"스컬: 더 히어로 슬레이어","platform":"steam","genre":"rogue","src":"steam","q":"Skul: The Hero Slayer","appid":1147560,"tags":["액션 로그라이크","로그라이트","플랫폼"],"tab":"rogue","year":2020},
+{"id":"dungeonborne","name":"던전본","platform":"steam","genre":"shooter","src":"steam","q":"Dungeonborne","appid":2448970,"tags":["익스트랙션 슈터","던전 크롤러","액션 RPG"],"tab":"shooter","year":2024},
+{"id":"duckov","name":"Escape from Duckov","platform":"steam","genre":"shooter","src":"steam","q":"Escape from Duckov","tags":["익스트랙션 슈터","약탈 슈팅","탑다운 슈팅"],"tab":"shooter","year":2025},
+{"id":"gungeon","name":"엔터 더 건전","platform":"steam","genre":"rogue","src":"steam","q":"Enter the Gungeon","appid":311690,"tags":["탄막 지옥","액션 로그라이크","던전 크롤러"],"tab":"rogue","year":2016},
+{"id":"spelunky","name":"스펠렁키","platform":"steam","genre":"rogue","src":"steam","q":"Spelunky","appid":239350,"tags":["로그라이크","플랫폼","액션"],"tab":"rogue","year":2012},
+{"id":"tlou","name":"The Last of Us Part I","platform":"steam","genre":"narrative","src":"steam","q":"The Last of Us Part I","appid":1888930,"tags":["액션 어드벤처","생존 공포","3인칭 슈팅"],"tab":"action","year":2022},
+{"id":"aceattorney","name":"역전재판 123 나루호도 셀렉션","platform":"steam","genre":"narrative","src":"steam","q":"Phoenix Wright: Ace Attorney Trilogy","appid":787480,"tags":["추리","비주얼 노벨","어드벤처"],"tab":"story","year":2019},
+{"id":"chronotrigger","name":"크로노 트리거","platform":"steam","genre":"rpg","src":"steam","q":"CHRONO TRIGGER","appid":613830,"tags":["JRPG","턴제","RPG"],"tab":"rpg","year":1995},
+{"id":"hff","name":"휴먼 폴 플랫","platform":"steam","genre":"versus","src":"steam","q":"Human Fall Flat","appid":477160,"tags":["퍼즐","협동","물리"],"tab":"story","year":2016},
+{"id":"sniperelite5","name":"스나이퍼 엘리트 5","platform":"steam","genre":"shooter","src":"steam","q":"Sniper Elite 5","appid":1029690,"tags":["3인칭 슈팅","잠입","액션 어드벤처"],"tab":"shooter","year":2022},
+{"id":"farcry6","name":"파 크라이 6","platform":"steam","genre":"openworld","src":"steam","q":"Far Cry 6","tags":["오픈 월드","1인칭 슈팅","액션 어드벤처"],"tab":"shooter","year":2021},
+{"id":"dqb2","name":"드래곤 퀘스트 빌더즈 2 파괴신 시도와 텅 빈 섬","platform":"steam","genre":"survival","src":"steam","q":"DRAGON QUEST BUILDERS 2","appid":1072420,"tags":["RPG","샌드박스","건설"],"tab":"sandbox","year":2018},
+{"id":"kingdom2c","name":"킹덤 투 크라운","platform":"steam","genre":"defense","src":"steam","q":"Kingdom Two Crowns","appid":701160,"tags":["타워 디펜스","도시 건설","전략"],"tab":"strategy","year":2018},
+{"id":"civ5","name":"시드 마이어의 문명 V","platform":"steam","genre":"tactics","src":"steam","q":"Sid Meier's Civilization V","appid":8930,"tags":["턴제 전략","4X","대전략"],"tab":"strategy","year":2010},
+{"id":"crysis3","name":"크라이시스 3","platform":"steam","genre":"shooter","src":"steam","q":"Crysis 3 Remastered","appid":2096610,"tags":["1인칭 슈팅","액션","샌드박스"],"tab":"shooter","year":2013},
+{"id":"dungreed","name":"던그리드","platform":"steam","genre":"rogue","src":"steam","q":"Dungreed","appid":753420,"tags":["액션 로그라이크","로그라이트","던전 크롤러"],"tab":"rogue","year":2018},
+{"id":"gta5","name":"Grand Theft Auto V","platform":"steam","genre":"openworld","src":"steam","q":"Grand Theft Auto V","appid":271590,"tags":["오픈 월드","액션","3인칭 슈팅"],"tab":"openworld","year":2013},
+{"id":"legendofmortal","name":"활협전","platform":"steam","genre":"rpg","src":"steam","q":"Legend of Mortal","tags":["RPG","무협","내러티브"],"tab":"story","year":2024},
+{"id":"chainedtogether","name":"체인드 투게더","platform":"steam","genre":"versus","src":"steam","q":"Chained Together","tags":["협동","3D 플랫폼","퍼즐 플랫폼"],"tab":"action","year":2024},
+{"id":"ror2","name":"리스크 오브 레인 2","platform":"steam","genre":"rogue","src":"steam","q":"Risk of Rain 2","appid":632360,"tags":["액션 로그라이크","3인칭 슈팅","협동"],"tab":"rogue","year":2019},
+{"id":"terraria","name":"테라리아","platform":"steam","genre":"survival","src":"steam","q":"Terraria","appid":105600,"tags":["오픈 월드 생존 제작","샌드박스","크래프팅"],"tab":"sandbox","year":2011},
+{"id":"deadcells","name":"데드 셀","platform":"steam","genre":"rogue","src":"steam","q":"Dead Cells","appid":588650,"tags":["액션 로그라이크","메트로배니아","로그라이트"],"tab":"rogue","year":2017},
+{"id":"forager","name":"포리저","platform":"steam","genre":"survival","src":"steam","q":"Forager","appid":751780,"tags":["오픈 월드 생존 제작","크래프팅","농장 시뮬레이션"],"tab":"sandbox","year":2019},
+{"id":"twom","name":"디스 워 오브 마인","platform":"steam","genre":"tactics","src":"steam","q":"This War of Mine","appid":282070,"tags":["생존","전략","시뮬레이션"],"tab":"strategy","year":2014},
+{"id":"pvz","name":"Plants vs. Zombies","platform":"steam","genre":"defense","src":"steam","q":"Plants vs. Zombies GOTY Edition","appid":3590,"tags":["타워 디펜스","전략","캐주얼"],"tab":"strategy","year":2009},
+{"id":"piratesoutlaws","name":"Pirates Outlaws","platform":"steam","genre":"card","src":"steam","q":"Pirates Outlaws","appid":1046300,"tags":["로그라이크 덱빌딩","카드 게임","전략"],"tab":"card","year":2019},
+{"id":"stacklands","name":"Stacklands","platform":"steam","genre":"card","src":"steam","q":"Stacklands","appid":1948280,"tags":["카드 게임","경영","도시 건설"],"tab":"card","year":2022},
+{"id":"btd6","name":"Bloons TD 6","platform":"steam","genre":"defense","src":"steam","q":"Bloons TD 6","appid":960090,"tags":["타워 디펜스","전략","협동"],"tab":"strategy","year":2018},
+
+{"id":"lol","name":"리그 오브 레전드","platform":"pc","genre":"versus","src":"wiki","q":"League of Legends","tags":["MOBA","전략","PvP"],"tab":"strategy","year":2009},
+{"id":"getamped","name":"겟앰프드","platform":"pc","genre":"versus","src":"wiki","q":"겟앰프드","lang":"ko","tags":["대전 격투","액션","PvP"],"tab":"action","year":2002},
+{"id":"minecraft","name":"마인크래프트","platform":"pc","genre":"survival","src":"itunes","q":"Minecraft","tags":["샌드박스","생존","크래프팅"],"tab":"sandbox","year":2009},
+{"id":"aion2","name":"아이온2","platform":"pc","genre":"mmo","src":"itunes","q":"아이온2","tags":["MMORPG","액션 RPG","PvP"],"tab":"rpg","year":2025},
+{"id":"overwatch","name":"오버워치","platform":"pc","genre":"shooter","src":"steam","q":"Overwatch 2","appid":2357570,"tags":["1인칭 슈팅","히어로 슈터","PvP"],"tab":"shooter","year":2016},
+{"id":"sc2randy","name":"스타크래프트 II 유즈맵 : 스2랜디","platform":"pc","genre":"defense","src":"wiki","q":"StarCraft II: Wings of Liberty","tags":["타워 디펜스","실시간 전략","협동"],"tab":"strategy","year":2010},
+{"id":"autochess","name":"도타2 유즈맵 : 오토체스","platform":"pc","genre":"defense","src":"steam","q":"Dota 2","appid":570,"tags":["오토 배틀러","전략","PvP"],"tab":"strategy","year":2019},
+
+{"id":"pokemondp","name":"포켓몬스터 시리즈 (DP~XY)","platform":"nintendo","genre":"rpg","src":"wiki","q":"Pokémon Diamond and Pearl","tags":["RPG","턴제","생명체 수집"],"tab":"rpg","year":2013},
+{"id":"arceus","name":"Pokémon LEGENDS 아르세우스","platform":"nintendo","genre":"rpg","src":"wiki","q":"Pokémon Legends: Arceus","tags":["액션 RPG","생명체 수집","오픈 월드"],"tab":"rpg","year":2022},
+{"id":"threehouses","name":"파이어 엠블렘 풍화설월","platform":"nintendo","genre":"tactics","src":"wiki","q":"Fire Emblem: Three Houses","tags":["전술 RPG","턴제 전술","시뮬레이션"],"tab":"strategy","year":2019},
+{"id":"totk","name":"젤다의 전설 티어스 오브 더 킹덤","platform":"nintendo","genre":"openworld","src":"wiki","q":"The Legend of Zelda: Tears of the Kingdom","tags":["오픈 월드","액션 어드벤처","샌드박스"],"tab":"openworld","year":2023},
+{"id":"botw","name":"젤다의 전설 브레스 오브 더 와일드","platform":"nintendo","genre":"openworld","src":"wiki","q":"The Legend of Zelda: Breath of the Wild","tags":["오픈 월드","액션 어드벤처","탐험"],"tab":"openworld","year":2017},
+{"id":"albw","name":"젤다의 전설 신들의 트라이포스 2","platform":"nintendo","genre":"narrative","src":"wiki","q":"The Legend of Zelda: A Link Between Worlds","tags":["액션 어드벤처","퍼즐","탑다운"],"tab":"action","year":2013},
+{"id":"spirittracks","name":"젤다의 전설 대지의 기적","platform":"nintendo","genre":"narrative","src":"wiki","q":"The Legend of Zelda: Spirit Tracks","tags":["액션 어드벤처","퍼즐","탐험"],"tab":"action","year":2009},
+{"id":"layton1","name":"레이튼 교수와 이상한 마을","platform":"nintendo","genre":"narrative","src":"wiki","q":"Professor Layton and the Curious Village","tags":["퍼즐","어드벤처","추리"],"tab":"story","year":2007},
+{"id":"layton2","name":"레이튼 교수와 악마의 상자","platform":"nintendo","genre":"narrative","src":"wiki","q":"Professor Layton and the Diabolical Box","tags":["퍼즐","어드벤처","추리"],"tab":"story","year":2007},
+{"id":"odyssey","name":"슈퍼 마리오 오디세이","platform":"nintendo","genre":"action","src":"wiki","q":"Super Mario Odyssey","tags":["3D 플랫폼","액션 어드벤처","탐험"],"tab":"action","year":2017},
+{"id":"galaxy2","name":"슈퍼 마리오 갤럭시 2","platform":"nintendo","genre":"action","src":"wiki","q":"Super Mario Galaxy 2","tags":["3D 플랫폼","액션","어드벤처"],"tab":"action","year":2010},
+{"id":"rabbids","name":"마리오 + 래비드 킹덤 배틀","platform":"nintendo","genre":"tactics","src":"wiki","q":"Mario + Rabbids Kingdom Battle","tags":["턴제 전술","전술 RPG","어드벤처"],"tab":"strategy","year":2017},
+{"id":"kirby","name":"별의 커비 디스커버리","platform":"nintendo","genre":"action","src":"wiki","q":"Kirby and the Forgotten Land","tags":["3D 플랫폼","액션","어드벤처"],"tab":"action","year":2022},
+
+{"id":"tcgpocket","name":"포켓몬 카드 게임 Pocket","platform":"mobile","genre":"card","src":"itunes","q":"Pokémon TCG Pocket","tags":["트레이딩 카드 게임","카드 배틀","캐주얼"],"tab":"card","year":2024},
+{"id":"randomdice","name":"랜덤 다이스: 디펜스","platform":"mobile","genre":"defense","src":"itunes","q":"랜덤다이스","itunesId":1462877149,"tags":["타워 디펜스","전략","PvP"],"tab":"strategy","year":2019},
+{"id":"luckydefense","name":"운빨존많겜","platform":"mobile","genre":"defense","src":"itunes","q":"운빨존많겜","tags":["타워 디펜스","전략","협동"],"tab":"strategy","year":2024},
+{"id":"marvelsnap","name":"마블 스냅","platform":"mobile","genre":"card","src":"itunes","q":"MARVEL SNAP","tags":["덱빌딩","카드 배틀","트레이딩 카드 게임"],"tab":"card","year":2022},
+{"id":"kingdomrush","name":"킹덤 러쉬","platform":"mobile","genre":"defense","src":"itunes","q":"Kingdom Rush Tower Defense TD","tags":["타워 디펜스","전략","액션"],"tab":"strategy","year":2011},
+{"id":"nightoffullmoon","name":"나이트 오브 풀문","platform":"mobile","genre":"card","src":"itunes","q":"Night of the Full Moon","tags":["카드 게임","덱빌딩","로그라이트"],"tab":"card","year":2017},
+{"id":"dungeonmaker","name":"던전메이커","platform":"mobile","genre":"rogue","src":"itunes","q":"던전메이커","tags":["로그라이크","디펜스","전략"],"tab":"rogue","year":2018},
+{"id":"dq1","name":"드래곤 퀘스트","platform":"mobile","genre":"rpg","src":"itunes","q":"DRAGON QUEST","itunesId":911201894,"tags":["JRPG","턴제","RPG"],"tab":"rpg","year":1986},
+{"id":"mermaid","name":"방구석에 인어아가씨","platform":"mobile","genre":"narrative","src":"itunes","q":"방구석에 인어아가씨","itunesId":904882274,"tags":["비주얼 노벨","연애 시뮬레이션","어드벤처"],"tab":"story","year":2014},
+{"id":"seoul2033","name":"서울 2033","platform":"mobile","genre":"survival","src":"itunes","q":"서울2033","tags":["텍스트 어드벤처","생존","포스트아포칼립스"],"tab":"story","year":2018},
+{"id":"balatro","name":"발라트로","platform":"mobile","genre":"card","src":"itunes","q":"Balatro+","tags":["로그라이크 덱빌딩","카드 게임","전략"],"tab":"card","year":2024},
+{"id":"brotato","name":"Brotato","platform":"mobile","genre":"rogue","src":"itunes","q":"Brotato","tags":["액션 로그라이크","탄막 지옥","아레나 슈팅"],"tab":"rogue","year":2022},
+{"id":"thronefall","name":"Thronefall","platform":"mobile","genre":"defense","src":"itunes","q":"Thronefall","tags":["타워 디펜스","도시 건설","액션 RTS"],"tab":"strategy","year":2023},
+{"id":"taleofimmortal","name":"귀곡팔황","platform":"mobile","genre":"rpg","src":"steam","q":"Tale of Immortal","appid":1468810,"tags":["샌드박스","RPG","시뮬레이션"],"tab":"rpg","year":2021},
+{"id":"rummikub","name":"루미큐브","platform":"mobile","genre":"card","src":"itunes","q":"Rummikub","tags":["보드게임","퍼즐","전략"],"tab":"story","year":1977},
+{"id":"kairosoft","name":"카이로소프트 시리즈","platform":"mobile","genre":"tactics","src":"itunes","q":"게임개발 스토리","itunesId":396085661,"tags":["경영","시뮬레이션","캐주얼"],"tab":"strategy","year":2010},
+{"id":"20mtd","name":"20 Minutes Till Dawn","platform":"mobile","genre":"rogue","src":"itunes","q":"20 Minutes Till Dawn","tags":["액션 로그라이크","탄막 지옥","생존"],"tab":"rogue","year":2022},
+{"id":"dokkaebi","name":"도깨비의세계","platform":"mobile","genre":"mmo","src":"itunes","q":"도깨비의세계","tags":["MMORPG","2.5D","판타지"],"tab":"rpg","year":2026},
+{"id":"eclipse","name":"이클립스: 더 어웨이크닝","platform":"mobile","genre":"mmo","src":"itunes","q":"이클립스 더 어웨이크닝","tags":["MMORPG","액션 RPG","판타지"],"tab":"rpg","year":2026},
+{"id":"zeus","name":"제우스: 오만의 신","platform":"mobile","genre":"mmo","src":"itunes","q":"제우스 오만의 신","tags":["MMORPG","액션 RPG","신화"],"tab":"rpg","year":2026},
+{"id":"battlecats","name":"냥코 대전쟁","platform":"mobile","genre":"defense","src":"itunes","q":"냥코 대전쟁","tags":["타워 디펜스","전략","캐주얼"],"tab":"strategy","year":2012},
+{"id":"soulknight","name":"소울 나이트","platform":"mobile","genre":"rogue","src":"itunes","q":"Soul Knight","tags":["액션 로그라이크","탑다운 슈팅","던전 크롤러"],"tab":"rogue","year":2017},
+{"id":"toweroftwinter","name":"겨울의 탑","platform":"mobile","genre":"rogue","src":"itunes","q":"겨울의 탑","tags":["로그라이크","턴제 전투","텍스트 어드벤처"],"tab":"rogue","year":2022},
+{"id":"brawlstars","name":"브롤스타즈","platform":"mobile","genre":"versus","src":"itunes","q":"Brawl Stars","tags":["탑다운 슈팅","PvP","배틀 로얄"],"tab":"shooter","year":2018},
+{"id":"unknownknights","name":"언노운 나이츠","platform":"mobile","genre":"rogue","src":"itunes","q":"언노운 나이츠","tags":["액션 로그라이크","실시간 전술","전략"],"tab":"rogue","year":2019},
+{"id":"hearthstone","name":"하스스톤","platform":"mobile","genre":"card","src":"itunes","q":"Hearthstone","tags":["트레이딩 카드 게임","카드 게임","전략"],"tab":"card","year":2014},
+{"id":"clashroyale","name":"클래시 로얄","platform":"mobile","genre":"defense","src":"itunes","q":"Clash Royale","tags":["실시간 전략","카드 배틀","PvP"],"tab":"strategy","year":2016},
+{"id":"lostpage","name":"로스트페이지","platform":"mobile","genre":"card","src":"itunes","q":"로스트페이지","tags":["로그라이크 덱빌딩","카드 게임","전략"],"tab":"card","year":2021}
+]
+</script>
+<script id="timeline-data" type="application/json">[
+{"title":"게임기획자로 입사","state":"goal","desc":"다음 스테이지.","media":[]},
+{"year":"2026","title":"졸업 · 취업 준비","state":"current","outputs":["시스템 분석서 1편","창작 기획서 2편"],"desc":"기획서 작성을 본격적으로 시작하여 MMORPG를 깊게 플레이하고 분석하며 시스템 기획서 3편을 작성했다.","media":[{"src":"media/lv9-midas-cover.jpg","caption":"미다스의 금고 시스템 분석서"},{"src":"media/lv9-zeus-cover.jpg","caption":"쟁 보정 시스템 창작 기획서"},{"src":"media/lv9-aion-cover.jpg","caption":"연전 시스템 창작 기획서"}]},
+{"year":"2026.03 – 06","title":"산학협력 캡스톤 · Tokyo Desire : Deck Builders","state":"done","highlight":true,"outputs":["기획 문서 13편","UI 명세서","데이터 테이블 6종","에셋 요청 리스트","스팀 데모 등록"],"desc":"협력하는 회사가 개발 중지한 에셋을 받아 로그라이크 덱빌딩 게임을 제작하여 스팀 덱빌딩 페스티벌에 데모를 등록했다. 이 데모를 바탕으로 협력사가 이어서 개발 중이며, 현재 버전은 데모와 다르다.","media":[{"src":"media/lv10-steam.jpg","caption":"스팀 라이브러리 페이지 (체험판)"},{"src":"media/lv10-system.jpg","caption":"시스템 기획서 (Act 1 MVP)"},{"src":"media/lv10-meeting.jpg","caption":"팀 회의"}]},
+{"year":"2024.03 – 06","title":"캡스톤디자인 · BapTalkSu 총괄 기획","state":"done","outputs":["요구사항 명세서","WBS · 간트 차트","와이어프레임","개략설계","사용자 매뉴얼","시험 절차서 · 결과서"],"desc":"교내 사람들과 밥 약속을 잡는 미팅 앱을 개발하고자 총괄 기획을 맡아 기능 명세, 일정 관리, 와이어프레임 제작을 주로 담당했다.","media":[{"src":"media/lv8-figma.png","caption":"피그마 와이어프레임"},{"src":"media/lv8-gantt.png","caption":"WBS · 간트 차트"}]},
+{"year":"2023","title":"게임개발동아리 creator · 기획 스터디","state":"done","outputs":["역기획서 4편","창작 기획서 2편"],"desc":"게임기획 스터디에 참여해 동아리 선배들과 주제를 잡고 토론하거나 주제에 맞게 써온 기획서들을 공유하며 피드백하는 시간을 가지면서 본격적인 게임 기획을 시작했다.","media":[{"src":"media/lv7-hammer.jpg","caption":"해머 로얄 게임 창작 기획서"},{"src":"media/lv7-sect.jpg","caption":"약소문파 키우기 게임 아이디어 제안서"},{"src":"media/lv7-rummikub.jpg","caption":"루미큐브 역기획서"},{"src":"media/lv7-brotato.jpg","caption":"Brotato 강화 시스템 역기획서"},{"src":"media/lv7-deadcells.jpg","caption":"Dead Cells 시스템 역기획서"},{"src":"media/lv9-botw-fsm.jpg","caption":"젤다의 전설 야생의 숨결 몬스터 AI 역기획서"}]},
+{"year":"2022–2023","title":"컴퓨터공학 전공","state":"done","desc":"개발 역량을 키워 기획에 도움이 되고자 인공지능융합학부로 입학한 후 컴퓨터공학부로 전과했다.","media":[]},
+{"year":"2015–2016","title":"학창 시절 게임 기획 · 개발","state":"done","outputs":["발표 자료 2편","교육용 게임"],"desc":"게임기획을 주제로 교내 발표 또는 경진 대회에 꾸준히 참가했다.","media":[{"src":"media/lv2-dream.jpg","caption":"'나의 꿈 발표대회' 발표 자료 표지 (2015)"},{"src":"media/lv2-edu-game.png","caption":"지구과학 교육 게임 (2016)"}]},
+{"year":"2011","title":"첫 게임을 만들다","state":"done","outputs":["GameMaker 게임 2편"],"desc":"GameMaker로 게임을 만들어 카페에 올리고, 사람들의 반응을 보며 흥미를 느끼고 게임기획자를 꿈꾸기 시작했다.","media":[{"src":"media/lv1-game.png","caption":"GameMaker로 만든 「경찰과 도둑」"},{"src":"media/lv1-space.png","caption":"GameMaker로 만든 space game"},{"src":"media/lv1-cafe.png","caption":"CrazyGM 카페에 올린 「경찰과 도둑 0.5」 (2011)"}]}
+]
+</script>
+<script id="portfolio-data" type="application/json">[
+{"featured":true,"year":"2026","type":"분석","title":"미다스의 금고 시스템 분석서","question":"금고는 재화 및 장비의 소각을 충분한 범위까지 잘 일으키는가?","game":"제우스: 오만의 신","tags":["라이브 경제","직접 수집 데이터"],
+ "hook":"거래소의 유동성 공급과 재화 및 장비 소각을 중심으로 분석",
+ "summary":"아이템을 매입하는 금고는 개발사가 다이아 발행량, 사냥터 분포 그리고 장비 소각량에 직접적으로 개입하게 한다. 하지만 이 순환에 닿지 않는 거래소 매물이 있다.",
+ "points":["분석 : 미다스의 금고는 거래소에 유동성을 공급하고, 그 과정에서 강화와 거래 수수료로 재화를 소각한다.","문제 : 금고는 거래소에 쌓인 잉여 희귀 장비들을 해결하지 못한다.","개선안 : 6번째 '서버 전용 슬롯'이 사들여 반응형 소각과 순환을 일으킨다."],
+ "cover":"media/lv9-midas-cover.jpg","pdf":"media/doc-zeus-midas.pdf","pages":16},
+{"featured":true,"year":"2026","type":"창작","title":"쟁 보정 시스템 창작 기획서","question":"통합서버의 보스는 서버 간 쟁을 일으키기에 충분했나?","game":"제우스: 오만의 신","tags":["서버 간 PvP","밸런스"],
+ "hook":"보스는 자신을 독점한 서버에게 적응하여 서버간의 구도를 조정",
+ "summary":"우세 서버의 보스 독점으로 열세 서버가 쟁을 포기하는 문제를, 스택형 보정으로 다시 싸울 이유를 만들어 해결했다.",
+ "points":["독점 스택 3~5단계마다 우세 서버에 전투 디버프","독점을 끊은 서버에 보상 가중치 ×1.5~2.5","아이온2 점령전 보정 실패 사례를 분석해 설계에 반영"],
+ "cover":"media/lv9-zeus-cover.jpg","pdf":"media/doc-zeus-adapt.pdf","pages":18},
+{"featured":true,"year":"2026","type":"창작","title":"연전 시스템 창작 기획서","question":"성장 정체 구간에서 유저들은 플레이 동기가 충분한가?","game":"아이온2","tags":["PvE 던전","리소스 재활용"],
+ "hook":"기존 던전의 보스들을 연속으로 격파하는 협동 PVE",
+ "summary":"반복되는 던전 동선과 성역 입문 전의 성장 정체를, 새 보스 없이 기존 리소스를 엮어 풀었다.",
+ "points":["보스 후보군을 격주로 순환 편성, 최종 보스는 성역 보스로 고정","10인 기믹을 파티 규모로 줄이는 규칙 4종으로 성역 패턴 연습","보스마다 보상을 큐브에 누적, 중간 합류 유저도 수령"],
+ "cover":"media/lv9-aion-cover.jpg","pdf":"media/doc-aion2-dungeon.pdf","pages":17},
+{"year":"2026","type":"창작","title":"산학협력 캡스톤 디자인 : Tokyo Desire","game":"Tokyo Desire : Deck Builders","tags":["로그라이크 덱빌딩","MVP"],
+ "summary":"총괄 기획을 담당하여 스팀 축제 일정에 맞추고자 시스템과 규칙, 플레이루프를 설계했고 로그라이크 덱빌딩 카드 게임 체험판을 등록했다.",
+ "cover":"media/lv10-system.jpg"},
+{"year":"2023","type":"역기획 · 창작","title":"게임 개발 동아리 : Creator","game":"게임개발동아리 creator","tags":["역기획 4편","창작 2편"],
+ "summary":"게임 기획 스터디에 참여하여 서로의 기획서를 공유하며 피드백을 하거나 주제를 잡고 토론했다.",
+ "cover":"media/lv7-hammer.jpg"},
+{"year":"2024","type":"서비스 기획","title":"캡스톤 디자인 : BapTalkSu","game":"교내 밥 약속 앱","tags":["기능 명세","와이어프레임"],
+ "summary":"총괄 기획을 담당하여 일정 관리 및 기능 명세를 진행했고 교내 친구들과 밥 약속을 잡는 어플을 제작하여 제출했다.",
+ "cover":"media/lv8-figma.png"}
+]
+</script>
+<script>
+(function () {
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  /* ================= 플레이 라이브러리 ================= */
+  const games = JSON.parse(document.getElementById('games-data').textContent);
+
+  // 장르 탭: 게임마다 games.json의 "tab" 값 하나에만 속함
+  const FILTERS = [
+    { key: 'card', label: '카드 & 덱빌딩' },
+    { key: 'rogue', label: '로그라이크' },
+    { key: 'rpg', label: 'RPG' },
+    { key: 'openworld', label: '오픈월드' },
+    { key: 'strategy', label: '전략 & 디펜스' },
+    { key: 'action', label: '액션 & 플랫포머' },
+    { key: 'shooter', label: '슈터' },
+    { key: 'sandbox', label: '샌드박스 & 생존' },
+    { key: 'story', label: '퍼즐 & 스토리' }
+  ];
+  const groupOf = g => FILTERS.some(f => f.key === g.tab) ? g.tab : 'story';
+
+  // 출시 연도 최신순 (같은 해는 목록 순서 유지)
+  const sorted = games.map((g, i) => ({ g, i })).sort((a, b) => (b.g.year || 0) - (a.g.year || 0) || a.i - b.i).map(x => x.g);
+
+  const grid = document.getElementById('grid');
+  grid.innerHTML = sorted.map(g => `
+    <li class="game" title="${esc(g.name)}" data-group="${groupOf(g)}">
+      <div class="icon" data-initial="${esc(g.name.charAt(0))}"><img src="icons/${g.id}.jpg" alt="" loading="lazy"></div>
+      <div class="name">${esc(g.name)}</div>
+    </li>`).join('');
+
+  // 아이콘 이미지가 없으면 첫 글자로 대체
+  const toInitial = img => {
+    const span = document.createElement('span');
+    span.className = 'initial';
+    span.textContent = img.parentElement.dataset.initial;
+    img.replaceWith(span);
+  };
+  grid.querySelectorAll('.icon img').forEach(img => {
+    if (img.complete && img.naturalWidth === 0) toInitial(img);
+    else img.addEventListener('error', () => toInitial(img), { once: true });
+  });
+
+  // 장르 탭: '전체'가 기본, 장르를 누르면 해당 장르만, 같은 장르를 다시 누르면 전체로
+  const filtersEl = document.getElementById('filters');
+  const items = [...grid.querySelectorAll('.game')];
+  let active = 'all';
+  const inGroup = (li, key) => key === 'all' || li.dataset.group === key;
+  [{ key: 'all', label: '전체' }, ...FILTERS].forEach(f => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'filter'; b.id = 'filter-' + f.key; b.dataset.key = f.key;
+    b.innerHTML = `${esc(f.label)}<span class="n">${items.filter(li => inGroup(li, f.key)).length}</span>`;
+    b.addEventListener('click', () => { active = (active === f.key && f.key !== 'all') ? 'all' : f.key; applyFilter(); });
+    filtersEl.appendChild(b);
+  });
+  function applyFilter() {
+    filtersEl.querySelectorAll('.filter').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.key === active)));
+    items.forEach(li => { li.hidden = !inGroup(li, active); });
+  }
+  applyFilter();
+
+  // 링크: '#'으로 시작하면 페이지 안 이동, 그 외는 새 탭
+  const linksHtml = links => links && links.length
+    ? `<div class="links">${links.map(l => l.href.startsWith('#')
+        ? `<a href="${esc(l.href)}">${esc(l.label)} →</a>`
+        : `<a href="${esc(l.href)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`).join('')}</div>`
+    : '';
+  const shotHtml = m => `<button type="button" class="shot-btn" data-src="${esc(m.src)}" data-caption="${esc(m.caption || '')}" aria-label="${esc(m.caption || '이미지')} 크게 보기"><img src="${esc(m.src)}" alt="${esc(m.caption || '')}" loading="lazy"></button>`;
+
+  /* ================= 포트폴리오 ================= */
+  const works = JSON.parse(document.getElementById('portfolio-data').textContent);
+  const workHtml = w => `
+    <article class="work">
+      <button type="button" class="cover shot-btn" data-src="${esc(w.cover)}" data-caption="${esc(w.title)}" aria-label="${esc(w.title)} 표지 크게 보기"><img src="${esc(w.cover)}" alt="" loading="lazy"></button>
+      <div class="body">
+        
+        <h3>${esc(w.title)}</h3>
+        <div class="game">${esc(w.game)}</div>
+        ${w.tags ? `<div class="tags">${w.tags.map(t => `<span>${esc(t)}</span>`).join('')}</div>` : ''}
+        ${w.question ? `<p class="q">${esc(w.question)}</p>` : ''}
+        ${w.hook ? `<p class="hook">${esc(w.hook)}</p>` : ''}
+        ${w.summary ? `<p>${esc(w.summary)}</p>` : ''}
+        ${w.problem ? `<div class="label">문제</div><p>${esc(w.problem)}</p>` : ''}
+        ${w.points ? `${w.problem ? '<div class="label">설계 · 분석</div>' : ''}<ul>${w.points.map(p => `<li>${esc(p)}</li>`).join('')}</ul>` : ''}
+        ${w.result ? `<div class="label">기대효과 · 검증</div><p>${esc(w.result)}</p>` : ''}
+        ${w.spec ? `<div class="label">문서 구성</div><div class="spec">${w.spec.map(t => `<span>${esc(t)}</span>`).join('')}</div>` : ''}
+        ${w.note ? `<div class="note">${esc(w.note)}</div>` : ''}
+        ${w.gallery ? `<div class="thumbs">${w.gallery.map(shotHtml).join('')}</div>` : ''}
+        ${w.pdf ? linksHtml([{ label: `문서 보기 (PDF, ${w.pages}쪽)`, href: w.pdf }]) : ''}
+      </div>
+    </article>`;
+  document.getElementById('featured').innerHTML = works.filter(w => w.featured).map(workHtml).join('');
+
+  /* ================= 타임라인 ================= */
+  // 위가 최신(다음 목표), 아래가 시작점. 노드 사이를 구불구불한 길로 잇는다.
+  const stagesData = JSON.parse(document.getElementById('timeline-data').textContent);
+  const ICON = {
+    done: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+    current: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6-4.5-4.2 6.1-.7z"/></svg>',
+    goal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>'
+  };
+  // 레벨: 맨 아래(시작점)가 Lv.1, 목표는 NEXT
+  const reached = stagesData.filter(s => s.state !== 'goal').length;
+  let lvCount = reached;
+  const levelOf = s => s.state === 'goal' ? 'NEXT' : 'Lv.' + (lvCount--);
+  const stagesEl = document.getElementById('stages');
+  stagesEl.innerHTML = stagesData.map(s => `
+    <li class="stage" data-state="${s.state || 'done'}"${s.highlight ? ' data-highlight' : ''}>
+      <div class="spot"><div class="node">${ICON[s.state] || ICON.done}</div><span class="lv">${levelOf(s)}</span></div>
+      <div class="card">
+        ${s.year ? `<span class="year">${esc(s.year)}</span>` : ''}
+        <div class="head">
+          <h3>${esc(s.title)}</h3>
+        </div>
+        <p>${esc(s.desc)}</p>
+        ${s.outputs && s.outputs.length ? `<div class="outputs"><span>산출물</span><ul>${s.outputs.map(o => `<li>${esc(o)}</li>`).join('')}</ul></div>` : ''}
+        ${s.media && s.media.length ? `<div class="media">${s.media.map(m => typeof m === 'string'
+          ? `<div class="ph"><span>${esc(m)}</span></div>`
+          : `<figure class="shot"><button type="button" class="shot-btn" data-src="${esc(m.src)}" data-caption="${esc(m.caption || '')}" aria-label="${esc(m.caption || '이미지')} 크게 보기"><img src="${esc(m.src)}" alt="${esc(m.caption || '')}" loading="lazy"></button>${m.caption ? `<figcaption>${esc(m.caption)}</figcaption>` : ''}</figure>`
+        ).join('')}</div>` : ''}
+        ${linksHtml(s.links)}
+      </div>
+    </li>`).join('');
+
+  // 타임라인 요약: 첫 해부터 지금까지 몇 년인지
+  const years = stagesData.map(s => parseInt(s.year, 10)).filter(n => n > 0);
+  const lastYears = stagesData.map(s => parseInt(String(s.year || '').slice(-4), 10)).filter(n => n > 0);
+  const span = Math.max(...lastYears) - Math.min(...years);
+  document.getElementById('lead-title').innerHTML = `${Math.min(...years)}년부터 <em>${span}년</em>, 게임을 즐기는 쪽에서 만드는 쪽으로.`;
+
+  // 이미지 클릭 → 크게 보기, 아무 데나 누르거나 Esc로 닫기
+  const viewer = document.getElementById('viewer');
+  const closeViewer = () => { viewer.hidden = true; };
+  document.addEventListener('click', e => {
+    const b = e.target.closest('.shot-btn'); if (!b) return;
+    viewer.querySelector('img').src = b.dataset.src;
+    viewer.querySelector('img').alt = b.dataset.caption;
+    viewer.querySelector('p').textContent = b.dataset.caption;
+    viewer.hidden = false;
+  });
+  viewer.addEventListener('click', closeViewer);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeViewer(); });
+  stagesEl.querySelectorAll('img').forEach(img => img.addEventListener('load', () => drawTrail()));
+
+  const map = document.getElementById('map');
+  function drawTrail() {
+    if (!map.offsetParent) return;
+    const box = map.getBoundingClientRect();
+    const pts = [...stagesEl.querySelectorAll('.node')].map(n => {
+      const r = n.getBoundingClientRect();
+      return { x: r.left - box.left + r.width / 2, y: r.top - box.top + r.height / 2 };
+    });
+    const states = stagesData.map(s => s.state || 'done');
+    const seg = (a, b) => ` L ${b.x} ${b.y}`;
+    // 아래(시작점)에서 위로 그린다. 목표(goal)로 가는 구간만 점선
+    let done = '', todo = '';
+    for (let i = pts.length - 1; i > 0; i--) {
+      const a = pts[i], b = pts[i - 1];
+      if (states[i - 1] === 'goal') todo += (todo ? '' : `M ${a.x} ${a.y}`) + seg(a, b);
+      else done += (done ? '' : `M ${a.x} ${a.y}`) + seg(a, b);
+    }
+    document.getElementById('trail-done').setAttribute('d', done);
+    document.getElementById('trail-todo').setAttribute('d', todo);
+  }
+  window.addEventListener('resize', drawTrail);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawTrail);
+
+  /* ================= 화면 전환 ================= */
+  /* ================= 홈 ================= */
+  const featured = works.filter(w => w.featured);
+  // 홈의 이미지·아이콘을 누르면 해당 탭으로 이동
+  const pickHtml = (w, tab, tabName) => `
+    <div class="pick">
+      <a class="img" href="#${tab}" aria-label="${esc(w.title)} · ${tabName} 탭으로 이동"><img src="${esc(w.cover)}" alt="" loading="lazy"></a>
+      <h3>${esc(w.title)}</h3>
+      <p>${esc(w.hook || w.summary)}</p>
+      ${w.question ? `<p class="q">${esc(w.question)}</p>` : ''}
+    </div>`;
+  document.getElementById('picks').innerHTML = featured.map(w => pickHtml(w, 'portfolio', '포트폴리오')).join('');
+  document.getElementById('projects').innerHTML = works.filter(w => !w.featured).map(w => pickHtml(w, 'timeline', '활동')).join('');
+  document.getElementById('shelf').innerHTML = sorted.slice(0, 12).map(g => `<a href="#library" aria-label="${esc(g.name)} · 게임 탭으로 이동"><img src="icons/${g.id}.jpg" alt="${esc(g.name)}" title="${esc(g.name)}" loading="lazy"></a>`).join('');
+  document.getElementById('library-title').innerHTML = `플레이한 다양한 장르의 게임들 <em>${games.length}개</em>를 기반으로,<br>장르의 경계를 넘어 의도에 맞는 시스템을 찾아옵니다.`;
+
+  const views = { home: document.getElementById('view-home'), portfolio: document.getElementById('view-portfolio'), timeline: document.getElementById('view-timeline'), library: document.getElementById('view-library') };
+  function route() {
+    const h = location.hash.slice(1);
+    const key = views[h] ? h : 'home';
+    window.scrollTo(0, 0);
+    Object.entries(views).forEach(([k, el]) => { el.hidden = k !== key; });
+    document.querySelectorAll('.nav a').forEach(a => {
+      if (a.id === 'nav-' + key) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    if (key === 'timeline') requestAnimationFrame(drawTrail);
+    movePill();
+  }
+  // 선택된 메뉴 뒤로 오렌지 알약이 미끄러져 이동
+  const dock = document.querySelector('.dock-nav'), pill = dock.querySelector('.pill');
+  function movePill() {
+    const a = dock.querySelector('a[aria-current="page"]'); if (!a) return;
+    pill.style.left = a.offsetLeft + 'px'; pill.style.width = a.offsetWidth + 'px';
+  }
+  window.addEventListener('resize', movePill);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(movePill);
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script>
+
+</body>
+</html>
